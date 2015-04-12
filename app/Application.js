@@ -44,20 +44,13 @@ Ext.define('LinkExPortal.Application', {
                     autoShow: 'true',
                     items: [
                         {
-                            region: 'north',
-                            layout: {
-                                type: 'hbox',
-                                align: 'left',
-                                items: [
-                                    {
-                                        xtype: 'label',
-                                        text: '<p><b>YOU ARE GOING TO HAVE TO SELECT A COURSE!</b></p>'
-                                    }
-                                ]
-                            }
-                        },{
                             region: 'center',
-                            xtype: 'app-main'
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    text: '<p><b>YOU ARE GOING TO HAVE TO SELECT A COURSE!</b></p>'
+                                }
+                            ]
                         }
                     ]
                 });

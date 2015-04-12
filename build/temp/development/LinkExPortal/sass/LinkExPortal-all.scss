@@ -908,11 +908,12 @@ $include-extthemeneptune-resizer-splitter: true;
 $include-extthemeneptune-toolbar-paging: true;
 $include-extthemeneptune-toolbar-toolbar: true;
 $include-linkexportal-application: true;
+$include-linkexportal-global-vars: true;
 $include-linkexportal-model-cpdhealthapplicationform: true;
 $include-linkexportal-model-countrylist: true;
 $include-linkexportal-model-course: true;
 $include-linkexportal-model-ethnicitieslist: true;
-$include-linkexportal-model-gendersslist: true;
+$include-linkexportal-model-genderslist: true;
 $include-linkexportal-model-professionalbodieslist: true;
 $include-linkexportal-model-studentexperience: true;
 $include-linkexportal-model-studentqualification: true;
@@ -947,6 +948,12 @@ $include-linkexportal-view-qualifications-qualificationsmodel: true;
 $include-linkexportal-view-references-references: true;
 $include-linkexportal-view-references-referencescontroller: true;
 $include-linkexportal-view-references-referencesmodel: true;
+$include-linkexportal-view-searchcourses-seachcourses: true;
+$include-linkexportal-view-searchcourses-seachcoursescontroller: true;
+$include-linkexportal-view-searchcourses-seachcoursesmodel: true;
+$include-linkexportal-view-selectcourse-selectcourse: true;
+$include-linkexportal-view-selectcourse-selectcoursecontroller: true;
+$include-linkexportal-view-selectcourse-selectcoursemodel: true;
 /* including package ext-theme-base */
 @import '../../../../../ext/packages/ext-theme-base/sass/etc/all';
 /* including package ext-theme-neutral */

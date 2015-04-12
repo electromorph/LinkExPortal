@@ -1,6 +1,6 @@
 
 Ext.define("LinkExPortal.view.courseSelection.CourseSelection",{
-    extend: "Ext.panel.Panel",
+    extend: "Ext.grid.Panel",
     alias: 'widget.courseSelection',
     requires: [
         'LinkExPortal.view.courseSelection.CourseSelectionController',
