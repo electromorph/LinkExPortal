@@ -12,7 +12,8 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
     title: 'Application for course',
     defaults: {
         // applied to each contained panel
-        bodyStyle: 'padding:15px'
+        bodyStyle: 'padding:15px',
+        autoScroll: true
     },
     layout: {
         // layout-specific configs go here
@@ -139,7 +140,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     name: 'Ethnicity',
                     forceSelection: true,
                     bind: {
-                        store: '{ethnicitiesList}',
+                        store: '{ethnicityList}',
                         value: '{EthnicityID}'
                     }
                 },
