@@ -1,16 +1,15 @@
-var types = Ext.data.Types;
 Ext.define('LinkExPortal.model.Course', {
     extend: 'Ext.data.Model',
     
     fields: [
-        { name: 'CourseID', type: types.INT },
-        { name: 'CourseCode', type: types.STRING },
-        { name: 'Description', type: types.STRING },
-        { name: 'AcademicYear', type: types.STRING },
-        { name: 'CourseTypeID', type: types.INT },
-        { name: 'Fee', type: types.FLOAT },
-        { name: 'Credit', type: types.INT },
-        { name: 'HEIID', type: types.INT }
+        { name: 'CourseID', type: 'int' },
+        { name: 'CourseCode', type: 'string' },
+        { name: 'Description', type: 'string' },
+        { name: 'AcademicYear', type: 'string' },
+        { name: 'CourseTypeID', type: 'int' },
+        { name: 'Fee', type: 'float' },
+        { name: 'Credit', type: 'int' },
+        { name: 'HEIID', type: 'int' }
     ],
     schema: {
         id: 'courses',

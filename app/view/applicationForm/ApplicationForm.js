@@ -2,7 +2,9 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
     extend: "Ext.panel.Panel",
     requires: [
         'LinkExPortal.view.applicationForm.ApplicationFormController',
-        'LinkExPortal.view.applicationForm.ApplicationFormModel'
+        'LinkExPortal.view.applicationForm.ApplicationFormModel',
+        'LinkExPortal.view.qualifications.Qualifications',
+        'Ext.layout.container.Card'
     ],
     alias: 'widget.applicationForm',
     controller: "applicationform-applicationform",
@@ -62,6 +64,49 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     }
                 },
                 {
+                    xtype: 'textfield',
+                    name: 'PreviousSurname',
+                    fieldLabel: 'Previous Surname',
+                    allowBlank: true,
+                    bind: {
+                        value: '{PreviousSurname}'
+                    }
+                },
+                {
+                    xtype: 'textfield',
+                    name: 'KnownAs',
+                    fieldLabel: 'Known as',
+                    allowBlank: true,
+                    bind: {
+                        value: '{KnownAs}'
+                    }
+                },
+                {
+                    xtype: 'datefield',
+                    anchor: '100%',
+                    fieldLabel: 'DOB',
+                    name: 'from_date',
+                    format: 'd/m/Y',
+                    maxValue: new Date(),  //Today or earlier.
+                    bind: {
+                        value: '{DOB}'
+                    }
+                }
+            ]
+        },
+        {
+            title: 'Other information',
+            items: [
+                {
+                    xtype: 'textfield',
+                    name: 'Nationality',
+                    fieldLabel: 'Nationality',
+                    allowBlank: true,
+                    bind: {
+                        value: '{Nationality}'
+                    }
+                },
+                {
                     xtype: 'combobox',
                     fieldLabel: 'Country of Birth',
                     queryMode: 'local',
@@ -74,6 +119,37 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         value: '{CountryOfBirthID}'
                     }
                 },
+                {
+                    xtype: 'combobox',
+                    fieldLabel: 'Gender',
+                    queryMode: 'local',
+                    editable: false,
+                    displayField: 'Description',
+                    valueField: 'ListItemID',
+                    name: 'Gender',
+                    bind: {
+                        store: '{gendersList}',
+                        value: '{GenderID}'
+                    }
+                },
+                {
+                    xtype: 'combobox',
+                    fieldLabel: 'Ethnicity',
+                    queryMode: 'local',
+                    displayField: 'Description',
+                    valueField: 'ListItemID',
+                    name: 'Ethnicity',
+                    forceSelection: true,
+                    bind: {
+                        store: '{ethnicityList}',
+                        value: '{EthnicityID}'
+                    }
+                }
+            ]
+        },
+        {
+            title: 'Professional Body Details',
+            items: [
                 {
                     xtype: 'combobox',
                     fieldLabel: 'Professional Body',
@@ -107,70 +183,6 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     bind: {
                         value: '{MembershipExpiry}',
                         hidden: '{ProfessionalBodyID} > 0'
-                    }
-                },
-                {
-                    xtype: 'combobox',
-                    fieldLabel: 'Gender',
-                    queryMode: 'local',
-                    editable: false,
-                    displayField: 'Description',
-                    valueField: 'ListItemID',
-                    name: 'Gender',
-                    bind: {
-                        store: '{gendersList}',
-                        value: '{GenderID}'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    name: 'Nationality',
-                    fieldLabel: 'Nationality',
-                    allowBlank: true,
-                    bind: {
-                        value: '{Nationality}'
-                    }
-                },
-                {
-                    xtype: 'combobox',
-                    fieldLabel: 'Ethnicity',
-                    queryMode: 'local',
-                    displayField: 'Description',
-                    valueField: 'ListItemID',
-                    name: 'Ethnicity',
-                    forceSelection: true,
-                    bind: {
-                        store: '{ethnicityList}',
-                        value: '{EthnicityID}'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    name: 'PreviousSurname',
-                    fieldLabel: 'Previous Surname',
-                    allowBlank: true,
-                    bind: {
-                        value: '{PreviousSurname}'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    name: 'KnownAs',
-                    fieldLabel: 'Known as',
-                    allowBlank: true,
-                    bind: {
-                        value: '{KnownAs}'
-                    }
-                },
-                {
-                    xtype: 'datefield',
-                    anchor: '100%',
-                    fieldLabel: 'DOB',
-                    name: 'from_date',
-                    format: 'd/m/Y',
-                    maxValue: new Date(),  //Today or earlier.
-                    bind: {
-                        value: '{DOB}'
                     }
                 }
             ]
@@ -572,7 +584,11 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         ]
     },{
         title: 'Qualifications',
-        html: 'Enter your qualifications here!'
+        items: [
+            {
+                xtype: 'qualifications'
+            }
+        ]
     },{
         title: 'Experience',
         html: 'Enter your experience here!'

@@ -1,20 +1,19 @@
-var types = Ext.data.Types;
 Ext.define('LinkExPortal.model.StudentReference', {
     extend: 'Ext.data.Model',
     
     fields: [
-        { name: 'StudentReferenceID', type: types.INT },
-        { name: 'Firstname', type: types.STRING },
-        { name: 'Surname', type: types.STRING },
-        { name: 'JobTitle', type: types.STRING },
-        { name: 'Organization', type: types.STRING },
-        { name: 'RelationshipToApplicant', type: types.STRING },
-        { name: 'Address', type: types.STRING },
-        { name: 'Telephone', type: types.STRING },
-        { name: 'Fax', type: types.STRING },
-        { name: 'Email', type: types.STRING },
-        { name: 'TitleID', type: types.INT },
-        { name: 'CPDHealthApplicationFormID', type: types.INT }
+        { name: 'StudentReferenceID', type: 'int' },
+        { name: 'Firstname', type: 'string' },
+        { name: 'Surname', type: 'string' },
+        { name: 'JobTitle', type: 'string' },
+        { name: 'Organization', type: 'string' },
+        { name: 'RelationshipToApplicant', type: 'string' },
+        { name: 'Address', type: 'string' },
+        { name: 'Telephone', type: 'string'},
+        { name: 'Fax', type: 'string' },
+        { name: 'Email', type: 'string' },
+        { name: 'TitleID', type: 'int' },
+        { name: 'CPDHealthApplicationFormID', type: 'int' }
 
     ],
     schema: {

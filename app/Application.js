@@ -8,12 +8,12 @@ Ext.define('LinkExPortal.Application', {
         'ProfessionalBodiesList',
         'EthnicitiesList',
         'GendersList',
-        'AcademicYearsList'/*
+        'AcademicYearsList',
+        'StudentExperience',
         'Course',
         'CPDHealthApplicationForm',
         'StudentQualification',
-        'StudentExperience',
-        'StudentReference'*/
+        'StudentReference'
     ],
     launch: function () {
         Ext.define('LinkExPortal.global.Vars', {

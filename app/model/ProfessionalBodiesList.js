@@ -1,4 +1,3 @@
-var types = Ext.data.Types;
 Ext.define('LinkExPortal.model.ProfessionalBodiesList', {
     extend: 'Ext.data.Model',
     

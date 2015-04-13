@@ -1,17 +1,16 @@
-var types = Ext.data.Types;
 Ext.define('LinkExPortal.model.StudentExperience', {
     extend: 'Ext.data.Model',
     
     fields: [
-        { name: 'StudentExperienceID', type: types.INT },
-        { name: 'Description', type: types.STRING },
-        { name: 'Organization', type: types.STRING },
-        { name: 'FullTime', type: types.STRING },
-        { name: 'Grade', type: types.BOOL },
-        { name: 'DateFrom', type: types.DATE },
-        { name: 'DateTo', type: types.DATE },
-        { name: 'Comments', type: types.STRING },
-        { name: 'CPDHealthApplicationFormID', type: types.INT }
+        { name: 'StudentExperienceID', type: 'int' },
+        { name: 'Description', type: 'string' },
+        { name: 'Organization', type: 'string' },
+        { name: 'FullTime', type: 'string' },
+        { name: 'Grade', type: 'bool' },
+        { name: 'DateFrom', type: 'date' },
+        { name: 'DateTo', type: 'date' },
+        { name: 'Comments', type: 'string' },
+        { name: 'CPDHealthApplicationFormID', type: 'int' }
 
     ],
     schema: {
@@ -19,7 +18,7 @@ Ext.define('LinkExPortal.model.StudentExperience', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: 'http://linkexwebapi.azurewebsites.net/api/Courses',
+            url: 'http://linkexwebapi.azurewebsites.net/application/2/experience',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

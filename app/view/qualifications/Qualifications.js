@@ -3,7 +3,8 @@ Ext.define("LinkExPortal.view.qualifications.Qualifications",{
     extend: "Ext.panel.Panel",
     requires: [
         'LinkExPortal.view.qualifications.QualificationsController',
-        'LinkExPortal.view.qualifications.QualificationsModel'
+        'LinkExPortal.view.qualifications.QualificationsModel',
+        'LinkExPortal.view.qualificationsGrid.QualificationsGrid'
     ],
     alias: 'widget.qualifications',
     controller: "qualifications-qualifications",
@@ -11,5 +12,9 @@ Ext.define("LinkExPortal.view.qualifications.Qualifications",{
         type: "qualifications-qualifications"
     },
 
-    html: "Hello, World!!"
+    items: [
+        {
+            xtype: 'qualificationsGrid'
+        }
+    ]
 });
