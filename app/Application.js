@@ -7,7 +7,8 @@ Ext.define('LinkExPortal.Application', {
         'CountryList',
         'ProfessionalBodiesList',
         'EthnicitiesList',
-        'GendersList'/*
+        'GendersList',
+        'AcademicYearsList'/*
         'Course',
         'CPDHealthApplicationForm',
         'StudentQualification',
@@ -18,43 +19,36 @@ Ext.define('LinkExPortal.Application', {
         Ext.define('LinkExPortal.global.Vars', {
             singleton: true,
             loginToken: undefined,
-            courseID: '-1'
+            courseID: {
+                value: '-1',
+                present: false
+            },
+            HEIID: {
+                value: '-1',
+                present: false
+            }
         });
         var queryString = Ext.Object.fromQueryString(location.search);
         if (queryString != null)
         {
             if ((queryString.courseid != null) && (queryString.courseid > 0))
             {
-                LinkExPortal.global.Vars.courseID = queryString.courseid;
-                alert('Course ID: ' + LinkExPortal.global.Vars.courseID);
-                Ext.create('Ext.container.Viewport', {
-                    layout: 'border',
-                    autoShow: 'true',
-                    items: [{
-                        region: 'center',
-                        xtype: 'app-main'
-                    }]
-                });
-            }
-            else
+                LinkExPortal.global.Vars.courseID.value = queryString.courseid;
+                LinkExPortal.global.Vars.courseID.present = true;
+            };
+            if ((queryString.HEIID != null) && (queryString.HEIID > 0))
             {
-                alert('You didnt supply a course id');
-                Ext.create('Ext.container.Viewport', {
-                    layout: 'border',
-                    autoShow: 'true',
-                    items: [
-                        {
-                            region: 'center',
-                            items: [
-                                {
-                                    xtype: 'label',
-                                    text: '<p><b>YOU ARE GOING TO HAVE TO SELECT A COURSE!</b></p>'
-                                }
-                            ]
-                        }
-                    ]
-                });
-            }
+                LinkExPortal.global.Vars.HEIID.value = queryString.HEIID;
+                LinkExPortal.global.Vars.HEIID.present = true;
+            };
         }
+        Ext.create('Ext.container.Viewport', {
+            layout: 'border',
+            autoShow: 'true',
+            items: [{
+                region: 'center',
+                xtype: 'app-main'
+            }]
+        });
     }
 });

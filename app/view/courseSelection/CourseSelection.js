@@ -1,4 +1,3 @@
-
 Ext.define("LinkExPortal.view.courseSelection.CourseSelection",{
     extend: "Ext.grid.Panel",
     alias: 'widget.courseSelection',

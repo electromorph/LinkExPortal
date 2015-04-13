@@ -3,7 +3,8 @@ Ext.define('LinkExPortal.view.main.Main', {
     requires: [
         'LinkExPortal.view.main.MainController',
         'LinkExPortal.view.main.MainModel',
-        'LinkExPortal.view.applicationForm.ApplicationForm'
+        'LinkExPortal.view.applicationForm.ApplicationForm',
+        'LinkExPortal.view.searchCourses.SearchCourses'
     ],
 
     xtype: 'app-main',
@@ -18,7 +19,7 @@ Ext.define('LinkExPortal.view.main.Main', {
     },
 
     items: [
-        /*{
+        {
             itemId: 'panelToolBar',
             region: 'north',
             xtype: 'panel',
@@ -45,18 +46,19 @@ Ext.define('LinkExPortal.view.main.Main', {
                         height: 81
                     },
                     {
-                    xtype: 'button',
-                    text: 'Fire!',
-                    handler: function(button) {
-                        var grid = button.up().up();
-                        grid.fireEvent('fireEvent',grid);
+                        xtype: 'button',
+                        text: 'Fire!',
+                        handler: function(button) {
+                            var grid = button.up().up();
+                            grid.fireEvent('fireEvent',grid);
+                        }
                     }
-                }]
+                ]
             }],
             items: [
 
             ]
-        }*/,
+        },
         {
             xtype: 'panel',
             bind: {
@@ -74,15 +76,25 @@ Ext.define('LinkExPortal.view.main.Main', {
         {
             region: 'center',
             xtype: 'tabpanel',
-            items:[{
-                title: 'Tab 1',
-                items: [
-                    {
-                        xtype: 'applicationForm',
-                        hidden: false
-                    }
-                ]
-            }]
+                items:[{
+                    title: 'Apply for course',
+                    //bind: { hidden: '{!courseID.present}' },
+                    items: [
+                        {
+                            xtype: 'applicationForm',
+                            bind: { hidden: '{!courseID.present}' }
+                        }
+                    ]
+                },{
+                    title: 'Search for course',
+                    items: [
+                        {
+                            xtype: 'searchCourses',
+                            bind: { hidden: '{courseID.present}' }
+                        }
+                    ]
+                }
+            ]
         }
     ]
 });

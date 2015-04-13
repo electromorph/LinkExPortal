@@ -1,4 +1,4 @@
-Ext.define('LinkExPortal.model.EthnicitiesList', {
+Ext.define('LinkExPortal.model.AcademicYearsList', {
     extend: 'Ext.data.Model',
     fields: [
         { name: 'ListItemId', type: 'int' },
@@ -6,11 +6,11 @@ Ext.define('LinkExPortal.model.EthnicitiesList', {
         { name: 'ListOrder', type: 'int' }
     ],
     schema: {
-        id: 'ethnicities',
+        id: 'academicYears',
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: 'http://linkexwebapi.azurewebsites.net/application/Refs/ethnicities',
+            url: 'http://linkexwebapi.azurewebsites.net/application/Refs/academicyears',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

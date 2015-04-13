@@ -17,9 +17,8 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
     layout: {
         // layout-specific configs go here
         type: 'accordion',
-        titleCollapse: false,
-        animate: true,
-        activeOnTop: true
+        titleCollapse: false
+        //activeOnTop: true
     },
     items: [
         {
@@ -506,7 +505,6 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         text: 'Have you been through the Criminal Records Bureau Enhanced Disclosure process in relation to your current employment?',
                         forId: 'isCRBChecked',
                         margin: '0 0 0 10'
-
                     },
                     {
                         xtype: 'segmentedbutton',
