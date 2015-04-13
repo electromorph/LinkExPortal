@@ -3,13 +3,13 @@ Ext.define('LinkExPortal.view.qualificationsGrid.QualificationsGridModel', {
     alias: 'viewmodel.qualificationsgrid-qualificationsgrid',
     data: {
         name: 'LinkExPortal'
-    }/*,
+    },
     stores: {
-        studentExperience: {
-            model: 'StudentExperience',
-            storeId: 'studentExperience',
-            alias: 'studentExperience',
+        studentQualifications: {
+            model: 'StudentQualification',
+            storeId: 'studentQualification',
+            alias: 'studentQualification',
             autoLoad: true
         }
-    }*/
+    }
 });

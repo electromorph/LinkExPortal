@@ -3,8 +3,8 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
     requires: [
         'LinkExPortal.view.applicationForm.ApplicationFormController',
         'LinkExPortal.view.applicationForm.ApplicationFormModel',
-        'LinkExPortal.view.qualifications.Qualifications',
-        'Ext.layout.container.Card'
+        'LinkExPortal.view.qualifications.Qualifications'/*,
+        'LinkExPortal.view.qualifications.Experience'*/
     ],
     alias: 'widget.applicationForm',
     controller: "applicationform-applicationform",
@@ -591,7 +591,11 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         ]
     },{
         title: 'Experience',
-        html: 'Enter your experience here!'
+        items: [
+            /*{
+                xtype: 'experience'
+            }*/
+        ]
     },{
         title: 'References',
         html: 'Enter your references here!'

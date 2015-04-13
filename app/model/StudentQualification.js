@@ -1,6 +1,5 @@
 Ext.define('LinkExPortal.model.StudentQualification', {
     extend: 'Ext.data.Model',
-    
     fields: [
         { name: 'StudentQualificationID', type: 'int' },
         { name: 'Name', type: 'string' },

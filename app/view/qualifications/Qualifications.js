@@ -1,4 +1,3 @@
-
 Ext.define("LinkExPortal.view.qualifications.Qualifications",{
     extend: "Ext.panel.Panel",
     requires: [
@@ -11,10 +10,7 @@ Ext.define("LinkExPortal.view.qualifications.Qualifications",{
     viewModel: {
         type: "qualifications-qualifications"
     },
-
-    items: [
-        {
-            xtype: 'qualificationsGrid'
-        }
-    ]
+    items: [{
+        xtype: 'qualificationsGrid'
+    }]
 });

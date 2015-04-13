@@ -1,4 +1,3 @@
-
 Ext.define("LinkExPortal.view.qualificationsGrid.QualificationsGrid",{
     extend: "Ext.grid.Panel",
     requires: [
@@ -11,41 +10,39 @@ Ext.define("LinkExPortal.view.qualificationsGrid.QualificationsGrid",{
         type: "qualificationsgrid-qualificationsgrid"
     },
     bind: {
-        store: '{studentExperience}'
+        store: '{studentQualifications}'
     },
     columns: [{
-        text     : 'Job Title',
-        flex     : 1,
-        sortable : false,
-        dataIndex: 'Description'
-    }, {
-        text     : 'Organization',
+        text     : 'Name',
         flex     : 1,
         sortable : true,
-        formatter: 'usMoney',
-        dataIndex: 'Organization'
+        dataIndex: 'Name'
     }, {
-        text     : 'Full/Part time',
+        text     : 'Comments',
+        flex     : 1,
+        sortable : true,
+        dataIndex: 'Comments'
+    }, {
+        text     : 'DateFrom',
         width    : 75,
         sortable : true,
-        renderer : 'usMoney',
-        dataIndex: 'FullTime'
-    }, {
-        text     : 'From',
-        width    : 90,
-        sortable : true,
         dataIndex: 'DateFrom'
-    },{
-        text     : 'To',
+    }, {
+        text     : 'DateTo',
         width    : 90,
         sortable : true,
         dataIndex: 'DateTo'
-    },
-    {
-        text     : 'Grade',
+    },{
+        text     : 'CPDHealthApplicationFormID',
         width    : 90,
         sortable : true,
-        dataIndex: 'Grade'
+        dataIndex: 'CPDHealthApplicationFormID'
+    },
+    {
+        text     : 'StudentQualificationID',
+        width    : 90,
+        sortable : true,
+        dataIndex: 'StudentQualificationID'
     }
     ]
 });
