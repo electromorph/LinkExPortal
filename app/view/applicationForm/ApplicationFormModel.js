@@ -32,6 +32,12 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormModel', {
             storeId: 'gendersList',
             alias: 'gendersList',
             autoLoad: true
+        },
+        titleList: {
+            model: 'TitleList',
+            storeId: 'titleList',
+            alias: 'titleList',
+            autoLoad: true
         }
     }
 });

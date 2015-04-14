@@ -13,7 +13,8 @@ Ext.define('LinkExPortal.Application', {
         'Course',
         'CPDHealthApplicationForm',
         'StudentQualification',
-        'StudentReference'
+        'StudentReference',
+        'TitleList'
     ],
     launch: function () {
         Ext.define('LinkExPortal.global.Vars', {
@@ -26,7 +27,11 @@ Ext.define('LinkExPortal.Application', {
             HEIID: {
                 value: '-1',
                 present: false
-            }
+            },
+            applicationID: {
+                value: '-1',
+                present: false
+        }
         });
         var queryString = Ext.Object.fromQueryString(location.search);
         if (queryString != null)
@@ -35,12 +40,17 @@ Ext.define('LinkExPortal.Application', {
             {
                 LinkExPortal.global.Vars.courseID.value = queryString.courseid;
                 LinkExPortal.global.Vars.courseID.present = true;
-            };
+            }
             if ((queryString.HEIID != null) && (queryString.HEIID > 0))
             {
                 LinkExPortal.global.Vars.HEIID.value = queryString.HEIID;
                 LinkExPortal.global.Vars.HEIID.present = true;
-            };
+            }
+            if ((queryString.applicationID != null) && (queryString.applicationID > 0))
+            {
+                LinkExPortal.global.Vars.applicationID.value = queryString.applicationID;
+                LinkExPortal.global.Vars.applicationID.present = true;
+            }
         }
         Ext.create('Ext.container.Viewport', {
             layout: 'border',

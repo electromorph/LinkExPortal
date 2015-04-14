@@ -1,11 +1,14 @@
-
 Ext.define("LinkExPortal.view.experienceGrid.ExperienceGrid",{
-    extend: "Ext.panel.Panel",
+    extend: "Ext.grid.Panel",
+    requires: [
+        'LinkExPortal.view.experienceGrid.ExperienceGridController',
+        'LinkExPortal.view.experienceGrid.ExperienceGridModel'
+    ],
+    alias: 'widget.experienceGrid',
     controller: "experiencegrid-experiencegrid",
     viewModel: {
         type: "experiencegrid-experiencegrid"
     },
-    alias: 'widget.experienceGrid',
     bind: {
         store: '{studentExperience}'
     },
@@ -20,7 +23,7 @@ Ext.define("LinkExPortal.view.experienceGrid.ExperienceGrid",{
         sortable : true,
         dataIndex: 'Organization'
     }, {
-        text     : 'Full/Part time',
+        text     : 'FT/PT',
         width    : 75,
         sortable : true,
         dataIndex: 'FullTime'
@@ -35,11 +38,11 @@ Ext.define("LinkExPortal.view.experienceGrid.ExperienceGrid",{
         sortable : true,
         dataIndex: 'DateTo'
     },
-        {
-            text     : 'Grade',
-            width    : 90,
-            sortable : true,
-            dataIndex: 'Grade'
-        }
+    {
+        text     : 'Grade',
+        width    : 90,
+        sortable : true,
+        dataIndex: 'Grade'
+    }
     ]
 });

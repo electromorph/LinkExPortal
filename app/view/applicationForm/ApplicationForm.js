@@ -3,8 +3,9 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
     requires: [
         'LinkExPortal.view.applicationForm.ApplicationFormController',
         'LinkExPortal.view.applicationForm.ApplicationFormModel',
-        'LinkExPortal.view.qualifications.Qualifications'/*,
-        'LinkExPortal.view.qualifications.Experience'*/
+        'LinkExPortal.view.qualifications.Qualifications',
+        'LinkExPortal.view.experience.Experience',
+        'LinkExPortal.view.references.References'
     ],
     alias: 'widget.applicationForm',
     controller: "applicationform-applicationform",
@@ -27,6 +28,19 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         {
             title: 'Personal Details',
             items: [
+               {
+                    xtype: 'combobox',
+                    fieldLabel: 'Title',
+                    queryMode: 'local',
+                    forceSelection: true,
+                    displayField: 'Description',
+                    valueField: 'ListItemID',
+                    name: 'Title',
+                    bind: {
+                        store: '{titleList}',
+                        value: '{TitleID}'
+                    }
+                },
                 {
                     xtype: 'textfield',
                     name: 'Surname',
@@ -592,18 +606,41 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
     },{
         title: 'Experience',
         items: [
-            /*{
+            {
                 xtype: 'experience'
-            }*/
+            }
         ]
     },{
         title: 'References',
-        html: 'Enter your references here!'
+        items: [
+            {
+                xtype: 'references'
+            }
+        ]
     },{
         title: 'Personal Statement',
-        html: 'Enter your personal statement here!'
+        items: [
+            {
+                xtype: 'textfield',
+                name: 'PersonalStatement',
+                fieldLabel: 'Personal Statement',
+                allowBlank: true,
+                bind: {
+                    value: '{PersonalStatement}'
+                }
+            }
+        ]
     },{
         title: 'Declaration',
-        html: 'Enter your declaration here!'
+        items: [
+            {
+                xtype: 'label',
+                text: 'Because of the nature of the programmes for which you are applying, they are exempt from the provision of Section 4 (2) of the Rehabilitation of Offenders Act 1974. By virtue of the Rehabilitation of Offenders Act 1974 (Exemptions) Order 1975 and the Children Act 1989, applicants are, therefore, not entitled to withhold information about convictions which for other purposes are "spent" under the provisions of the Act.'
+            },
+            {
+                xtype: 'label',
+                text: 'As you are applying for a programme in health or social work which may involve children or vulnerable adults, you must tell us about any criminal convictions, including spent sentences and cautions (including verbal cautions) and bind-over orders.'
+            }
+        ]
     }]
 });

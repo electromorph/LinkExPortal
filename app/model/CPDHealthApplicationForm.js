@@ -57,8 +57,8 @@ Ext.define('LinkExPortal.model.CPDHealthApplicationForm', {
         { name: 'HasTrustConfirmedCPDFunded', type: 'bool' },
         { name: 'Email', type: 'string' },
         { name: 'ApplicationDate', type: 'date' },
-        { name: 'PONumber', type: 'string' }
-
+        { name: 'PONumber', type: 'string' },
+        { name: 'TitleID', type: 'int' }
     ],
     schema: {
         id: 'applicationform',

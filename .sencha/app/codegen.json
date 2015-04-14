@@ -376,6 +376,18 @@
         "modelNamespace": "LinkExPortal.model",
         "name": "AcademicYearsList"
       }
+    },
+    "app/model/TitleList.js": {
+      "source": "{modelFileName}.js.tpl.merge",
+      "version": "31d5356142a167c72422f7902f19df3c583f3249",
+      "parameters": {
+        "appName": "LinkExPortal",
+        "baseClass": "Ext.data.Model",
+        "fields": "ListItemId:auto:null,Description:auto:null,ListOrder:auto:null",
+        "modelFileName": "TitleList",
+        "modelNamespace": "LinkExPortal.model",
+        "name": "TitleList"
+      }
     }
   }
 }
