@@ -10,7 +10,6 @@ Ext.define('LinkExPortal.Application', {
         'GendersList',
         'AcademicYearsList',
         'StudentExperience',
-        'Course',
         'CPDHealthApplicationForm',
         'StudentQualification',
         'StudentReference',
@@ -31,7 +30,9 @@ Ext.define('LinkExPortal.Application', {
             applicationID: {
                 value: '-1',
                 present: false
-        }
+            },
+            currentRecord: {
+            }
         });
         var queryString = Ext.Object.fromQueryString(location.search);
         if (queryString != null)

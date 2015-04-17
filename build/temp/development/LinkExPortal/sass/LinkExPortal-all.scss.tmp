@@ -926,7 +926,6 @@ $include-linkexportal-view-accountoverview-accountoverviewmodel: true;
 $include-linkexportal-view-applicationform-applicationform: true;
 $include-linkexportal-view-applicationform-applicationformcontroller: true;
 $include-linkexportal-view-applicationform-applicationformmodel: true;
-$include-linkexportal-view-courseselection-courseselection: true;
 $include-linkexportal-view-courseselection-courseselectioncontroller: true;
 $include-linkexportal-view-courseselection-courseselectionmodel: true;
 $include-linkexportal-view-declaration-declaration: true;
@@ -959,9 +958,6 @@ $include-linkexportal-view-references-referencesmodel: true;
 $include-linkexportal-view-referencesgrid-referencesgrid: true;
 $include-linkexportal-view-referencesgrid-referencesgridcontroller: true;
 $include-linkexportal-view-referencesgrid-referencesgridmodel: true;
-$include-linkexportal-view-searchcourses-searchcourses: true;
-$include-linkexportal-view-searchcourses-searchcoursescontroller: true;
-$include-linkexportal-view-searchcourses-searchcoursesmodel: true;
 /* including package ext-theme-base */
 @import '../../../../../ext/packages/ext-theme-base/sass/etc/all';
 /* including package ext-theme-neutral */

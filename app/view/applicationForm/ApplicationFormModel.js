@@ -5,6 +5,13 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormModel', {
         name: 'LinkExPortal'
     },
     stores: {
+        applicationForm: {
+            model: 'CPDHealthApplicationForm',
+            storeId: 'cpdHealthApplicationForm',
+            alias: 'cpdHealthApplicationForm',
+            autoLoad: true,
+            idProperty: 'CPDHealthApplicationFormTempID'
+        },
         countryList: {
             model: 'CountryList',
             storeId: 'homeCountryList',
@@ -38,6 +45,16 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormModel', {
             storeId: 'titleList',
             alias: 'titleList',
             autoLoad: true
+        }
+    },
+    formulas: {
+        recordOfID: {
+            bind: {
+                bindTo: '{sessionListGrid.selection}',
+                deep: true
+            },
+            get: function(session) { return session },
+            set: function(session) { session = this.set('recordOfID', session) }
         }
     }
 });

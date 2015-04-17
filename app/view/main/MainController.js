@@ -21,14 +21,15 @@ Ext.define('LinkExPortal.view.main.MainController', {
         alert('Fire! button clicked');
     },
 
-    onReady: function() {
-
-    },
-
     init: function() {
         this.getViewModel().set('courseID', LinkExPortal.global.Vars.courseID);//Ext.create('User', result.data.user));
         this.getViewModel().set('HEIID', LinkExPortal.global.Vars.HEIID);//Ext.create('User', result.data.user));
-        this.getViewModel().set('applicationID', LinkExPortal.global.Vars.HEIID);//Ext.create('User', result.data.user));
-    }
+        this.getViewModel().set('applicationID', LinkExPortal.global.Vars.applicationID);//Ext.create('User', result.data.user));
+        if (!LinkExPortal.global.Vars.applicationID.present) {
+            //Load up application form
+        }
+        if (LinkExPortal.global.Vars.courseID.present) {
 
+        }
+    }
 });

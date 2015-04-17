@@ -1,5 +1,5 @@
 Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
-    extend: "Ext.panel.Panel",
+    extend: "Ext.form.Panel",
     requires: [
         'LinkExPortal.view.applicationForm.ApplicationFormController',
         'LinkExPortal.view.applicationForm.ApplicationFormModel',
@@ -19,16 +19,15 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         autoScroll: true
     },
     layout: {
-        // layout-specific configs go here
-        type: 'accordion',
+        type: 'card', //'accordion',
         titleCollapse: false
-        //activeOnTop: true
     },
+    store: 'applicationForm',
     items: [
         {
             title: 'Personal Details',
             items: [
-               {
+                {
                     xtype: 'combobox',
                     fieldLabel: 'Title',
                     queryMode: 'local',
@@ -38,7 +37,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     name: 'Title',
                     bind: {
                         store: '{titleList}',
-                        value: '{TitleID}'
+                        value: '{currentRecord.TitleID}'
                     }
                 },
                 {
@@ -47,7 +46,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     fieldLabel: 'Surname',
                     allowBlank: false,
                     bind: {
-                        value: '{Lastname}'
+                        value: '{currentRecord.Lastname}'
                     }
                 },
                 {
@@ -56,7 +55,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     fieldLabel: 'Forename(s)',
                     allowBlank: false,
                     bind: {
-                        value: '{Firstname}'
+                        value: '{currentRecord.Firstname}'
                     }
                 },
                 {
@@ -65,7 +64,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     fieldLabel: 'Email',
                     allowBlank: false,
                     bind: {
-                        value: '{Email}'
+                        value: '{currentRecord.Email}'
                     }
                 },
                 {
@@ -74,7 +73,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     fieldLabel: 'Mobile',
                     allowBlank: true,
                     bind: {
-                        value: '{MobileNumber}'
+                        value: '{currentRecord.MobileNumber}'
                     }
                 },
                 {
@@ -83,7 +82,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     fieldLabel: 'Previous Surname',
                     allowBlank: true,
                     bind: {
-                        value: '{PreviousSurname}'
+                        value: '{currentRecord.PreviousSurname}'
                     }
                 },
                 {
@@ -92,21 +91,41 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     fieldLabel: 'Known as',
                     allowBlank: true,
                     bind: {
-                        value: '{KnownAs}'
+                        value: '{currentRecord.KnownAs}'
                     }
                 },
                 {
                     xtype: 'datefield',
                     anchor: '100%',
                     fieldLabel: 'DOB',
-                    name: 'from_date',
-                    format: 'd/m/Y',
+                    name: 'DOB',
+                    format: 'd m Y',
                     maxValue: new Date(),  //Today or earlier.
+                    submitFormat: 'd m Y',
                     bind: {
-                        value: '{DOB}'
+                        value: '{currentRecord.DOB}'
                     }
                 }
-            ]
+            ],
+            bbar: {
+                items: [
+                    {
+                        xtype: 'button',
+                        text: 'Save and continue',
+                        listeners: {
+                            click: 'onSaveClicked'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Submit',
+                        formBind: true,
+                        listeners: {
+                            click: 'onSubmit'
+                        }
+                    }
+                ]
+            }
         },
         {
             title: 'Other information',
@@ -117,7 +136,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     fieldLabel: 'Nationality',
                     allowBlank: true,
                     bind: {
-                        value: '{Nationality}'
+                        value: '{currentRecord.Nationality}'
                     }
                 },
                 {
@@ -130,7 +149,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     name: 'CountryOfBirth',
                     bind: {
                         store: '{countryList}',
-                        value: '{CountryOfBirthID}'
+                        value: '{currentRecord.CountryOfBirthID}'
                     }
                 },
                 {
@@ -143,7 +162,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     name: 'Gender',
                     bind: {
                         store: '{gendersList}',
-                        value: '{GenderID}'
+                        value: '{currentRecord.GenderID}'
                     }
                 },
                 {
@@ -156,10 +175,34 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     forceSelection: true,
                     bind: {
                         store: '{ethnicityList}',
-                        value: '{EthnicityID}'
+                        value: '{currentRecord.EthnicityID}'
                     }
                 }
-            ]
+            ],
+            bbar: {
+                items: [
+                    {
+                        xtype: 'button',
+                        text: 'Back',
+                        listeners: {
+                            click: 'onBackClicked'
+                        }
+                    },{
+                        xtype: 'button',
+                        text: 'Save and continue',
+                        listeners: {
+                            click: 'onSaveClicked'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Submit',
+                        listeners: {
+                            click: 'onSubmit'
+                        }
+                    }
+                ]
+            }
         },
         {
             title: 'Professional Body Details',
@@ -174,7 +217,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     name: 'ProfessionalBody',
                     bind: {
                         store: '{professionalBodyList}',
-                        value: '{ProfessionalBodyID}'
+                        value: '{currentRecord.ProfessionalBodyID}'
                     }
                 },
                 {
@@ -184,7 +227,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     allowBlank: true,
                     bind: {
                         value: '{MembershipNumber}',
-                        hidden: '{ProfessionalBodyID} <= 0'
+                        hidden: '{currentRecord.ProfessionalBodyID} <= 0'
                     }
                 },
                 {
@@ -196,10 +239,35 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     maxValue: new Date(),  //Today or earlier.
                     bind: {
                         value: '{MembershipExpiry}',
-                        hidden: '{ProfessionalBodyID} > 0'
+                        hidden: '{currentRecord.ProfessionalBodyID} > 0'
                     }
                 }
-            ]
+            ],
+            bbar: {
+                items: [
+                    {
+                        xtype: 'button',
+                        text: 'Back',
+                        listeners: {
+                            click: 'onBackClicked'
+                        }
+                    },{
+                        xtype: 'button',
+                        text: 'Save and continue',
+                        listeners: {
+                            click: 'onSaveClicked'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Submit',
+                        formBind: true,
+                        listeners: {
+                            click: 'onSubmit'
+                        }
+                    }
+                ]
+            }
         },
         {
             title: 'Home details',
@@ -210,7 +278,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: 'Address',
                 allowBlank: false,
                 bind: {
-                    value: '{HomeAddress1}'
+                    value: '{currentRecord.HomeAddress1}'
                 }
             },
             {
@@ -219,7 +287,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: ' ',
                 allowBlank: true,
                 bind: {
-                    value: '{HomeAddress2}'
+                    value: '{currentRecord.HomeAddress2}'
                 }
             },
             {
@@ -228,7 +296,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: 'City',
                 allowBlank: false,
                 bind: {
-                    value: '{HomeCity}'
+                    value: '{currentRecord.HomeCity}'
                 }
             },
             {
@@ -237,7 +305,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: 'Postcode',
                 allowBlank: false,
                 bind: {
-                    value: '{HomePostcode}'
+                    value: '{currentRecord.HomePostCode}'
                 }
             },
             {
@@ -250,7 +318,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 forceSelection: true,
                 bind: {
                     store: '{countryList}',
-                    value: '{HomeCountryID}'
+                    value: '{currentRecord.HomeCountryID}'
                 }
             },
             {
@@ -259,10 +327,35 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: 'Telephone',
                 allowBlank: true,
                 bind: {
-                    value: '{Telephone}'
+                    value: '{currentRecord.Telephone}'
                 }
             }
-        ]
+        ],
+            bbar: {
+                items: [
+                    {
+                        xtype: 'button',
+                        text: 'Back',
+                        listeners: {
+                            click: 'onBackClicked'
+                        }
+                    },{
+                        xtype: 'button',
+                        text: 'Save and continue',
+                        listeners: {
+                            click: 'onSaveClicked'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Submit',
+                        formBind: true,
+                        listeners: {
+                            click: 'onSubmit'
+                        }
+                    }
+                ]
+            }
     },
     {
         title: 'Work details',
@@ -277,7 +370,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: 'Address',
                 allowBlank: true,
                 bind: {
-                    value: '{WorkAddress1}'
+                    value: '{currentRecord.WorkAddress1}'
                 }
             },
             {
@@ -286,7 +379,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: ' ',
                 allowBlank: true,
                 bind: {
-                    value: '{WorkAddress2}'
+                    value: '{currentRecord.WorkAddress2}'
                 }
             },
             {
@@ -295,7 +388,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: 'City',
                 allowBlank: true,
                 bind: {
-                    value: '{WorkCity}'
+                    value: '{currentRecord.WorkCity}'
                 }
             },
             {
@@ -304,7 +397,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: 'Postcode',
                 allowBlank: true,
                 bind: {
-                    value: '{WorkPostcode}'
+                    value: '{currentRecord.WorkPostcode}'
                 }
             },
             {
@@ -317,7 +410,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 name: 'WorkCountry',
                 bind: {
                     store: '{countryList}',
-                    value: '{WorkCountryID}'
+                    value: '{currentRecord.WorkCountryID}'
                 }
             },
             {
@@ -326,7 +419,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: 'Email',
                 allowBlank: true,
                 bind: {
-                    value: '{WorkEmail}'
+                    value: '{currentRecord.WorkEmail}'
                 }
             },
             {
@@ -335,10 +428,35 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: 'Ward/Dept',
                 allowBlank: true,
                 bind: {
-                    value: '{WardDept}'
+                    value: '{currentRecord.WardDept}'
                 }
             }
-        ]
+        ],
+        bbar: {
+            items: [
+                {
+                    xtype: 'button',
+                    text: 'Back',
+                    listeners: {
+                        click: 'onBackClicked'
+                    }
+                },{
+                    xtype: 'button',
+                    text: 'Save and continue',
+                    listeners: {
+                        click: 'onSaveClicked'
+                    }
+                },
+                {
+                    xtype: 'button',
+                    text: 'Submit',
+                    formBind: true,
+                    listeners: {
+                        click: 'onSubmit'
+                    }
+                }
+            ]
+        }
     },{
         title: 'Eligibility',
         items: [
@@ -353,10 +471,17 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         text: 'Have you been granted permanent residence in the EU / Indefinite leave to remain in the UK?',
                         forId: 'hascriminalconviction',
                         margin: '0 0 0 10'
-                    },{
+                    },
+                    {
+                        xtype: 'checkbox',
+                        bind: {
+                            value: '{currentRecord.IsPermanentResident}'
+                        }
+                    }
+                    /*{
                         xtype: 'segmentedbutton',
                         bind: {
-                            value: '{IsPermanentResident}'
+                            value: '{currentRecord.IsPermanentResident}'
                         },
                         items: [
                             {
@@ -370,9 +495,35 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                                 text: 'No'
                             }
                         ]
-                    }
-                ]
-            },{
+                    }*/
+                ],
+                bbar: {
+                    items: [
+                        {
+                            xtype: 'button',
+                            text: 'Back',
+                            listeners: {
+                                click: 'onBackClicked'
+                            }
+                        },{
+                            xtype: 'button',
+                            text: 'Save and continue',
+                            listeners: {
+                                click: 'onSaveClicked'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Submit',
+                            formBind: true,
+                            listeners: {
+                                click: 'onSubmit'
+                            }
+                        }
+                    ]
+                }
+            },
+            {
                 xtype: 'datefield',
                 anchor: '100%',
                 fieldLabel: 'Date of First Entry to UK',
@@ -380,7 +531,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 format: 'd/m/Y',
                 maxValue: new Date(),  //Today or earlier.
                 bind: {
-                    value: '{DateOfFirstEntryToUK}'
+                    value: '{currentRecord.DateOfFirstEntryToUK}'
                 }
             },
             {
@@ -391,7 +542,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 format: 'd/m/Y',
                 maxValue: new Date(),  //Today or earlier.
                 bind: {
-                    value: '{MembershipExpiry}'
+                    value: '{currentRecord.MembershipExpiry}'
                 }
             },
             {
@@ -407,9 +558,15 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         margin: '0 0 0 10'
                     },
                     {
+                        xtype: 'checkbox',
+                        bind: {
+                            value: '{currentRecord.HasCriminalConviction}'
+                        }
+                    }
+                    /*{
                         xtype: 'segmentedbutton',
                         bind: {
-                            value: '{HasCriminalConviction}'
+                            value: '{currentRecord.HasCriminalConviction}'
                         },
                         fieldLabel: ' ',
                         items: [
@@ -424,7 +581,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                                 text: 'No'
                             }
                         ]
-                    }
+                    }*/
                 ]
             },{
                 layout: {
@@ -437,10 +594,17 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         text: 'Have you had a caution (including verbal cautions)?',
                         forId: 'hasCaution',
                         margin: '0 0 0 10'
-                    },{
+                    },
+                    {
+                        xtype: 'checkbox',
+                        bind: {
+                            value: '{currentRecord.hasCaution}'
+                        }
+                    }
+                    /*{
                         xtype: 'segmentedbutton',
                         bind: {
-                            value: '{HasCaution}'
+                            value: '{currentRecord.HasCaution}'
                         },
                         items: [
                             {
@@ -454,7 +618,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                                 text: 'No'
                             }
                         ]
-                    }
+                    }*/
                 ]
             },
             {
@@ -470,9 +634,15 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         margin: '0 0 0 10'
                     },
                     {
+                        xtype: 'checkbox',
+                        bind: {
+                            value: '{currentRecord.hasSpentCriminalConviction}'
+                        }
+                    }
+                    /*{
                         xtype: 'segmentedbutton',
                         bind: {
-                            value: '{HasSpentCriminalConviction}'
+                            value: '{currentRecord.HasSpentCriminalConviction}'
                         },
                         items: [
                             {
@@ -486,7 +656,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                                 text: 'No'
                             }
                         ]
-                    }
+                    }*/
                 ]
             },
             {
@@ -501,10 +671,17 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         forId: 'hasBindOverOrder',
                         margin: '0 0 0 10'
 
-                    },{
+                    },
+                    {
+                        xtype: 'checkbox',
+                        bind: {
+                            value: '{currentRecord.hasBindOverOrder}'
+                        }
+                    }
+                    /*{
                         xtype: 'segmentedbutton',
                         bind: {
-                            value: '{HasBindOverOrder}'
+                            value: '{currentRecord.HasBindOverOrder}'
                         },
                         items: [
                             {
@@ -518,7 +695,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                                 text: 'No'
                             }
                         ]
-                    }
+                    }*/
                 ]
             },
             {
@@ -534,10 +711,16 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         margin: '0 0 0 10'
                     },
                     {
+                        xtype: 'checkbox',
+                        bind: {
+                            value: '{currentRecord.IsCRBChecked}'
+                        }
+                    }
+                    /*{
                         xtype: 'segmentedbutton',
                         id: 'isCRBChecked',
                         bind: {
-                            value: '{IsCRBChecked}'
+                            value: '{currentRecord.IsCRBChecked}'
                         },
                         items: [
                             {
@@ -551,7 +734,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                                 text: 'No'
                             }
                         ]
-                    }
+                    }*/
                 ]
             },
             {
@@ -562,7 +745,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 format: 'd/m/Y',
                 maxValue: new Date(),  //Today or earlier.
                 bind: {
-                    value: '{CRBCheckDate}'
+                    value: '{currentRecord.CRBCheckDate}'
                 }
             },
             {
@@ -571,12 +754,12 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: 'CRB Reference No',
                 allowBlank: true,
                 bind: {
-                    value: '{CRBCheckRefNo}'
+                    value: '{currentRecord.CRBCheckRefNo}'
                 }
             },
             {
                 xtype: 'fieldcontainer',
-                fieldLabel: 'Toppings',
+                fieldLabel: ' ',
                 defaultType: 'checkboxfield',
                 items: [{
                     boxLabel  : 'I agree to the above declararation',
@@ -592,31 +775,131 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 name: 'ConfirmationDate',
                 format: 'd/m/Y',
                 bind: {
-                    value: '{ConfirmationDate}'
+                    value: '{currentRecord.ConfirmationDate}'
                 }
             }
-        ]
+        ],
+            bbar: {
+                items: [
+                    {
+                        xtype: 'button',
+                        text: 'Back',
+                        listeners: {
+                            click: 'onBackClicked'
+                        }
+                    },{
+                        xtype: 'button',
+                        text: 'Save and continue',
+                        listeners: {
+                            click: 'onSaveClicked'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Submit',
+                        formBind: true,
+                        listeners: {
+                            click: 'onSubmit'
+                        }
+                    }
+                ]
+            }
     },{
         title: 'Qualifications',
         items: [
             {
                 xtype: 'qualifications'
             }
-        ]
+        ],
+            bbar: {
+                items: [
+                    {
+                        xtype: 'button',
+                        text: 'Back',
+                        listeners: {
+                            click: 'onBackClicked'
+                        }
+                    },{
+                        xtype: 'button',
+                        text: 'Save and continue',
+                        listeners: {
+                            click: 'onSaveClicked'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Submit',
+                        formBind: true,
+                        listeners: {
+                            click: 'onSubmit'
+                        }
+                    }
+                ]
+            }
     },{
         title: 'Experience',
         items: [
             {
                 xtype: 'experience'
             }
-        ]
+        ],
+            bbar: {
+                items: [
+                    {
+                        xtype: 'button',
+                        text: 'Back',
+                        listeners: {
+                            click: 'onBackClicked'
+                        }
+                    },{
+                        xtype: 'button',
+                        text: 'Save and continue',
+                        listeners: {
+                            click: 'onSaveClicked'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Submit',
+                        formBind: true,
+                        listeners: {
+                            click: 'onSubmit'
+                        }
+                    }
+                ]
+            }
     },{
         title: 'References',
         items: [
             {
                 xtype: 'references'
             }
-        ]
+        ],
+            bbar: {
+                items: [
+                    {
+                        xtype: 'button',
+                        text: 'Back',
+                        listeners: {
+                            click: 'onBackClicked'
+                        }
+                    },{
+                        xtype: 'button',
+                        text: 'Save and continue',
+                        listeners: {
+                            click: 'onSaveClicked'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Submit',
+                        formBind: true,
+                        listeners: {
+                            click: 'onSubmit'
+                        }
+                    }
+                ]
+            }
     },{
         title: 'Personal Statement',
         items: [
@@ -626,10 +909,36 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 fieldLabel: 'Personal Statement',
                 allowBlank: true,
                 bind: {
-                    value: '{PersonalStatement}'
+                    value: '{currentRecord.PersonalStatement}'
                 }
             }
-        ]
+        ],
+            bbar: {
+                items: [
+                    {
+                        xtype: 'button',
+                        text: 'Back',
+                        listeners: {
+                            click: 'onBackClicked'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Save and continue',
+                        listeners: {
+                            click: 'onSaveClicked'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Submit',
+                        formBind: true,
+                        listeners: {
+                            click: 'onSubmit'
+                        }
+                    }
+                ]
+            }
     },{
         title: 'Declaration',
         items: [
@@ -641,6 +950,32 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 xtype: 'label',
                 text: 'As you are applying for a programme in health or social work which may involve children or vulnerable adults, you must tell us about any criminal convictions, including spent sentences and cautions (including verbal cautions) and bind-over orders.'
             }
-        ]
+        ],
+            bbar: {
+                items: [
+                    {
+                        xtype: 'button',
+                        text: 'Back',
+                        listeners: {
+                            click: 'onBackClicked'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Save',
+                        listeners: {
+                            click: 'onSaveClicked'
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        text: 'Submit',
+                        formBind: true,
+                        listeners: {
+                            click: 'onSubmit'
+                        }
+                    }
+                ]
+            }
     }]
 });

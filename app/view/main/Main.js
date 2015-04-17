@@ -3,37 +3,21 @@ Ext.define('LinkExPortal.view.main.Main', {
     requires: [
         'LinkExPortal.view.main.MainController',
         'LinkExPortal.view.main.MainModel',
-        'LinkExPortal.view.applicationForm.ApplicationForm',
-        'LinkExPortal.view.searchCourses.SearchCourses'
+        'LinkExPortal.view.applicationForm.ApplicationForm'
     ],
-
     xtype: 'app-main',
-    
     controller: 'main',
     viewModel: {
         type: 'main'
     },
-
     layout: {
         type: 'border'
     },
-
     items: [
-        {
+        /*{
             itemId: 'panelToolBar',
             region: 'north',
             xtype: 'panel',
-            height: 100,
-            listeners: [
-                {
-                    fireEvent: 'onClickPanelButton',
-                    scope: 'controller'
-                },
-                {
-                    boxready: 'onReady',
-                    scope: 'controller'
-                }
-            ],
             dockedItems: [{
                 xtype: 'toolbar',
                 dock: 'top',
@@ -44,55 +28,22 @@ Ext.define('LinkExPortal.view.main.Main', {
                         src: '/LinkExPortal/LinkEX.png',
                         width: 103,
                         height: 81
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Fire!',
-                        handler: function(button) {
-                            var grid = button.up().up();
-                            grid.fireEvent('fireEvent',grid);
-                        }
                     }
                 ]
             }],
             items: [
 
             ]
-        },
-        {
-            xtype: 'panel',
-            bind: {
-                title: '{name}'
-            },
-            region: 'west',
-            html: '<ul><li>This area is commonly used for navigation, for example, using a "tree" component.</li></ul>',
-            width: 250,
-            split: true,
-            tbar: [{
-                text: 'Apply!',
-                handler: 'onClickButton'
-            }]
-        },
-        {
+        },*/{
             region: 'center',
-            xtype: 'tabpanel',
+            xtype: 'panel',
                 items:[{
-                    title: 'Apply for course',
-                    //bind: { hidden: '{!courseID.present}' },
-                    items: [
-                        {
-                            xtype: 'applicationForm',
-                            bind: { hidden: '{!courseID.present}' }
-                        }
-                    ]
+                    xtype: 'applicationForm',
+                    bind: { hidden: '{!courseID.present}' }
                 },{
-                    title: 'Search for course',
-                    items: [
-                        {
-                            xtype: 'searchCourses',
-                            bind: { hidden: '{courseID.present}' }
-                        }
-                    ]
+                    xtype: 'label',
+                    text: 'Oops - you have arrived here by mistake.',
+                    bind: { hidden: '{courseID.present}' }
                 }
             ]
         }
