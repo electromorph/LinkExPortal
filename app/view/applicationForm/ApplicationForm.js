@@ -123,6 +123,12 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         listeners: {
                             click: 'onSubmit'
                         }
+                    },
+                    {
+                        xtype: 'textfield',
+                        bind: {
+                            value: '{currentRecord.id}'
+                        }
                     }
                 ]
             }
@@ -478,24 +484,6 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                             value: '{currentRecord.IsPermanentResident}'
                         }
                     }
-                    /*{
-                        xtype: 'segmentedbutton',
-                        bind: {
-                            value: '{currentRecord.IsPermanentResident}'
-                        },
-                        items: [
-                            {
-                                name: 'isPermanentResident',
-                                inputValue: 'true',
-                                text: 'Yes'
-                            },
-                            {
-                                name: 'isPermanentResident',
-                                inputValue: 'false',
-                                text: 'No'
-                            }
-                        ]
-                    }*/
                 ],
                 bbar: {
                     items: [
@@ -522,289 +510,9 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         }
                     ]
                 }
-            },
-            {
-                xtype: 'datefield',
-                anchor: '100%',
-                fieldLabel: 'Date of First Entry to UK',
-                name: 'DateOfFirstEntryToUK',
-                format: 'd/m/Y',
-                maxValue: new Date(),  //Today or earlier.
-                bind: {
-                    value: '{currentRecord.DateOfFirstEntryToUK}'
-                }
-            },
-            {
-                xtype: 'datefield',
-                anchor: '100%',
-                fieldLabel: 'Date residency was granted',
-                name: 'DateOfGrantedResidency',
-                format: 'd/m/Y',
-                maxValue: new Date(),  //Today or earlier.
-                bind: {
-                    value: '{currentRecord.MembershipExpiry}'
-                }
-            },
-            {
-                layout: {
-                    type: 'hbox',
-                    align: 'left'
-                },
-                items: [
-                    {
-                        xtype: 'label',
-                        text: 'Do you have a criminal conviction?',
-                        forId: 'hascriminalconviction',
-                        margin: '0 0 0 10'
-                    },
-                    {
-                        xtype: 'checkbox',
-                        bind: {
-                            value: '{currentRecord.HasCriminalConviction}'
-                        }
-                    }
-                    /*{
-                        xtype: 'segmentedbutton',
-                        bind: {
-                            value: '{currentRecord.HasCriminalConviction}'
-                        },
-                        fieldLabel: ' ',
-                        items: [
-                            {
-                                name: 'hascriminalconviction',
-                                inputValue: 'true',
-                                text: 'Yes'
-                            },
-                            {
-                                name: 'hascriminalconviction',
-                                inputValue: 'false',
-                                text: 'No'
-                            }
-                        ]
-                    }*/
-                ]
-            },{
-                layout: {
-                    type: 'hbox',
-                    align: 'left'
-                },
-                items: [
-                    {
-                        xtype: 'label',
-                        text: 'Have you had a caution (including verbal cautions)?',
-                        forId: 'hasCaution',
-                        margin: '0 0 0 10'
-                    },
-                    {
-                        xtype: 'checkbox',
-                        bind: {
-                            value: '{currentRecord.hasCaution}'
-                        }
-                    }
-                    /*{
-                        xtype: 'segmentedbutton',
-                        bind: {
-                            value: '{currentRecord.HasCaution}'
-                        },
-                        items: [
-                            {
-                                name: 'hasCaution',
-                                inputValue: 'true',
-                                text: 'Yes'
-                            },
-                            {
-                                name: 'hasCaution',
-                                inputValue: 'false',
-                                text: 'No'
-                            }
-                        ]
-                    }*/
-                ]
-            },
-            {
-                layout: {
-                    type: 'hbox',
-                    align: 'left'
-                },
-                items: [
-                    {
-                        xtype: 'label',
-                        text: 'Do you have a spent criminal conviction?',
-                        forId: 'hasSpentCriminalConviction',
-                        margin: '0 0 0 10'
-                    },
-                    {
-                        xtype: 'checkbox',
-                        bind: {
-                            value: '{currentRecord.hasSpentCriminalConviction}'
-                        }
-                    }
-                    /*{
-                        xtype: 'segmentedbutton',
-                        bind: {
-                            value: '{currentRecord.HasSpentCriminalConviction}'
-                        },
-                        items: [
-                            {
-                                name: 'hasSpentCriminalConviction',
-                                inputValue: 'true',
-                                text: 'Yes'
-                            },
-                            {
-                                name: 'hasSpentCriminalConviction',
-                                inputValue: 'false',
-                                text: 'No'
-                            }
-                        ]
-                    }*/
-                ]
-            },
-            {
-                layout: {
-                    type: 'hbox',
-                    align: 'left'
-                },
-                items: [
-                    {
-                        xtype: 'label',
-                        text: 'Do you have a bind-over order?',
-                        forId: 'hasBindOverOrder',
-                        margin: '0 0 0 10'
-
-                    },
-                    {
-                        xtype: 'checkbox',
-                        bind: {
-                            value: '{currentRecord.hasBindOverOrder}'
-                        }
-                    }
-                    /*{
-                        xtype: 'segmentedbutton',
-                        bind: {
-                            value: '{currentRecord.HasBindOverOrder}'
-                        },
-                        items: [
-                            {
-                                name: 'hasBindOverOrder',
-                                inputValue: 'true',
-                                text: 'Yes'
-                            },
-                            {
-                                name: 'hasBindOverOrder',
-                                inputValue: 'false',
-                                text: 'No'
-                            }
-                        ]
-                    }*/
-                ]
-            },
-            {
-                layout: {
-                    type: 'hbox',
-                    align: 'middle'
-                },
-                items: [
-                    {
-                        xtype: 'label',
-                        text: 'Have you been through the Criminal Records Bureau Enhanced Disclosure process in relation to your current employment?',
-                        forId: 'isCRBChecked',
-                        margin: '0 0 0 10'
-                    },
-                    {
-                        xtype: 'checkbox',
-                        bind: {
-                            value: '{currentRecord.IsCRBChecked}'
-                        }
-                    }
-                    /*{
-                        xtype: 'segmentedbutton',
-                        id: 'isCRBChecked',
-                        bind: {
-                            value: '{currentRecord.IsCRBChecked}'
-                        },
-                        items: [
-                            {
-                                name: 'isCRBChecked',
-                                inputValue: 'true',
-                                text: 'Yes'
-                            },
-                            {
-                                name: 'isCRBChecked',
-                                inputValue: 'false',
-                                text: 'No'
-                            }
-                        ]
-                    }*/
-                ]
-            },
-            {
-                xtype: 'datefield',
-                anchor: '100%',
-                fieldLabel: 'Date of Check',
-                name: 'CRBCheckDate',
-                format: 'd/m/Y',
-                maxValue: new Date(),  //Today or earlier.
-                bind: {
-                    value: '{currentRecord.CRBCheckDate}'
-                }
-            },
-            {
-                xtype: 'textfield',
-                name: 'CRBCheckRefNo',
-                fieldLabel: 'CRB Reference No',
-                allowBlank: true,
-                bind: {
-                    value: '{currentRecord.CRBCheckRefNo}'
-                }
-            },
-            {
-                xtype: 'fieldcontainer',
-                fieldLabel: ' ',
-                defaultType: 'checkboxfield',
-                items: [{
-                    boxLabel  : 'I agree to the above declararation',
-                    name      : 'ConfirmedAgreement',
-                    inputValue: '1',
-                    id        : 'confirmedAgreement'
-                }]
-            },
-            {
-                xtype: 'datefield',
-                anchor: '100%',
-                fieldLabel: 'Date',
-                name: 'ConfirmationDate',
-                format: 'd/m/Y',
-                bind: {
-                    value: '{currentRecord.ConfirmationDate}'
-                }
             }
-        ],
-            bbar: {
-                items: [
-                    {
-                        xtype: 'button',
-                        text: 'Back',
-                        listeners: {
-                            click: 'onBackClicked'
-                        }
-                    },{
-                        xtype: 'button',
-                        text: 'Save and continue',
-                        listeners: {
-                            click: 'onSaveClicked'
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Submit',
-                        formBind: true,
-                        listeners: {
-                            click: 'onSubmit'
-                        }
-                    }
-                ]
-            }
-    },{
+        ]
+     },{
         title: 'Qualifications',
         items: [
             {
@@ -949,6 +657,169 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             {
                 xtype: 'label',
                 text: 'As you are applying for a programme in health or social work which may involve children or vulnerable adults, you must tell us about any criminal convictions, including spent sentences and cautions (including verbal cautions) and bind-over orders.'
+            },
+            {
+                xtype: 'datefield',
+                anchor: '100%',
+                fieldLabel: 'Date of First Entry to UK',
+                name: 'DateOfFirstEntryToUK',
+                format: 'd/m/Y',
+                maxValue: new Date(),  //Today or earlier.
+                bind: {
+                    value: '{currentRecord.DateOfFirstEntryToUK}'
+                }
+            },
+            {
+                xtype: 'datefield',
+                anchor: '100%',
+                fieldLabel: 'Date residency was granted',
+                name: 'DateOfGrantedResidency',
+                format: 'd/m/Y',
+                maxValue: new Date(),  //Today or earlier.
+                bind: {
+                    value: '{currentRecord.MembershipExpiry}'
+                }
+            },
+            {
+                layout: {
+                    type: 'hbox',
+                    align: 'left'
+                },
+                items: [
+                    {
+                        xtype: 'label',
+                        text: 'Do you have a criminal conviction?',
+                        forId: 'hascriminalconviction',
+                        margin: '0 0 0 10'
+                    },
+                    {
+                        xtype: 'checkbox',
+                        bind: {
+                            value: '{currentRecord.HasCriminalConviction}'
+                        }
+                    }
+                ]
+            },{
+                layout: {
+                    type: 'hbox',
+                    align: 'left'
+                },
+                items: [
+                    {
+                        xtype: 'label',
+                        text: 'Have you had a caution (including verbal cautions)?',
+                        forId: 'hasCaution',
+                        margin: '0 0 0 10'
+                    },
+                    {
+                        xtype: 'checkbox',
+                        bind: {
+                            value: '{currentRecord.hasCaution}'
+                        }
+                    }
+                ]
+            },
+            {
+                layout: {
+                    type: 'hbox',
+                    align: 'left'
+                },
+                items: [
+                    {
+                        xtype: 'label',
+                        text: 'Do you have a spent criminal conviction?',
+                        forId: 'hasSpentCriminalConviction',
+                        margin: '0 0 0 10'
+                    },
+                    {
+                        xtype: 'checkbox',
+                        bind: {
+                            value: '{currentRecord.hasSpentCriminalConviction}'
+                        }
+                    }
+                ]
+            },
+            {
+                layout: {
+                    type: 'hbox',
+                    align: 'left'
+                },
+                items: [
+                    {
+                        xtype: 'label',
+                        text: 'Do you have a bind-over order?',
+                        forId: 'hasBindOverOrder',
+                        margin: '0 0 0 10'
+
+                    },
+                    {
+                        xtype: 'checkbox',
+                        bind: {
+                            value: '{currentRecord.hasBindOverOrder}'
+                        }
+                    }
+                ]
+            },
+            {
+                layout: {
+                    type: 'hbox',
+                    align: 'middle'
+                },
+                items: [
+                    {
+                        xtype: 'label',
+                        text: 'Have you been through the Criminal Records Bureau Enhanced Disclosure process in relation to your current employment?',
+                        forId: 'isCRBChecked',
+                        margin: '0 0 0 10'
+                    },
+                    {
+                        xtype: 'checkbox',
+                        bind: {
+                            value: '{currentRecord.IsCRBChecked}'
+                        }
+                    }
+                ]
+            },
+            {
+                xtype: 'datefield',
+                anchor: '100%',
+                fieldLabel: 'Date of Check',
+                name: 'CRBCheckDate',
+                format: 'd/m/Y',
+                maxValue: new Date(),  //Today or earlier.
+                bind: {
+                    value: '{currentRecord.CRBCheckDate}'
+                }
+            },
+            {
+                xtype: 'textfield',
+                name: 'CRBCheckRefNo',
+                fieldLabel: 'CRB Reference No',
+                allowBlank: true,
+                bind: {
+                    value: '{currentRecord.CRBCheckRefNo}'
+                }
+            },
+            {
+                xtype: 'fieldcontainer',
+                fieldLabel: ' ',
+                defaultType: 'checkboxfield',
+                items: [{
+                    boxLabel  : 'I agree to the above declararation',
+                    name      : 'ConfirmedAgreement',
+                    inputValue: '1',
+                    id        : 'confirmedAgreement'
+                }]
+            },
+            {
+                xtype: 'datefield',
+                anchor: '100%',
+                fieldLabel: 'Date',
+                name: 'ConfirmationDate',
+                format: 'd/m/Y',
+                bind: {
+                    value: '{currentRecord.ConfirmationDate}'
+                }
             }
         ],
             bbar: {

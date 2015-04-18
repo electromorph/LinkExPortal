@@ -23,13 +23,9 @@ Ext.define('LinkExPortal.view.main.MainController', {
 
     init: function() {
         this.getViewModel().set('courseID', LinkExPortal.global.Vars.courseID);//Ext.create('User', result.data.user));
-        this.getViewModel().set('HEIID', LinkExPortal.global.Vars.HEIID);//Ext.create('User', result.data.user));
-        this.getViewModel().set('applicationID', LinkExPortal.global.Vars.applicationID);//Ext.create('User', result.data.user));
-        if (!LinkExPortal.global.Vars.applicationID.present) {
-            //Load up application form
-        }
-        if (LinkExPortal.global.Vars.courseID.present) {
-
-        }
+        this.getViewModel().set('HEIID', LinkExPortal.global.Vars.HEIID);
+        this.getViewModel().set('applicationID', LinkExPortal.global.Vars.applicationID);
+        this.getViewModel().set('courseSessionID', LinkExPortal.global.Vars.courseSessionID);
+        this.getViewModel().set('showApplicationForm', LinkExPortal.global.Vars.showApplicationForm);
     }
 });

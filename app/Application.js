@@ -31,8 +31,11 @@ Ext.define('LinkExPortal.Application', {
                 value: '-1',
                 present: false
             },
-            currentRecord: {
-            }
+            courseSessionID: {
+                value: '-1',
+                present: false
+            },
+            showApplicationForm: true
         });
         var queryString = Ext.Object.fromQueryString(location.search);
         if (queryString != null)
@@ -47,11 +50,17 @@ Ext.define('LinkExPortal.Application', {
                 LinkExPortal.global.Vars.HEIID.value = queryString.HEIID;
                 LinkExPortal.global.Vars.HEIID.present = true;
             }
-            if ((queryString.applicationID != null) && (queryString.applicationID > 0))
+            if ((queryString.applicationid != null) && (queryString.applicationid > 0))
             {
-                LinkExPortal.global.Vars.applicationID.value = queryString.applicationID;
+                LinkExPortal.global.Vars.applicationID.value = queryString.applicationid;
                 LinkExPortal.global.Vars.applicationID.present = true;
             }
+            if ((queryString.coursesessionid != null) && (queryString.coursesessionid > 0))
+            {
+                LinkExPortal.global.Vars.courseSessionID.value = queryString.coursesessionid;
+                LinkExPortal.global.Vars.courseSessionID.present = true;
+            }
+            LinkExPortal.global.Vars.showApplicationForm = LinkExPortal.global.Vars.applicationID.present || LinkExPortal.global.Vars.courseSessionID.present;
         }
         Ext.create('Ext.container.Viewport', {
             layout: 'border',

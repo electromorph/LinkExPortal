@@ -87,19 +87,19 @@ Ext.define('LinkExPortal.model.CPDHealthApplicationForm', {
                 return typeof v === 'boolean' ? (v === true ? 1 : 0) : v;
             }
         },*/
-        { name: 'IsCPDFunded', type: 'string' },
+        { name: 'IsCPDFunded', type: 'bool' },
         /*{ name: 'IsCPDFundedDisplay', type: 'bool', mapping: 'IsCPDFunded',
             convert: function (v, record) {
                 return typeof v === 'boolean' ? (v === true ? 1 : 0) : v;
             }
         },*/
-        { name: 'IsSelfFunded', type: 'string'},
+        { name: 'IsSelfFunded', type: 'bool'},
         /*{ name: 'IsSelfFundedDisplay', type: 'bool', mapping: 'IsSelfFunded',
             convert: function (v, record) {
                 return typeof v === 'boolean' ? (v === true ? 1 : 0) : v;
             }
         },*/
-        { name: 'IsPartFunded', type: 'string' },
+        { name: 'IsPartFunded', type: 'bool' },
         /*{ name: 'IsPartFundedDisplay', type: 'bool',  mapping: 'IsPartFunded',
             convert: function (v, record) {
                 return typeof v === 'boolean' ? (v === true ? 1 : 0) : v;

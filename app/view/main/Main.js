@@ -39,11 +39,11 @@ Ext.define('LinkExPortal.view.main.Main', {
             xtype: 'panel',
                 items:[{
                     xtype: 'applicationForm',
-                    bind: { hidden: '{!courseID.present}' }
+                    bind: { hidden: '{!showApplicationForm}' }
                 },{
                     xtype: 'label',
                     text: 'Oops - you have arrived here by mistake.',
-                    bind: { hidden: '{courseID.present}' }
+                    bind: { hidden: '{showApplicationForm}' }
                 }
             ]
         }
