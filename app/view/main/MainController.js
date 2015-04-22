@@ -27,5 +27,7 @@ Ext.define('LinkExPortal.view.main.MainController', {
         this.getViewModel().set('applicationID', LinkExPortal.global.Vars.applicationID);
         this.getViewModel().set('courseSessionID', LinkExPortal.global.Vars.courseSessionID);
         this.getViewModel().set('showApplicationForm', LinkExPortal.global.Vars.showApplicationForm);
+        this.getViewModel().set('applicationFormSubmitted', LinkExPortal.global.Vars.applicationFormSubmitted);
+        this.getViewModel().set('showOopsScreen', LinkExPortal.global.Vars.showOopsScreen);
     }
 });

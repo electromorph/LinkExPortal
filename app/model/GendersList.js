@@ -10,7 +10,8 @@ Ext.define('LinkExPortal.model.GendersList', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: 'http://linkexwebapi.azurewebsites.net/application/Refs/genders',
+            //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/genders',
+            url: 'http://localhost:26214/application/Refs/genders',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

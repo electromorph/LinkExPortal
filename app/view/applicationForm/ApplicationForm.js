@@ -29,6 +29,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             items: [
                 {
                     xtype: 'combobox',
+                    id: 'fldTitleID',
                     fieldLabel: 'Title',
                     queryMode: 'local',
                     forceSelection: true,
@@ -42,6 +43,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 },
                 {
                     xtype: 'textfield',
+                    id: 'fldLastname',
                     name: 'Surname',
                     fieldLabel: 'Surname',
                     allowBlank: false,
@@ -51,6 +53,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 },
                 {
                     xtype: 'textfield',
+                    id: 'fldFirstname',
                     name: 'Forename',
                     fieldLabel: 'Forename(s)',
                     allowBlank: false,
@@ -60,6 +63,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 },
                 {
                     xtype: 'textfield',
+                    id: 'fldEmail',
                     name: 'Email',
                     fieldLabel: 'Email',
                     allowBlank: false,
@@ -69,6 +73,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 },
                 {
                     xtype: 'textfield',
+                    id: 'fldMobileNumber',
                     name: 'Mobile',
                     fieldLabel: 'Mobile',
                     allowBlank: true,
@@ -78,6 +83,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 },
                 {
                     xtype: 'textfield',
+                    id: 'fldPreviousSurname',
                     name: 'PreviousSurname',
                     fieldLabel: 'Previous Surname',
                     allowBlank: true,
@@ -87,6 +93,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 },
                 {
                     xtype: 'textfield',
+                    id: 'fldKnownAs',
                     name: 'KnownAs',
                     fieldLabel: 'Known as',
                     allowBlank: true,
@@ -96,6 +103,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 },
                 {
                     xtype: 'datefield',
+                    id: 'fldDOB',
                     anchor: '100%',
                     fieldLabel: 'DOB',
                     name: 'DOB',
@@ -138,6 +146,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             items: [
                 {
                     xtype: 'textfield',
+                    id: 'fldNationality',
                     name: 'Nationality',
                     fieldLabel: 'Nationality',
                     allowBlank: true,
@@ -147,6 +156,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 },
                 {
                     xtype: 'combobox',
+                    id: 'fldCountryOfBirthID',
                     fieldLabel: 'Country of Birth',
                     queryMode: 'local',
                     forceSelection: true,
@@ -160,6 +170,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 },
                 {
                     xtype: 'combobox',
+                    id: 'fldGenderID',
                     fieldLabel: 'Gender',
                     queryMode: 'local',
                     editable: false,
@@ -173,6 +184,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 },
                 {
                     xtype: 'combobox',
+                    id: 'fldEthnicityID',
                     fieldLabel: 'Ethnicity',
                     queryMode: 'local',
                     displayField: 'Description',
@@ -215,6 +227,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             items: [
                 {
                     xtype: 'combobox',
+                    id: 'fldProfessionalBodyID',
                     fieldLabel: 'Professional Body',
                     queryMode: 'local',
                     displayField: 'Description',
@@ -228,24 +241,26 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 },
                 {
                     xtype: 'textfield',
+                    id: 'fldMembershipNumber',
                     name: 'MembershipNumber',
                     fieldLabel: 'Membership Number',
                     allowBlank: true,
                     bind: {
-                        value: '{MembershipNumber}',
-                        hidden: '{currentRecord.ProfessionalBodyID} <= 0'
+                        value: '{MembershipNumber}'/*,
+                        hidden: '{currentRecord.ProfessionalBodyID} <= 0'*/
                     }
                 },
                 {
                     xtype: 'datefield',
+                    id: 'fldMembershipExpiry',
                     anchor: '100%',
                     fieldLabel: 'Expiry Date',
                     name: 'MembershipExpiry',
                     format: 'd/m/Y',
-                    maxValue: new Date(),  //Today or earlier.
+                    minValue: new Date(),  //Today or earlier.
                     bind: {
-                        value: '{MembershipExpiry}',
-                        hidden: '{currentRecord.ProfessionalBodyID} > 0'
+                        value: '{MembershipExpiry}'/*,
+                        hidden: '{currentRecord.ProfessionalBodyID} > 0'*/
                     }
                 }
             ],
@@ -280,6 +295,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             items: [
             {
                 xtype: 'textfield',
+                id: 'fldHomeAddress1',
                 name: 'HomeAddress1',
                 fieldLabel: 'Address',
                 allowBlank: false,
@@ -289,6 +305,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'textfield',
+                id: 'fldHomeAddress2',
                 name: 'HomeAddress2',
                 fieldLabel: ' ',
                 allowBlank: true,
@@ -298,6 +315,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'textfield',
+                id: 'fldHomeCity',
                 name: 'HomeCity',
                 fieldLabel: 'City',
                 allowBlank: false,
@@ -307,6 +325,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'textfield',
+                id: 'fldHomePostCode',
                 name: 'HomePostcode',
                 fieldLabel: 'Postcode',
                 allowBlank: false,
@@ -316,6 +335,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'combobox',
+                id: 'fldHomeCountryID',
                 fieldLabel: 'Country',
                 queryMode: 'local',
                 displayField: 'Description',
@@ -329,6 +349,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'textfield',
+                id: 'fldTelephone',
                 name: 'Telephone',
                 fieldLabel: 'Telephone',
                 allowBlank: true,
@@ -372,6 +393,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'textfield',
+                id: 'fldWorkAddress1',
                 name: 'WorkAddress1',
                 fieldLabel: 'Address',
                 allowBlank: true,
@@ -381,6 +403,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'textfield',
+                id: 'fldWorkAddress2',
                 name: 'WorkAddress2',
                 fieldLabel: ' ',
                 allowBlank: true,
@@ -390,6 +413,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'textfield',
+                id: 'fldWorkCity',
                 name: 'WorkCity',
                 fieldLabel: 'City',
                 allowBlank: true,
@@ -399,6 +423,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'textfield',
+                id: 'fldWorkPostcode',
                 name: 'WorkPostcode',
                 fieldLabel: 'Postcode',
                 allowBlank: true,
@@ -408,6 +433,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'combobox',
+                id: 'fldWorkCountryID',
                 fieldLabel: 'Country',
                 queryMode: 'local',
                 displayField: 'Description',
@@ -421,6 +447,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'textfield',
+                id: 'fldWorkEmail',
                 name: 'WorkEmail',
                 fieldLabel: 'Email',
                 allowBlank: true,
@@ -430,6 +457,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'textfield',
+                id: 'fldWardDept',
                 name: 'WardDept',
                 fieldLabel: 'Ward/Dept',
                 allowBlank: true,
@@ -467,6 +495,20 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         title: 'Eligibility',
         items: [
             {
+                xtype: 'combobox',
+                id: 'fldCountryOfResidenceID',
+                fieldLabel: 'Country Of Residence',
+                queryMode: 'local',
+                displayField: 'Description',
+                valueField: 'ListItemID',
+                forceSelection: true,
+                name: 'WorkCountry',
+                bind: {
+                    store: '{countryList}',
+                    value: '{currentRecord.CountryOfResidenceID}'
+                }
+            },
+            {
                 layout: {
                     type: 'hbox',
                     align: 'left'
@@ -475,11 +517,12 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     {
                         xtype: 'label',
                         text: 'Have you been granted permanent residence in the EU / Indefinite leave to remain in the UK?',
-                        forId: 'hascriminalconviction',
+                        forId: 'fldIsPermanentResident',
                         margin: '0 0 0 10'
                     },
                     {
                         xtype: 'checkbox',
+                        id: 'fldIsPermanentResident',
                         bind: {
                             value: '{currentRecord.IsPermanentResident}'
                         }
@@ -613,6 +656,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         items: [
             {
                 xtype: 'textfield',
+                id: 'fldPersonalStatement',
                 name: 'PersonalStatement',
                 fieldLabel: 'Personal Statement',
                 allowBlank: true,
@@ -660,6 +704,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'datefield',
+                id: 'fldDateOfFirstEntryToUK',
                 anchor: '100%',
                 fieldLabel: 'Date of First Entry to UK',
                 name: 'DateOfFirstEntryToUK',
@@ -671,13 +716,14 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'datefield',
+                id: 'fldDateOfGrantedResidency',
                 anchor: '100%',
                 fieldLabel: 'Date residency was granted',
                 name: 'DateOfGrantedResidency',
                 format: 'd/m/Y',
                 maxValue: new Date(),  //Today or earlier.
                 bind: {
-                    value: '{currentRecord.MembershipExpiry}'
+                    value: '{currentRecord.DateOfGrantedResidency}'
                 }
             },
             {
@@ -694,6 +740,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     },
                     {
                         xtype: 'checkbox',
+                        id: 'fldHasCriminalConviction',
                         bind: {
                             value: '{currentRecord.HasCriminalConviction}'
                         }
@@ -708,13 +755,14 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     {
                         xtype: 'label',
                         text: 'Have you had a caution (including verbal cautions)?',
-                        forId: 'hasCaution',
+                        forId: 'fldhasCaution',
                         margin: '0 0 0 10'
                     },
                     {
                         xtype: 'checkbox',
+                        id: 'fldHasCaution',
                         bind: {
-                            value: '{currentRecord.hasCaution}'
+                            value: '{currentRecord.HasCaution}'
                         }
                     }
                 ]
@@ -728,13 +776,14 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     {
                         xtype: 'label',
                         text: 'Do you have a spent criminal conviction?',
-                        forId: 'hasSpentCriminalConviction',
+                        forId: 'fldHasSpentCriminalConviction',
                         margin: '0 0 0 10'
                     },
                     {
                         xtype: 'checkbox',
+                        id: 'fldHasSpentCriminalConviction',
                         bind: {
-                            value: '{currentRecord.hasSpentCriminalConviction}'
+                            value: '{currentRecord.HasSpentCriminalConviction}'
                         }
                     }
                 ]
@@ -748,14 +797,15 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     {
                         xtype: 'label',
                         text: 'Do you have a bind-over order?',
-                        forId: 'hasBindOverOrder',
+                        forId: 'HasBindOverOrder',
                         margin: '0 0 0 10'
 
                     },
                     {
                         xtype: 'checkbox',
+                        id: 'fldHasBindOverOrder',
                         bind: {
-                            value: '{currentRecord.hasBindOverOrder}'
+                            value: '{currentRecord.HasBindOverOrder}'
                         }
                     }
                 ]
@@ -774,6 +824,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     },
                     {
                         xtype: 'checkbox',
+                        id: 'fldIsCRBChecked',
                         bind: {
                             value: '{currentRecord.IsCRBChecked}'
                         }
@@ -782,6 +833,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'datefield',
+                id: 'fldCRBCheckDate',
                 anchor: '100%',
                 fieldLabel: 'Date of Check',
                 name: 'CRBCheckDate',
@@ -793,6 +845,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 xtype: 'textfield',
+                id: 'fldCRBCheckRefNo',
                 name: 'CRBCheckRefNo',
                 fieldLabel: 'CRB Reference No',
                 allowBlank: true,
@@ -808,11 +861,12 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     boxLabel  : 'I agree to the above declararation',
                     name      : 'ConfirmedAgreement',
                     inputValue: '1',
-                    id        : 'confirmedAgreement'
+                    id        : 'fldConfirmedAgreement'
                 }]
             },
             {
                 xtype: 'datefield',
+                id: 'fldConfirmationDate',
                 anchor: '100%',
                 fieldLabel: 'Date',
                 name: 'ConfirmationDate',

@@ -5,6 +5,13 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormModel', {
         name: 'LinkExPortal'
     },
     stores: {
+        application: {
+            model: 'CPDHealthApplication',
+            storeId: 'cpdHealthApplication',
+            alias: 'cpdHealthApplication',
+            autoLoad: true,
+            idProperty: 'CPDHealthApplicationFormID'
+        },
         applicationForm: {
             model: 'CPDHealthApplicationForm',
             storeId: 'cpdHealthApplicationForm',

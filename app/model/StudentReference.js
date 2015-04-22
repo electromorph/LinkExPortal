@@ -21,7 +21,8 @@ Ext.define('LinkExPortal.model.StudentReference', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: 'http://linkexwebapi.azurewebsites.net/api/Courses',
+            //url: 'http://linkexwebapi.azurewebsites.net/api/Courses',
+            url: 'http://localhost:26214/api/Courses',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

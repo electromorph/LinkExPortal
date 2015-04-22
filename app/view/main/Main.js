@@ -43,7 +43,11 @@ Ext.define('LinkExPortal.view.main.Main', {
                 },{
                     xtype: 'label',
                     text: 'Oops - you have arrived here by mistake.',
-                    bind: { hidden: '{showApplicationForm}' }
+                    bind: { hidden: '{!showOopsScreen}' }
+                },{
+                    xtype: 'label',
+                    text: 'Thank you!  Your application has been accepted, and is now under consideration.',
+                    bind: { hidden: '{!applicationFormSubmitted}' }
                 }
             ]
         }

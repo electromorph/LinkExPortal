@@ -1,8 +1,8 @@
-Ext.define('LinkExPortal.model.CPDHealthApplicationForm', {
+Ext.define('LinkExPortal.model.CPDHealthApplication', {
     extend: 'Ext.data.Model',
-    idProperty: 'CPDHealthApplicationFormTempID',
+    idProperty: 'CPDHealthApplicationFormID',
     fields: [
-        { name: 'CPDHealthApplicationFormTempID', type: 'int' },
+        { name: 'CPDHealthApplicationFormID', type: 'auto' },
         { name: 'Description', type: 'string' },
         { name: 'Firstname', type: 'string' },
         { name: 'Lastname', type: 'string' },
@@ -61,12 +61,12 @@ Ext.define('LinkExPortal.model.CPDHealthApplicationForm', {
         { name: 'TitleID', type: 'int' }
     ],
     schema: {
-        id: 'applicationformtemp',
+        id: 'applicationform',
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
             //url: 'http://linkexwebapi.azurewebsites.net/api/CPDHealthApplicationFormTemps',
-            url: 'http://localhost:26214/api/CPDHealthApplicationFormTemps',
+            url: 'http://localhost:26214/api/CPDHealthApplicationForms',
             reader: {
                 type: 'json',
                 rootProperty: 'data'
