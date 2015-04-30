@@ -1,5 +1,5 @@
 $image-search-path: 'D:/Code/ExtJs/LinkExPortal/build/development/LinkExPortal/resources';
-$theme-name:  'ext-theme-neptune' !default;
+$theme-name:  'my-custom-theme' !default;
 $include-ext-abstractcomponent: true;
 $include-ext-abstractcontainer: true;
 $include-ext-abstractmanager: true;
@@ -959,6 +959,10 @@ $include-linkexportal-view-referencesgrid-referencesgridmodel: true;
 @import '../../../../../ext/packages/ext-theme-neutral/sass/etc/all';
 /* including package ext-theme-neptune */
 @import '../../../../../ext/packages/ext-theme-neptune/sass/etc/all';
+/* including package my-custom-theme */
+@import '../../../../../packages/my-custom-theme/sass/etc/all';
+/* including package my-custom-theme */
+@import '../../../../../packages/my-custom-theme/sass/var/Component';
 /* including package ext-theme-neptune */
 @import '../../../../../ext/packages/ext-theme-neptune/sass/var/Component';
 @import '../../../../../ext/packages/ext-theme-neptune/sass/var/LoadMask';

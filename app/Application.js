@@ -66,6 +66,15 @@ Ext.define('LinkExPortal.Application', {
             LinkExPortal.global.Vars.showApplicationForm = LinkExPortal.global.Vars.applicationID.present || LinkExPortal.global.Vars.courseSessionID.present;
             LinkExPortal.global.Vars.showOopsScreen = !(LinkExPortal.global.Vars.showApplicationForm);
         }
+        if (LinkExPortal.global.Vars.HEIID.present) {
+            if (LinkExPortal.global.Vars.HEIID.value == 1) {
+                Ext.util.CSS.swapStyleSheet( 'styles', url );
+            }
+            if (LinkExPortal.global.Vars.HEIID.value == 2) {
+                Ext.util.CSS.swapStyleSheet( 'styles', url );
+            }
+        }
+
         Ext.create('Ext.container.Viewport', {
             layout: 'border',
             autoShow: 'true',

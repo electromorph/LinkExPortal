@@ -4,9 +4,10 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
     alias: 'controller.applicationform-applicationform',
     init: function() {
         var myStore = this.getStore('applicationForm');
-        myStore.on({ load: { fn: this.finishedLoading, scope: this, single: true },
-                     write: { fn: this.storeWrite, scope:  this }
-        });
+        if (LinkExPortal.global.Vars.applicationID.present) {
+            myStore.on({ load: { fn: this.finishedLoading, scope: this, single: true } })
+        }
+        myStore.on({ write: { fn: this.storeWrite, scope:  this } });
         this.on({ gotRecord: { fn: this.onGotRecord, scope: this } });
         if (!LinkExPortal.global.Vars.applicationID.present) {
             if (LinkExPortal.global.Vars.courseSessionID.present) {
@@ -25,13 +26,16 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
                     }
                 }
             }
+            else {
+                alert('No course session id - redirect to the search page at this point...')
+            }
         }
     },
 
     //This is called from the store on load completion. It executes in a Store context, which is useless.
     //So we just use it to fire a new event that gets picked up by in controller context.
-    finishedLoading: function(me, myViewModel) {
-        this.fireEvent('gotRecord');
+    finishedLoading: function(me, myViewModel, successful) {
+            this.fireEvent('gotRecord');
     },
 
     storeWrite: function(me, operation) {
@@ -51,13 +55,21 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
                     myViewModel.set('currentRecord', myRecord);
                 }
             }
+            else {
+                alert('Could not find the specified applicationid - redirect to the search page at this point...');
+            }
         }
     },
     saveCurrentRecord: function() {
         var myViewModel = this.getViewModel();
         var myRecord = myViewModel.get('currentRecord');
-        var myData = myRecord.getData();
-        myRecord.save();
+        //var myData = myRecord.getData();
+        if (myRecord) {
+            myRecord.save();
+        }
+        else {
+            alert('An error occurred whilst savind data');
+        }
         //myRecord.id = myRecord.CPDHealthApplicationFormTempID;
     },
 
@@ -143,17 +155,12 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
             Email: Ext.getCmp('fldEmail').getValue(),
             //ApplicationDate: Ext.getCmp('fldApplicationDate').getValue(),
             //PONumber: Ext.getCmp('fldPONumber').getValue(),
-            TitleID: Ext.getCmp('fldTitleID').getValue()
+            TitleID: Ext.getCmp('fldTitleID').getValue(),
+            AccountID: Ext.getCmp('fldAccountID').getValue()
         });
         myStore.save();
         var myStore2 = this.getStore('applicationForm');
-        if (myStore2) {
-            alert('Found applicationForm store');
-        }
         var myRecord = myStore2.findRecord('CPDHealthApplicationFormTempID', LinkExPortal.global.Vars.applicationID.value);
-        if (myRecord) {
-            alert('myRecord (' + LinkExPortal.global.Vars.applicationID.value +  ')was found: ' + myRecord);
-        }
         myRecord.erase();
         alert('Successfully dropped MyRecord');
         //myStore2.save();

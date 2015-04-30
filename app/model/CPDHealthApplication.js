@@ -58,6 +58,7 @@ Ext.define('LinkExPortal.model.CPDHealthApplication', {
         { name: 'Email', type: 'string' },
         { name: 'ApplicationDate', type: 'date', dateReadFormat: 'Y-m-dT00:00:00', dateWriteFormat: 'Y-m-d' },
         { name: 'PONumber', type: 'string' },
+        { name: 'AccountID', type: 'int' },
         { name: 'TitleID', type: 'int' }
     ],
     schema: {

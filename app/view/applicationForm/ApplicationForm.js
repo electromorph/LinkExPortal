@@ -655,11 +655,16 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         title: 'Personal Statement',
         items: [
             {
-                xtype: 'textfield',
+                html: '<p><strong>Please give your reasons for choosing this particular programme of study.</strong></p><p><i>You may wish to alter this section according to which programme of study you are applying for.</i></p>'
+            },
+            {
+                xtype: 'textarea',
                 id: 'fldPersonalStatement',
                 name: 'PersonalStatement',
                 fieldLabel: 'Personal Statement',
+                height: 200,
                 allowBlank: true,
+                emptyText: 'Personal statement...',
                 bind: {
                     value: '{currentRecord.PersonalStatement}'
                 }
@@ -799,7 +804,6 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         text: 'Do you have a bind-over order?',
                         forId: 'HasBindOverOrder',
                         margin: '0 0 0 10'
-
                     },
                     {
                         xtype: 'checkbox',
@@ -873,6 +877,13 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 format: 'd/m/Y',
                 bind: {
                     value: '{currentRecord.ConfirmationDate}'
+                }
+            },
+            {
+                xtype: 'label',
+                id: 'fldAccountID',
+                bind: {
+                    text: '{currentRecord.AccountID}'
                 }
             }
         ],
