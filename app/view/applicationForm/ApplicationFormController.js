@@ -2,6 +2,9 @@ var active = 0;
 Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.applicationform-applicationform',
+    rowEditing: Ext.create('Ext.grid.plugin.RowEditing', {
+        clicksToEdit: 1
+    }),
     init: function() {
         var myStore = this.getStore('applicationForm');
         if (LinkExPortal.global.Vars.applicationID.present) {
@@ -25,9 +28,6 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
                         myViewModel.set('currentRecord', newRecords[0]);
                     }
                 }
-            }
-            else {
-                alert('No course session id - redirect to the search page at this point...')
             }
         }
     },
@@ -56,7 +56,9 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
                 }
             }
             else {
-                alert('Could not find the specified applicationid - redirect to the search page at this point...');
+                alert('Could not find the specified applicationid - strip out the duff applicationID from querystring and treat application as a new one...');
+                LinkExPortal.global.Vars.applicationID = { value: -1, present: false};
+
             }
         }
     },

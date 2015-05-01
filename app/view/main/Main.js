@@ -3,7 +3,10 @@ Ext.define('LinkExPortal.view.main.Main', {
     requires: [
         'LinkExPortal.view.main.MainController',
         'LinkExPortal.view.main.MainModel',
-        'LinkExPortal.view.applicationForm.ApplicationForm'
+        'LinkExPortal.view.applicationForm.ApplicationForm',
+        'LinkExPortal.view.commissionedCourses.CommissionedCourses',
+        'LinkExPortal.view.searchCourses.SearchCourses',
+        'LinkExPortal.view.fromTrust.FromTrust'
     ],
     xtype: 'app-main',
     controller: 'main',
@@ -42,12 +45,47 @@ Ext.define('LinkExPortal.view.main.Main', {
                     bind: { hidden: '{!showApplicationForm}' }
                 },{
                     xtype: 'label',
-                    text: 'Oops - you have arrived here by mistake.',
-                    bind: { hidden: '{!showOopsScreen}' }
-                },{
-                    xtype: 'label',
                     text: 'Thank you!  Your application has been accepted, and is now under consideration.',
                     bind: { hidden: '{!applicationFormSubmitted}' }
+                }, {
+                    xtype: 'tabpanel',
+                    items: [{
+                        title: 'Select Information',
+                        defaults: {
+                            // applied to each contained panel
+                            bodyStyle: 'padding:15px',
+                            autoScroll: true
+                        },
+                        items: [
+                            {
+                                title: 'Page 1',
+                                items: [{
+                                    xtype: 'fromtrust',
+                                    listeners: {
+                                        select: 'onTrustSelected',
+                                        change: 'onTrustSelected'
+                                    },
+                                    bind: { hidden: '{!showTrustScreen}' }
+                                },
+                                {
+                                    xtype: 'commissionedcourses',
+                                    listeners: {
+                                        click: 'onTrustSelected'
+                                    },
+                                    bind: { hidden: '{!showCommissionedCoursesScreen}'}
+                                }]
+                            }
+                        ]},
+                        {
+                            title: 'Search for courses',
+                            bind: { hidden: '{!showSearchScreen}' },
+                            items: [
+                                {
+                                    xtype: 'searchcourses'
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }

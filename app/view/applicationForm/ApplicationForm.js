@@ -3,7 +3,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
     requires: [
         'LinkExPortal.view.applicationForm.ApplicationFormController',
         'LinkExPortal.view.applicationForm.ApplicationFormModel',
-        'LinkExPortal.view.qualifications.Qualifications',
+        'LinkExPortal.view.qualificationsGrid.QualificationsGrid',
         'LinkExPortal.view.experience.Experience',
         'LinkExPortal.view.references.References'
     ],
@@ -12,7 +12,9 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
     viewModel: {
         type: "applicationform-applicationform"
     },
-    title: 'Application for course',
+    bind: {
+        title: 'Application for course {courseID}'
+    },
     defaults: {
         // applied to each contained panel
         bodyStyle: 'padding:15px',
@@ -559,7 +561,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         title: 'Qualifications',
         items: [
             {
-                xtype: 'qualifications'
+                xtype: 'qualificationsgrid'
             }
         ],
             bbar: {
