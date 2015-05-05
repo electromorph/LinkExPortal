@@ -45,10 +45,13 @@ Ext.define('LinkExPortal.view.main.Main', {
                     bind: { hidden: '{!showApplicationForm}' }
                 },{
                     xtype: 'label',
-                    text: 'Thank you!  Your application has been accepted, and is now under consideration.',
+                    text: 'Thank you!  Your application has been successfully registered, and is now under consideration.',
                     bind: { hidden: '{!applicationFormSubmitted}' }
                 }, {
                     xtype: 'tabpanel',
+                    bind: {
+                        hidden: '{showApplicationForm}'
+                    },
                     items: [{
                         title: 'Select Information',
                         defaults: {
@@ -56,9 +59,8 @@ Ext.define('LinkExPortal.view.main.Main', {
                             bodyStyle: 'padding:15px',
                             autoScroll: true
                         },
-                        items: [
-                            {
-                                title: 'Page 1',
+                        items: [{
+                                title: 'Select Trust',
                                 items: [{
                                     xtype: 'fromtrust',
                                     listeners: {
@@ -78,7 +80,9 @@ Ext.define('LinkExPortal.view.main.Main', {
                         ]},
                         {
                             title: 'Search for courses',
-                            bind: { hidden: '{!showSearchScreen}' },
+                            bind: {
+                                hidden: '{!showSearchScreen}'
+                            },
                             items: [
                                 {
                                     xtype: 'searchcourses'

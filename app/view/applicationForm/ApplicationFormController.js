@@ -12,14 +12,19 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
         }
         myStore.on({ write: { fn: this.storeWrite, scope:  this } });
         this.on({ gotRecord: { fn: this.onGotRecord, scope: this } });
-        if (!LinkExPortal.global.Vars.applicationID.present) {
-            if (LinkExPortal.global.Vars.courseSessionID.present) {
+        this.createNewRecordIfRequired();
+    },
+    createNewRecordIfRequired: function() {
+        //Checks if an application id was supplied. If it was, then no need for a new record.
+        //Then checks if a courseid is present - if so, then create the application form - if not, don't.
+        //Create form record and add it to the store, then set it as the ViewModel's currentRecord.
+        if (!LinkExPortal.global.Vars.applicationRecordExists) {
+            var myStore = this.getStore('applicationForm');
+            if (LinkExPortal.global.Vars.courseID.present) {
+                var newRecord = LinkExPortal.model.CPDHealthApplicationForm.create();
+                LinkExPortal.global.Vars.applicationRecordExists = true;
                 //Create new record in temp table.
-                myStore.add({
-                    Firstname: 'New',
-                    Lastname: 'Record',
-                    Email: 'new@record.com'
-                });
+                myStore.add(newRecord);
                 var newRecords = myStore.getNewRecords();
                 if (newRecords.length > 0) {
                     var myViewModel = this.getViewModel();
@@ -27,11 +32,11 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
                         newRecords[0].phantom = true;
                         myViewModel.set('currentRecord', newRecords[0]);
                     }
+                    var email = Ext.getCmp('fldEmail').getValue();
                 }
             }
         }
     },
-
     //This is called from the store on load completion. It executes in a Store context, which is useless.
     //So we just use it to fire a new event that gets picked up by in controller context.
     finishedLoading: function(me, myViewModel, successful) {
@@ -49,30 +54,47 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
         if (myStore) {
             var myRecord = myStore.findRecord('CPDHealthApplicationFormTempID', LinkExPortal.global.Vars.applicationID.value);
             if (myRecord) {
-                //var myData = myRecord.getData(true);
                 var myViewModel = this.getViewModel();
                 if (myViewModel) {
                     myViewModel.set('currentRecord', myRecord);
+                    LinkExPortal.global.Vars.applicationRecordExists = true;
                 }
             }
             else {
                 alert('Could not find the specified applicationid - strip out the duff applicationID from querystring and treat application as a new one...');
                 LinkExPortal.global.Vars.applicationID = { value: -1, present: false};
-
             }
         }
     },
+    onClickInfo: function() {
+        alert('hey we arrived');
+    },
+    onActivateCourseSessionCard: function() {
+        var myStore = this.getStore('courseSessionList');
+        myStore.clearFilter(false);
+        myStore.addFilter({
+            property: 'CourseID',
+            value   : LinkExPortal.global.Vars.courseID.value
+        });
+        myStore.setAutoLoad(true);
+    },
+    onSelectCourseSession: function(rowModel, record, index, eOpts) {
+        var myViewModel = this.getViewModel();
+        if (myViewModel) {
+            var rec = myViewModel.get('currentRecord');
+            rec.set('CourseSessionID', (record.get('CourseSessionID')).replace(/\D/g,''));
+        }
+    },
     saveCurrentRecord: function() {
+        this.createNewRecordIfRequired();
         var myViewModel = this.getViewModel();
         var myRecord = myViewModel.get('currentRecord');
-        //var myData = myRecord.getData();
         if (myRecord) {
             myRecord.save();
         }
         else {
-            alert('An error occurred whilst savind data');
+            alert('An error occurred whilst saving data');
         }
-        //myRecord.id = myRecord.CPDHealthApplicationFormTempID;
     },
 
     onSaveClicked: function() {
@@ -100,7 +122,6 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
         //var myRecord = myViewModel.get('currentRecord');
         //Create a new record in ApplicationForm and store the contents of the current record.
         var myStore = this.getStore('application');
-        //alert('DOB: ' + Ext.getCmp('fldDOB').getValue() + '  MembershipExpiry' + Ext.getCmp('fldMembershipExpiry').getValue());
         myStore.add({
             //Description: myRecord.Description,
             Firstname: Ext.getCmp('fldLastname').getValue(),
@@ -125,7 +146,7 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
             MobileNumber: Ext.getCmp('fldMobileNumber').getValue(),
             Telephone: Ext.getCmp('fldTelephone').getValue(),
             CountryOfBirthID: Ext.getCmp('fldCountryOfBirthID').getValue(),
-            fldCountryOfResidenceID: Ext.getCmp('fldCountryOfResidenceID').getValue(),
+            CountryOfResidenceID: Ext.getCmp('fldCountryOfResidenceID').getValue(),
             ProfessionalBodyID: Ext.getCmp('fldProfessionalBodyID').getValue(),
             MembershipNumber: Ext.getCmp('fldMembershipNumber').getValue(),
             MembershipExpiry: Ext.getCmp('fldMembershipExpiry').getValue(),
@@ -162,9 +183,12 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
         });
         myStore.save();
         var myStore2 = this.getStore('applicationForm');
-        var myRecord = myStore2.findRecord('CPDHealthApplicationFormTempID', LinkExPortal.global.Vars.applicationID.value);
-        myRecord.erase();
-        alert('Successfully dropped MyRecord');
+        if (LinkExPortal.global.Vars.applicationID.present)
+        {
+            var myRecord = myStore2.findRecord('CPDHealthApplicationFormTempID', LinkExPortal.global.Vars.applicationID.value);
+            myRecord.erase();
+            alert('Successfully dropped MyRecord');
+        }
         //myStore2.save();
         alert('Successfully saved store');
         applicationFormSubmitted = true;

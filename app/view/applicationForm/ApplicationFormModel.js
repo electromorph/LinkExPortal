@@ -52,6 +52,11 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormModel', {
             storeId: 'titleList',
             alias: 'titleList',
             autoLoad: true
+        },
+        courseSessionList: {
+            model: 'coursesession',
+            storeId: 'courseSessionList',
+            alias: 'courseSessionList'
         }
     },
     formulas: {

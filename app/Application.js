@@ -53,12 +53,13 @@ Ext.define('LinkExPortal.Application', {
             showTrustScreen: false,
             showCommissionedCoursesScreen: false,
             showHEIBox: false,
-            applicationFormSubmitted: false
+            applicationFormSubmitted: false,
+            applicationRecordExists: false
         });
         Ext.define('LinkExPortal.global.Utils', {
             singleton: true,
             calculateHideAndShow: function() {
-                LinkExPortal.global.Vars.showApplicationForm = LinkExPortal.global.Vars.applicationID.present || (LinkExPortal.global.Vars.courseID.present && LinkExPortal.global.Vars.trustID.present);
+                LinkExPortal.global.Vars.showApplicationForm = LinkExPortal.global.Vars.applicationID.present || (LinkExPortal.global.Vars.trustID.present && LinkExPortal.global.Vars.courseID.present);
                 LinkExPortal.global.Vars.showSearchScreen = !LinkExPortal.global.Vars.applicationID.present && LinkExPortal.global.Vars.trustID.present && !LinkExPortal.global.Vars.courseID.present;
                 LinkExPortal.global.Vars.showTrustScreen = !LinkExPortal.global.Vars.trustID.present;
                 LinkExPortal.global.Vars.showHEIBox = !LinkExPortal.global.Vars.HEIID.present;
@@ -79,9 +80,9 @@ Ext.define('LinkExPortal.Application', {
         var queryString = Ext.Object.fromQueryString(location.search);
         if (queryString != null)
         {
-            if ((queryString.coursecode != null) && (queryString.coursecode > 0))
+            if ((queryString.courseid != null) && (queryString.courseid > 0))
             {
-                LinkExPortal.global.Vars.courseID.value = queryString.courseID;
+                LinkExPortal.global.Vars.courseID.value = queryString.courseid;
                 LinkExPortal.global.Vars.courseID.present = true;
             }
             if ((queryString.heiid != null) && (queryString.heiid > 0))

@@ -20,6 +20,9 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         bodyStyle: 'padding:15px',
         autoScroll: true
     },
+    listeners: {
+        focus: 'onGotFocus'
+    },
     layout: {
         type: 'card', //'accordion',
         titleCollapse: false
@@ -121,23 +124,76 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 items: [
                     {
                         xtype: 'button',
+                        text: 'Back',
+                        listeners: {
+                            click: 'onBackClicked'
+                        }
+                    },{
+                        xtype: 'button',
                         text: 'Save and continue',
                         listeners: {
                             click: 'onSaveClicked'
                         }
-                    },
-                    {
+                    },{
                         xtype: 'button',
                         text: 'Submit',
                         formBind: true,
                         listeners: {
                             click: 'onSubmit'
                         }
+                    }
+                ]
+            }
+        },{
+            title: 'Select Course Session',
+            listeners: {
+                activate: 'onActivateCourseSessionCard'
+            },
+            items: [
+                {
+                    xtype: 'gridpanel',
+                    title: 'Course Sessions',
+                    bubbleEvents: [
+                        'select'
+                    ],
+                    listeners: {
+                        select: 'onSelectCourseSession'
                     },
+                    bind: {
+                        store: '{courseSessionList}',
+                        selection: '{selectedcoursesession}'
+                    },
+                    columns: [
+                        { text: 'ID',  dataIndex: 'CourseSessionID', flex: 1 },
+                        { text: 'Description',  dataIndex: 'SessionDescription', flex: 1 },
+                        { text: 'StartDate', dataIndex: 'StartDate' },
+                        { text: 'Status', dataIndex: 'Status' },
+                        { text: 'Places Remaining', dataIndex: 'PlacesRemaining'}
+                    ],
+                    height: 200,
+                    width: 500
+                }
+            ],
+            bbar: {
+                items: [
                     {
-                        xtype: 'textfield',
-                        bind: {
-                            value: '{currentRecord.id}'
+                        xtype: 'button',
+                        text: 'Back',
+                        listeners: {
+                            click: 'onBackClicked'
+                        }
+                    },{
+                        xtype: 'button',
+                        text: 'Save and continue',
+                        listeners: {
+                            click: 'onSaveClicked'
+                        }
+                    },{
+                        xtype: 'button',
+                        text: 'Submit',
+                        formBind: true,
+                        listeners: {
+                            click: 'onSubmit'
                         }
                     }
                 ]
@@ -176,6 +232,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     fieldLabel: 'Gender',
                     queryMode: 'local',
                     editable: false,
+                    forceSelection: true,
                     displayField: 'Description',
                     valueField: 'ListItemID',
                     name: 'Gender',
@@ -882,10 +939,10 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 }
             },
             {
-                xtype: 'label',
+                xtype: 'textfield',
                 id: 'fldAccountID',
                 bind: {
-                    text: '{currentRecord.AccountID}'
+                    value: '{currentRecord.AccountID}'
                 }
             }
         ],
@@ -896,13 +953,6 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         text: 'Back',
                         listeners: {
                             click: 'onBackClicked'
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Save',
-                        listeners: {
-                            click: 'onSaveClicked'
                         }
                     },
                     {

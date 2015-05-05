@@ -3,10 +3,19 @@ Ext.define('LinkExPortal.model.coursesession', {
     idProperty: 'CourseSessionID',
     fields: [
         { name: 'CourseSessionID', type: 'int' },
-        { name: 'Description', type: 'string' },
+        { name: 'SessionDescription', type: 'string' },
+        { name: 'CourseDescription', type: 'string'},
         { name: 'StartDate', type: 'date' },
         { name: 'Status', type: 'string' },
-        { name: 'CourseID', type: 'int' }
+        { name: 'CourseID', type: 'int' },
+        { name: 'Capacity', type: 'int' },
+        { name: 'PlacesTaken', type: 'int' },
+        { name: 'PlacesRemaining', type: 'int', persist:false,
+            convert:function(v, record){
+                var data = record.getData();
+                return (data.Capacity + data.PlacesTaken);
+            }
+        }
     ],
     schema: {
         id: 'coursesessions',
@@ -14,7 +23,7 @@ Ext.define('LinkExPortal.model.coursesession', {
         proxy: {
             type: 'rest',
             //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/genders',
-            url: 'http://localhost:26214/application/Refs/CourseSessions',
+            url: 'http://localhost:26214/api/CourseSessions',
             reader: {
                 type: 'json',
                 rootProperty: 'data'
