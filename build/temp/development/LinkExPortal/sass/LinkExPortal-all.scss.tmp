@@ -918,6 +918,7 @@ $include-linkexportal-model-countrylist: true;
 $include-linkexportal-model-coursetype: true;
 $include-linkexportal-model-ethnicitieslist: true;
 $include-linkexportal-model-ftptlist: true;
+$include-linkexportal-model-filterlist: true;
 $include-linkexportal-model-genderslist: true;
 $include-linkexportal-model-professionalbodieslist: true;
 $include-linkexportal-model-studentexperience: true;

@@ -124,12 +124,6 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 items: [
                     {
                         xtype: 'button',
-                        text: 'Back',
-                        listeners: {
-                            click: 'onBackClicked'
-                        }
-                    },{
-                        xtype: 'button',
                         text: 'Save and continue',
                         listeners: {
                             click: 'onSaveClicked'
@@ -305,8 +299,8 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     fieldLabel: 'Membership Number',
                     allowBlank: true,
                     bind: {
-                        value: '{MembershipNumber}'/*,
-                        hidden: '{currentRecord.ProfessionalBodyID} <= 0'*/
+                        value: '{currentRecord.MembershipNumber}',
+                        hidden: '{!currentRecord.ProfessionalBodyID}'
                     }
                 },
                 {
@@ -316,10 +310,10 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     fieldLabel: 'Expiry Date',
                     name: 'MembershipExpiry',
                     format: 'd/m/Y',
-                    minValue: new Date(),  //Today or earlier.
+                    minValue: new Date(),  //Today or later.
                     bind: {
-                        value: '{MembershipExpiry}'/*,
-                        hidden: '{currentRecord.ProfessionalBodyID} > 0'*/
+                        value: '{currentRecord.MembershipExpiry}',
+                        hidden: '{!currentRecord.ProfessionalBodyID}'
                     }
                 }
             ],
@@ -417,31 +411,31 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 }
             }
         ],
-            bbar: {
-                items: [
-                    {
-                        xtype: 'button',
-                        text: 'Back',
-                        listeners: {
-                            click: 'onBackClicked'
-                        }
-                    },{
-                        xtype: 'button',
-                        text: 'Save and continue',
-                        listeners: {
-                            click: 'onSaveClicked'
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Submit',
-                        formBind: true,
-                        listeners: {
-                            click: 'onSubmit'
-                        }
+        bbar: {
+            items: [
+                {
+                    xtype: 'button',
+                    text: 'Back',
+                    listeners: {
+                        click: 'onBackClicked'
                     }
-                ]
-            }
+                },{
+                    xtype: 'button',
+                    text: 'Save and continue',
+                    listeners: {
+                        click: 'onSaveClicked'
+                    }
+                },
+                {
+                    xtype: 'button',
+                    text: 'Submit',
+                    formBind: true,
+                    listeners: {
+                        click: 'onSubmit'
+                    }
+                }
+            ]
+        }
     },
     {
         title: 'Work details',
@@ -558,10 +552,10 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 id: 'fldCountryOfResidenceID',
                 fieldLabel: 'Country Of Residence',
                 queryMode: 'local',
+                forceSelection: true,
                 displayField: 'Description',
                 valueField: 'ListItemID',
-                forceSelection: true,
-                name: 'WorkCountry',
+                name: 'CountryOfResidence',
                 bind: {
                     store: '{countryList}',
                     value: '{currentRecord.CountryOfResidenceID}'

@@ -1,9 +1,6 @@
 Ext.define('LinkExPortal.view.applicationForm.ApplicationFormModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.applicationform-applicationform',
-    data: {
-        name: 'LinkExPortal'
-    },
     stores: {
         application: {
             model: 'CPDHealthApplication',
@@ -56,7 +53,8 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormModel', {
         courseSessionList: {
             model: 'coursesession',
             storeId: 'courseSessionList',
-            alias: 'courseSessionList'
+            alias: 'courseSessionList',
+            autoLoad: true
         }
     },
     formulas: {
@@ -67,6 +65,11 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormModel', {
             },
             get: function(session) { return session },
             set: function(session) { session = this.set('recordOfID', session) }
-        }
+        },
+        // We'll explain formulas in more detail soon.
+        professionalBodySelected: function (get) {
+            var fn = get('ProfessionalBodyID');
+            return (fn >0);
+            }
     }
 });

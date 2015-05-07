@@ -4,12 +4,15 @@ Ext.define('LinkExPortal.model.course', {
     fields: [
         { name: 'CourseID', type: 'int' },
         { name: 'CourseCode', type: 'string' },
-        { name: 'Description', type: 'string' },
-        { name: 'AcademicYear', type: 'int' },
-        { name: 'CourseTypeID', type: 'int' },
+        { name: 'CourseName', type: 'string' },
+        { name: 'AcademicYearID', type: 'int' },
+        { name: 'AcademicYear', type: 'string' },
+        { name: 'CourseTypeID', type: 'string' },
         { name: 'Fee', type: 'float' },
         { name: 'Credit', type: 'int' },
-        { name: 'HEIID', type: 'int' }
+        { name: 'HEIID', type: 'int' },
+        { name: 'CourseTypeName', type: 'string' },
+        { name: 'HEIName', type: 'string' }
     ],
     schema: {
         id: 'courses',

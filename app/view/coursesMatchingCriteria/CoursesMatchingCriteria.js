@@ -10,30 +10,33 @@ Ext.define("LinkExPortal.view.coursesMatchingCriteria.CoursesMatchingCriteria",{
         type: "coursesmatchingcriteria-coursesmatchingcriteria"
     },
     bind: {
-        store: '{commissionedcourses}'/*,
-         selection: '{selectedApplicationView}'*/
+        store: '{allCourses}'
     },
     height: 250,
-    width: 600,
+    width: 800,
     scrollable: true,
-    columns: [
-        {
+    bubbleEvents: ['rowclick'],
+    listeners : {
+        rowclick: function(grid, rec, tr, rowIndex, e, eOpts) {
+                LinkExPortal.global.Vars.courseID = { value: rec.get('CourseID'), present: true};
+        }
+    },
+    columns: [{
             text     : 'Course Code',
             flex     : 1,
             sortable : true,
             dataIndex: 'CourseCode'
         },{
-            text     : 'Course',
-            flex     : 1,
+            text     : 'Description',
+            flex     : 2,
             sortable : true,
             dataIndex: 'CourseName'
         },{
             text     : 'Academic Year',
             flex     : 1,
             sortable : true,
-            dataIndex: 'AcademicYearName'
-        },
-        {
+            dataIndex: 'AcademicYear'
+        },{
             text     : 'Institution',
             flex     : 1,
             sortable : true,

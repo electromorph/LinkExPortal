@@ -400,6 +400,18 @@
         "modelNamespace": "LinkExPortal.model",
         "name": "CPDHealthApplication"
       }
+    },
+    "app/model/FilterList.js": {
+      "source": "{modelFileName}.js.tpl.merge",
+      "version": "31d5356142a167c72422f7902f19df3c583f3249",
+      "parameters": {
+        "appName": "LinkExPortal",
+        "baseClass": "Ext.data.Model",
+        "fields": "field:auto:null,value:auto:null",
+        "modelFileName": "FilterList",
+        "modelNamespace": "LinkExPortal.model",
+        "name": "FilterList"
+      }
     }
   }
 }

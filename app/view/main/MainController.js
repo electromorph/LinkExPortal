@@ -20,7 +20,7 @@ Ext.define('LinkExPortal.view.main.MainController', {
     init: function() {
         this.copyGlobalsToViewModel();
     },
-    onTrustSelected: function() {
+    onCourseSelected: function() {
         this.copyGlobalsToViewModel();
     }
 });

@@ -22,7 +22,8 @@ Ext.define('LinkExPortal.Application', {
         'CourseType',
         'FTPTList',
         'hei',
-        'sponsor'
+        'sponsor',
+        'FilterList'
     ],
     launch: function () {
         Ext.define('LinkExPortal.global.Vars', {
@@ -54,7 +55,12 @@ Ext.define('LinkExPortal.Application', {
             showCommissionedCoursesScreen: false,
             showHEIBox: false,
             applicationFormSubmitted: false,
-            applicationRecordExists: false
+            applicationRecordExists: false,
+            searchFilters: new Ext.util.Collection({
+                extraKeys: {
+                    byName: 'name' // based on "name" property of each item
+                }
+            })
         });
         Ext.define('LinkExPortal.global.Utils', {
             singleton: true,
@@ -75,6 +81,22 @@ Ext.define('LinkExPortal.Application', {
                 this.getViewModel().set('showTrustScreen', LinkExPortal.global.Vars.showTrustScreen);
                 this.getViewModel().set('showHEIBox', LinkExPortal.global.Vars.showHEIBox);
                 this.getViewModel().set('applicationFormSubmitted', LinkExPortal.global.Vars.applicationFormSubmitted);
+            },
+            getCourseIdFromCourseSession: function(courseSessionId) {
+                Ext.Ajax.request({ url: 'http://localhost:26214/application/Refs/getCourseFromCourseSession/' + courseSessionId,
+                    method: 'GET',
+                    success: function(responseObject){
+                        var obj = Ext.decode(responseObject.responseText);
+                        if (obj) {
+                            LinkExPortal.global.Vars.courseID = { present: true, value: courseID};
+                            return obj.CourseID;
+                        }
+                    },
+                    failure: function(responseObject){
+                        var obj = Ext.decode(responseObject.responseText);
+                        Ext.Msg.alert('Status', 'Could not retrieve course information.');
+                    }
+                });
             }
         });
         var queryString = Ext.Object.fromQueryString(location.search);

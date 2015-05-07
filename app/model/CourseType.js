@@ -2,7 +2,7 @@ Ext.define('LinkExPortal.model.CourseType', {
     extend: 'Ext.data.Model',
     
     fields: [
-        { name: 'CourseTypeID', type: 'int' },
+        { name: 'CourseTypeID', type: 'string' },
         { name: 'Description', type: 'string' }
 
     ],

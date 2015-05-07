@@ -6,19 +6,25 @@ Ext.define("LinkExPortal.view.searchCourses.SearchCourses",{
     ],
     alias: 'widget.searchcourses',
     controller: "searchcourses-searchcourses",
+
     viewModel: {
         type: "searchcourses-searchcourses"
     },
+    bubbleEvents: ['rowclick'],
     items: [
         {
             xtype: 'combobox',
             id: 'searchType',
             fieldLabel: 'Type',
             queryMode: 'local',
+            editable: false,
             forceSelection: true,
             displayField: 'Description',
             valueField: 'CourseTypeID',
             name: 'searchType',
+            listeners: {
+                select: 'onSearch'
+            },
             bind: {
                 store: '{courseTypeList}',
                 value: '{currentRecord.CourseTypeID}'
@@ -28,23 +34,31 @@ Ext.define("LinkExPortal.view.searchCourses.SearchCourses",{
             id: 'searchAcademicYear',
             fieldLabel: 'Academic Year',
             queryMode: 'local',
+            editable: false,
             forceSelection: true,
             displayField: 'Description',
-            valueField: 'listitemid',
+            valueField: 'ListItemid',
             name: 'academicyear',
+            listeners: {
+                select: 'onSearch'
+            },
             bind: {
                 store: '{academicYearsList}',
-                value: '{currentRecord.academicyearid}'
+                value: '{currentRecord.AcademicYearID}'
             }
         },{
             xtype: 'combobox',
             id: 'searchInstitution',
             fieldLabel: 'Institution',
             queryMode: 'local',
+            editable: false,
             forceSelection: true,
             displayField: 'Name',
             valueField: 'HEIID',
             name: 'institution',
+            listeners: {
+                select: 'onSearch'
+            },
             bind: {
                 store: '{HEIList}',
                 value: '{currentRecord.HEIID}',
@@ -55,6 +69,7 @@ Ext.define("LinkExPortal.view.searchCourses.SearchCourses",{
             id: 'searchFTPT',
             fieldLabel: 'FT/PT',
             queryMode: 'local',
+            editable: false,
             forceSelection: true,
             displayField: 'Description',
             valueField: 'ListItemID',
@@ -66,11 +81,13 @@ Ext.define("LinkExPortal.view.searchCourses.SearchCourses",{
         },{
             xtype: 'textfield',
             fieldLabel: 'keywords',
-            id: 'searchKeywords'
-        },
-        {
-            xtype: 'button',
-            text: 'Search'
+            id: 'searchKeywords',
+            bind: {
+                value: '{currentRecord.keywords}'
+            }
+        },{
+            xtype: 'coursesmatchingcriteria',
+            bubbleEvents: ['rowclick']
         }
     ]
 });
