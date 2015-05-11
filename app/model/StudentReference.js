@@ -1,6 +1,6 @@
 Ext.define('LinkExPortal.model.StudentReference', {
     extend: 'Ext.data.Model',
-    
+    idProperty: 'StudentReferenceID',
     fields: [
         { name: 'StudentReferenceID', type: 'int' },
         { name: 'Firstname', type: 'string' },
@@ -14,7 +14,6 @@ Ext.define('LinkExPortal.model.StudentReference', {
         { name: 'Email', type: 'string' },
         { name: 'TitleID', type: 'int' },
         { name: 'CPDHealthApplicationFormID', type: 'int' }
-
     ],
     schema: {
         id: 'studentreference',
@@ -22,10 +21,14 @@ Ext.define('LinkExPortal.model.StudentReference', {
         proxy: {
             type: 'rest',
             //url: 'http://linkexwebapi.azurewebsites.net/api/Courses',
-            url: 'http://localhost:26214/api/Courses',
+            url: 'http://localhost:26214/api/studentreferences',
             reader: {
                 type: 'json',
                 rootProperty: 'data'
+            },
+            writer: {
+                type: 'json',
+                writeAllFields: true
             },
             noCache: false
         }

@@ -11,13 +11,27 @@ Ext.define("LinkExPortal.view.qualificationsGrid.QualificationsGrid", {
     },
     plugins: [
         Ext.create('Ext.grid.plugin.RowEditing', {
-            clicksToEdit: 1
+            clicksToEdit: 1,
+            autoCancel: false
         })
     ],
     bind: {
         store: '{studentQualifications}'
     },
+    selModel: 'rowmodel',
+        listeners: {
+        /*'selectionchange': function(view, records) {
+            grid.down('#removeEmployee').setDisabled(!records.length);
+        }*/
+    },
     columns: [{
+        text     : 'StudentQualificationID',
+        dataIndex: 'StudentQualificationID',
+        hidden: true,
+        editor: {
+            xtype: 'textfield'
+        }
+    },{
         text     : 'Name',
         flex     : 1,
         sortable : true,
@@ -35,74 +49,84 @@ Ext.define("LinkExPortal.view.qualificationsGrid.QualificationsGrid", {
             xtype: 'textfield'
         }
     }, {
-        xtype: 'datecolumn',
-        header: 'Start Date',
-        dataIndex: 'Date',
-        width: 135,
+        text     : 'Institution',
+        flex     : 1,
+        sortable : true,
+        dataIndex: 'Institution',
         editor: {
-            xtype: 'datefield',
-            allowBlank: false,
+            xtype: 'textfield'
+        }
+    }, {
+        xtype: 'datecolumn',
+        header: 'Date From',
+        dataIndex: 'DateFrom',
+        width: 135,
+        dateformat: 'd/m/Y',//renderer:Ext.util.Format.dateRenderer('m-d-Y'),
+        editor: {
+            xtype: 'textfield',
+            anchor: '100%',
             format: 'd/m/Y'
         }
     }, {
         xtype: 'datecolumn',
-        header: 'Start Date',
-        dataIndex: 'start',
+        header: 'Date To',
+        dataIndex: 'DateTo',
+        dateformat: 'd/m/Y',
         width: 135,
         editor: {
-            xtype: 'datefield',
-            allowBlank: false,
+            xtype: 'textfield',
+            anchor: '100%',
             format: 'd/m/Y'
         }
-    },{
-        text     : 'CPDHealthApplicationFormID',
-        width    : 90,
-        sortable : true,
-        dataIndex: 'CPDHealthApplicationFormID'
-    },{
-        text     : 'StudentQualificationID',
-        width    : 90,
-        sortable : true,
-        dataIndex: 'StudentQualificationID'
+    }, {
+        xtype:'actioncolumn',
+        width:50,
+        bubbleEvents: [ 'click' ],
+        items: [{
+            icon: 'app/images/cross.gif',  // Use a URL in the icon config
+            tooltip: 'View details',
+            handler: function(grid, rowIndex, colIndex) {
+                var rec = grid.getStore().getAt(rowIndex);
+                alert("Edit " + rec.get('CourseName'));
+            }
+        }]
     }],
     tbar: [{
         text: 'Add Qualification',
         iconCls: 'employee-add',
         handler : function() {
-            //rowEditing.cancelEdit();
-            // Create a model instance
-            //var r = Ext.create('StudentQualification', {
-            //    Name: 'New Qual',
-            //    Comments: 'new@sencha-test.com'
-            //});
-            //store.insert(0, r);
-            //rowEditing.startEdit(0, 0);
             var myStore = this.up().up().getStore();
-            if (myStore) {
-                myStore.add({
-                    Name: 'New Qualification',
-                    Comments: 'No comments'
-                });
-            }
+            var rec = Ext.create('LinkExPortal.model.StudentQualification', {
+                    Name: '',
+                    Comments: '',
+                    DateFrom: new Date(),
+                    DateTo: new Date(),
+                    Institution: '',
+                    CPDHealthApplicationFormID: LinkExPortal.global.Vars.applicationID.value});
+            rec.save({
+                failure: function(record, operation) {
+                    // do something if the save failed
+                },
+                success: function(record, operation) {
+                    myStore.load();
+                },
+                callback: function(record, operation, success) {
+                    // do something whether the save succeeded or failed
+                }
+            });
         }
     },{
         itemId: 'removeQualification',
         text: 'Remove Qualification',
         iconCls: 'employee-remove',
-        /*handler: function() {
-            var sm = grid.getSelectionModel();
-            rowEditing.cancelEdit();
-            store.remove(sm.getSelection());
-            if (store.getCount() > 0) {
-                sm.select(0);
-            }
-        },*/
+        handler: function(grid) {
+            //var sm = grid.getSelectionModel();
+            //rowEditing.cancelEdit();
+            //store.remove(sm.getSelection());
+            //if (store.getCount() > 0) {
+            //    sm.select(0);
+            //}
+        },
         disabled: true
-    }]//,
-    //plugins: [rowEditing],
-    //listeners: {
-    //    'selectionchange': function(view, records) {
-    //        grid.down('#removeEmployee').setDisabled(!records.length);
-    //    }
-    //}
+    }]
 });

@@ -13,6 +13,21 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
         myStore.on({ write: { fn: this.storeWrite, scope:  this } });
         this.on({ gotRecord: { fn: this.onGotRecord, scope: this } });
         this.createNewRecordIfRequired();
+        var applicationStore = Ext.StoreManager.lookup('allCourses');
+        applicationStore.on({ load: { fn: this.getCourseNameFromCourseID, scope: this, single: true } })
+    },
+    getCourseNameFromCourseID: function(store) {
+        //Populate name if an ID exists but no name.
+        if (LinkExPortal.global.Vars.courseID.present && LinkExPortal.global.Vars.courseID.name == '') {
+            if (store) {
+                var myRecord = store.findRecord('CourseID', LinkExPortal.global.Vars.courseID.value);
+                if (myRecord) {
+                    var data = myRecord.getData();
+                    LinkExPortal.global.Vars.courseID.name = data.CourseName;
+                    this.getViewModel().set('CourseName', LinkExPortal.global.Vars.courseID.name);
+                }
+            }
+        }
     },
     createNewRecordIfRequired: function() {
         //Checks if an application id was supplied. If it was, then no need for a new record.
@@ -66,12 +81,39 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
             }
         }
     },
-    onClickInfo: function() {
-        alert('hey we arrived');
+    onActivateQualificationsCard: function() {
+        var qualificationsStore = this.getStore('studentQualifications');
+        qualificationsStore.clearFilter(false);
+        if (qualificationsStore) {
+            qualificationsStore.addFilter({
+                property: 'CPDHealthApplicationFormID',
+                value: LinkExPortal.global.Vars.applicationID.value
+            });
+        }
+    },
+    onActivateExperienceCard: function() {
+        var experienceStore = this.getStore('studentExperience');
+        experienceStore.clearFilter(false);
+        if (experienceStore) {
+            experienceStore.addFilter({
+                property: 'CPDHealthApplicationFormID',
+                value: LinkExPortal.global.Vars.applicationID.value
+            });
+        }
+    },
+    onActivateReferencesCard: function() {
+        var referencesStore = this.getStore('studentReferences');
+        referencesStore.clearFilter(false);
+        if (referencesStore) {
+            referencesStore.addFilter({
+                property: 'CPDHealthApplicationFormID',
+                value: LinkExPortal.global.Vars.applicationID.value
+            });
+        }
     },
     onActivateCourseSessionCard: function() {
         var myViewModel = this.getViewModel();
-        var currRecord, courseSessionId, data;
+        var currRecord, courseSessionId, courseID, data;
         if (myViewModel) {
             currRecord = myViewModel.get('currentRecord');
         }
@@ -81,28 +123,11 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
                 courseSessionId = data.CourseSessionID;
             }
         }
-        var myStore = this.getStore('courseSessionList');
-        if (LinkExPortal.global.Vars.courseID.present == false) {
-            Ext.Ajax.request({ url: 'http://localhost:26214/application/Refs/getCourseFromCourseSession/' + courseSessionId,
-                method: 'GET',
-                success: function(responseObject){
-                    var obj = Ext.decode(responseObject.responseText);
-                    if (obj) {
-                        if (obj.CourseID > 0) {
-                            LinkExPortal.global.Vars.courseID = { present: true, value: obj.CourseID};
-                        }
-                    }
-                    myStore.clearFilter(false);
-                    myStore.addFilter({
-                        property: 'CourseID',
-                        value   : LinkExPortal.global.Vars.courseID.value
-                    });
-                    myStore.setAutoLoad(true);
-                },
-                failure: function(responseObject){
-                    var obj = Ext.decode(responseObject.responseText);
-                    Ext.Msg.alert('Status', 'Could not retrieve course information.');
-                }
+        var sessionListStore = this.getStore('courseSessionList');
+        if (sessionListStore) {
+            sessionListStore.addFilter({
+                property: 'CourseID',
+                value: LinkExPortal.global.Vars.courseID.value
             });
         }
     },
@@ -126,7 +151,6 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
             alert('An error occurred whilst saving data');
         }
     },
-
     onSaveClicked: function() {
         this.saveCurrentRecord();
         var appForm = this.getView();
@@ -134,7 +158,6 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
         ++active;
         layout.setActiveItem(active);
     },
-
     onBackClicked: function() {
         this.saveCurrentRecord();
         var appForm = this.getView();
@@ -142,7 +165,22 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
         --active;
         layout.setActiveItem(active);
     },
-
+    onSaveQualificationsClicked: function() {
+        var qualificationsStore = this.getStore('studentQualifications');
+        qualificationsStore.commitChanges();
+        var appForm = this.getView();
+        var layout = appForm.getLayout();
+        ++active;
+        layout.setActiveItem(active);
+    },
+    onBackQualificationsClicked: function() {
+        var qualificationsStore = this.getStore('studentQualifications');
+        qualificationsStore.commitChanges();
+        var appForm = this.getView();
+        var layout = appForm.getLayout();
+        --active;
+        layout.setActiveItem(active);
+    },
     onSubmit: function() {
         //Save current record
         this.saveCurrentRecord();
@@ -154,12 +192,13 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
                 if (obj.SubmittedApplicationId == -1) {
                     Ext.Msg.alert('Status', 'Your application could not be submitted because ' + obj.Information + '.');
                 } else {
-                    applicationFormSubmitted = true;
+                    LinkExPortal.global.Vars.applicationFormSubmitted = true;
+                    location.href = "/LinkExPortal/ApplicationSubmitted.html";
                 }
             },
             failure: function(responseObject){
                 var obj = Ext.decode(responseObject.responseText);
-                Ext.Msg.alert('Status', '');
+                Ext.Msg.alert('Status', obj);
             }
         });
     }

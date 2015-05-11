@@ -37,24 +37,6 @@ Ext.define('LinkExPortal.view.searchCourses.SearchCoursesModel', {
                     store.insert(0,rec);
                 }
             }
-        },
-        FTPTList: {
-            model: 'FTPTList',
-            storeId: 'FTPTList',
-            alias: 'FTPTList',
-            autoLoad: true,
-            listeners: {
-                load: function(store){
-                    var rec = { Description: 'Any', FTPTID: '-1' };
-                    store.insert(0,rec);
-                }
-            }
-        },
-        allCourses: {
-            model: 'course',
-            storeId: 'allCourses',
-            alias: 'allCourses',
-            autoLoad: true
         }
     }
 });

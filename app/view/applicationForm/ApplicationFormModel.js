@@ -55,6 +55,27 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormModel', {
             storeId: 'courseSessionList',
             alias: 'courseSessionList',
             autoLoad: true
+        },
+        studentQualifications: {
+            model: 'StudentQualification',
+            storeId: 'studentQualifications',
+            alias: 'studentQualifications',
+            autoSync: true,
+            autoLoad: true
+        },
+        studentExperience: {
+            model: 'StudentExperience',
+            storeId: 'studentExperience',
+            alias: 'studentExperience',
+            autoSync: true,
+            autoLoad: true
+        },
+        studentReferences: {
+            model: 'StudentReference',
+            storeId: 'studentReferences',
+            alias: 'studentReferences',
+            autoSync: true,
+            autoLoad: true
         }
     },
     formulas: {

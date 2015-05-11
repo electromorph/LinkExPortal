@@ -1,7 +1,4 @@
 Ext.define('LinkExPortal.view.commissionedCourses.CommissionedCoursesModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.commissionedcourses-commissionedcourses',
-    data: {
-        name: 'LinkExSearchCourse'
-    }
+    alias: 'viewmodel.commissionedcourses-commissionedcourses'
 });

@@ -18,9 +18,7 @@ Ext.define('LinkExPortal.view.main.MainController', {
         this.getViewModel().set('applicationFormSubmitted', LinkExPortal.global.Vars.applicationFormSubmitted);
     },
     init: function() {
-        this.copyGlobalsToViewModel();
-    },
-    onCourseSelected: function() {
+        //Populate name if an ID exists but no name.
         this.copyGlobalsToViewModel();
     }
 });

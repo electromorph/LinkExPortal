@@ -18,7 +18,7 @@ Ext.define("LinkExPortal.view.coursesMatchingCriteria.CoursesMatchingCriteria",{
     bubbleEvents: ['rowclick'],
     listeners : {
         rowclick: function(grid, rec, tr, rowIndex, e, eOpts) {
-                LinkExPortal.global.Vars.courseID = { value: rec.get('CourseID'), present: true};
+            LinkExPortal.global.Vars.courseID = { value: rec.get('CourseID'), present: true, name: rec.get('CourseName')};
         }
     },
     columns: [{

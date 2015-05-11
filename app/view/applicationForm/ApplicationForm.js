@@ -4,8 +4,8 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         'LinkExPortal.view.applicationForm.ApplicationFormController',
         'LinkExPortal.view.applicationForm.ApplicationFormModel',
         'LinkExPortal.view.qualificationsGrid.QualificationsGrid',
-        'LinkExPortal.view.experience.Experience',
-        'LinkExPortal.view.references.References'
+        'LinkExPortal.view.experienceGrid.ExperienceGrid',
+        'LinkExPortal.view.referencesGrid.ReferencesGrid'
     ],
     alias: 'widget.applicationForm',
     controller: "applicationform-applicationform",
@@ -13,7 +13,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         type: "applicationform-applicationform"
     },
     bind: {
-        title: 'Application for course {courseID}'
+        title: 'You are applying for the following course: {CourseName}'
     },
     defaults: {
         // applied to each contained panel
@@ -32,11 +32,13 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         {
             title: 'Personal Details',
             items: [
+
                 {
                     xtype: 'combobox',
                     id: 'fldTitleID',
                     fieldLabel: 'Title',
                     queryMode: 'local',
+                    flex: 1,
                     forceSelection: true,
                     displayField: 'Description',
                     valueField: 'ListItemID',
@@ -48,22 +50,24 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 },
                 {
                     xtype: 'textfield',
+                    id: 'fldFirstname',
+                    name: 'Forename',
+                    flex: 2,
+                    fieldLabel: 'Forename(s)',
+                    allowBlank: false,
+                    bind: {
+                        value: '{currentRecord.Firstname}'
+                    }
+                },
+                {
+                    xtype: 'textfield',
                     id: 'fldLastname',
+                    flex: 2,
                     name: 'Surname',
                     fieldLabel: 'Surname',
                     allowBlank: false,
                     bind: {
                         value: '{currentRecord.Lastname}'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    id: 'fldFirstname',
-                    name: 'Forename',
-                    fieldLabel: 'Forename(s)',
-                    allowBlank: false,
-                    bind: {
-                        value: '{currentRecord.Firstname}'
                     }
                 },
                 {
@@ -140,6 +144,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             }
         },{
             title: 'Select Course Session',
+            autoScroll: true,
             listeners: {
                 activate: 'onActivateCourseSessionCard'
             },
@@ -147,6 +152,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 {
                     xtype: 'gridpanel',
                     title: 'Course Sessions',
+                    scrollable: true,
                     bubbleEvents: [
                         'select'
                     ],
@@ -158,14 +164,10 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         selection: '{selectedcoursesession}'
                     },
                     columns: [
-                        { text: 'ID',  dataIndex: 'CourseSessionID', flex: 1 },
-                        { text: 'Description',  dataIndex: 'SessionDescription', flex: 1 },
+                        { text: 'Description',  dataIndex: 'SessionDescription', flex: 2 },
                         { text: 'StartDate', dataIndex: 'StartDate' },
-                        { text: 'Status', dataIndex: 'Status' },
-                        { text: 'Places Remaining', dataIndex: 'PlacesRemaining'}
-                    ],
-                    height: 200,
-                    width: 500
+                        { text: 'Status', dataIndex: 'Status' }
+                    ]
                 }
             ],
             bbar: {
@@ -225,7 +227,6 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     id: 'fldGenderID',
                     fieldLabel: 'Gender',
                     queryMode: 'local',
-                    editable: false,
                     forceSelection: true,
                     displayField: 'Description',
                     valueField: 'ListItemID',
@@ -580,36 +581,65 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                             value: '{currentRecord.IsPermanentResident}'
                         }
                     }
-                ],
-                bbar: {
-                    items: [
-                        {
-                            xtype: 'button',
-                            text: 'Back',
-                            listeners: {
-                                click: 'onBackClicked'
-                            }
-                        },{
-                            xtype: 'button',
-                            text: 'Save and continue',
-                            listeners: {
-                                click: 'onSaveClicked'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            text: 'Submit',
-                            formBind: true,
-                            listeners: {
-                                click: 'onSubmit'
-                            }
-                        }
-                    ]
+                ]
+            },
+            {
+                xtype: 'datefield',
+                id: 'fldDateOfFirstEntryToUK',
+                anchor: '100%',
+                fieldLabel: 'Date of First Entry to UK',
+                name: 'DateOfFirstEntryToUK',
+                format: 'd/m/Y',
+                maxValue: new Date(),  //Today or earlier.
+                bind: {
+                    value: '{currentRecord.DateOfFirstEntryToUK}',
+                    hidden: '{!currentRecord.IsPermanentResident}'
+                }
+            },
+            {
+                xtype: 'datefield',
+                id: 'fldDateOfGrantedResidency',
+                anchor: '100%',
+                fieldLabel: 'Date residency was granted',
+                name: 'DateOfGrantedResidency',
+                format: 'd/m/Y',
+                maxValue: new Date(),  //Today or earlier.
+                bind: {
+                    value: '{currentRecord.DateOfGrantedResidency}',
+                    hidden: '{!currentRecord.IsPermanentResident}'
                 }
             }
-        ]
+        ],
+        bbar: {
+            items: [
+                {
+                    xtype: 'button',
+                    text: 'Back',
+                    listeners: {
+                        click: 'onBackClicked'
+                    }
+                },{
+                    xtype: 'button',
+                    text: 'Save and continue',
+                    listeners: {
+                        click: 'onSaveClicked'
+                    }
+                },
+                {
+                    xtype: 'button',
+                    text: 'Submit',
+                    formBind: true,
+                    listeners: {
+                        click: 'onSubmit'
+                    }
+                }
+            ]
+        }
      },{
         title: 'Qualifications',
+        listeners: {
+            activate: 'onActivateQualificationsCard'
+        },
         items: [
             {
                 xtype: 'qualificationsgrid'
@@ -627,7 +657,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         xtype: 'button',
                         text: 'Save and continue',
                         listeners: {
-                            click: 'onSaveClicked'
+                            click: 'onSaveQualificationsClicked'
                         }
                     },
                     {
@@ -642,9 +672,12 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             }
     },{
         title: 'Experience',
+        listeners: {
+            activate: 'onActivateExperienceCard'
+        },
         items: [
             {
-                xtype: 'experience'
+                xtype: 'experiencegrid'
             }
         ],
             bbar: {
@@ -674,9 +707,12 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             }
     },{
         title: 'References',
+        listeners: {
+            activate: 'onActivateReferencesCard'
+        },
         items: [
             {
-                xtype: 'references'
+                xtype: 'referencesgrid'
             }
         ],
             bbar: {
@@ -759,30 +795,6 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             {
                 xtype: 'label',
                 text: 'As you are applying for a programme in health or social work which may involve children or vulnerable adults, you must tell us about any criminal convictions, including spent sentences and cautions (including verbal cautions) and bind-over orders.'
-            },
-            {
-                xtype: 'datefield',
-                id: 'fldDateOfFirstEntryToUK',
-                anchor: '100%',
-                fieldLabel: 'Date of First Entry to UK',
-                name: 'DateOfFirstEntryToUK',
-                format: 'd/m/Y',
-                maxValue: new Date(),  //Today or earlier.
-                bind: {
-                    value: '{currentRecord.DateOfFirstEntryToUK}'
-                }
-            },
-            {
-                xtype: 'datefield',
-                id: 'fldDateOfGrantedResidency',
-                anchor: '100%',
-                fieldLabel: 'Date residency was granted',
-                name: 'DateOfGrantedResidency',
-                format: 'd/m/Y',
-                maxValue: new Date(),  //Today or earlier.
-                bind: {
-                    value: '{currentRecord.DateOfGrantedResidency}'
-                }
             },
             {
                 layout: {

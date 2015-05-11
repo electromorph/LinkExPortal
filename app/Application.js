@@ -1,8 +1,6 @@
 Ext.define('LinkExPortal.Application', {
     extend: 'Ext.app.Application',
     name: 'LinkExPortal',
-    stores: [
-    ],
     models: [
         'CountryList',
         'ProfessionalBodiesList',
@@ -22,8 +20,7 @@ Ext.define('LinkExPortal.Application', {
         'CourseType',
         'FTPTList',
         'hei',
-        'sponsor',
-        'FilterList'
+        'sponsor'
     ],
     launch: function () {
         Ext.define('LinkExPortal.global.Vars', {
@@ -31,10 +28,12 @@ Ext.define('LinkExPortal.Application', {
             loginToken: undefined,
             courseID: {
                 value: '-1',
+                name: '',
                 present: false
             },
             HEIID: {
                 value: '-1',
+                name: '',
                 present: false
             },
             applicationID: {
@@ -47,6 +46,7 @@ Ext.define('LinkExPortal.Application', {
             },
             trustID: {
                 value: '-1',
+                name: '',
                 present: false
             },
             showApplicationForm: false,
@@ -65,14 +65,14 @@ Ext.define('LinkExPortal.Application', {
         Ext.define('LinkExPortal.global.Utils', {
             singleton: true,
             calculateHideAndShow: function() {
-                LinkExPortal.global.Vars.showApplicationForm = LinkExPortal.global.Vars.applicationID.present || (LinkExPortal.global.Vars.trustID.present && LinkExPortal.global.Vars.courseID.present);
+                LinkExPortal.global.Vars.showApplicationForm = (LinkExPortal.global.Vars.applicationID.present || (LinkExPortal.global.Vars.trustID.present && LinkExPortal.global.Vars.courseID.present)) && !LinkExPortal.global.Vars.applicationFormSubmitted;
                 LinkExPortal.global.Vars.showSearchScreen = !LinkExPortal.global.Vars.applicationID.present && LinkExPortal.global.Vars.trustID.present && !LinkExPortal.global.Vars.courseID.present;
                 LinkExPortal.global.Vars.showTrustScreen = !LinkExPortal.global.Vars.trustID.present;
                 LinkExPortal.global.Vars.showHEIBox = !LinkExPortal.global.Vars.HEIID.present;
                 LinkExPortal.global.Vars.showCommissionedCoursesScreen = !LinkExPortal.global.Vars.applicationID.present && LinkExPortal.global.Vars.trustID.present && !LinkExPortal.global.Vars.courseID.present && (LinkExPortal.global.Vars.trustID.value > 0);
             },
             addGlobalsToMainViewModel: function() {
-                this.getViewModel().set('courseID', LinkExPortal.global.Vars.courseID.value);//Ext.create('User', result.data.user));
+                this.getViewModel().set('courseID', LinkExPortal.global.Vars.courseID.value);
                 this.getViewModel().set('HEIID', LinkExPortal.global.Vars.HEIID.value);
                 this.getViewModel().set('applicationID', LinkExPortal.global.Vars.applicationID.value);
                 this.getViewModel().set('courseSessionID', LinkExPortal.global.Vars.courseSessionID.value);

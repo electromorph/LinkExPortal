@@ -4,70 +4,164 @@ Ext.define("LinkExPortal.view.referencesGrid.ReferencesGrid",{
         'LinkExPortal.view.referencesGrid.ReferencesGridController',
         'LinkExPortal.view.referencesGrid.ReferencesGridModel'
     ],
-    alias: 'widget.referencesGrid',
+    alias: 'widget.referencesgrid',
     controller: "referencesgrid-referencesgrid",
     viewModel: {
         type: "referencesgrid-referencesgrid"
+    },
+    plugins: [
+        Ext.create('Ext.grid.plugin.RowEditing', {
+            clicksToEdit: 1,
+            autoCancel: false
+        })
+    ],
+    selModel: 'rowmodel',
+    listeners: {
+        /*'selectionchange': function(view, records) {
+         grid.down('#removeEmployee').setDisabled(!records.length);
+         }*/
     },
     bind: {
         store: '{studentReferences}'
     },
     columns: [{
+        text     : 'StudentReferenceID',
+        flex     : 1,
+        sortable : true,
+        dataIndex: 'StudentReferenceID'
+    },{
         text     : 'Firstname',
         flex     : 1,
         sortable : true,
-        dataIndex: 'Firstname'
+        dataIndex: 'Firstname',
+        editor: {
+            xtype: 'textfield'
+        }
     }, {
         text     : 'Surname',
         flex     : 1,
         sortable : true,
-        dataIndex: 'Surname'
+        dataIndex: 'Surname',
+        editor: {
+            xtype: 'textfield'
+        }
     }, {
         text     : 'JobTitle',
         width    : 75,
         sortable : true,
-        dataIndex: 'JobTitle'
+        dataIndex: 'JobTitle',
+        editor: {
+            xtype: 'textfield'
+        }
     }, {
         text     : 'Organization',
         width    : 90,
         sortable : true,
-        dataIndex: 'Organization'
+        dataIndex: 'Organization',
+        editor: {
+            xtype: 'textfield'
+        }
     },{
         text     : 'RelationshipToApplicant',
         width    : 90,
         sortable : true,
-        dataIndex: 'RelationshipToApplicant'
+        dataIndex: 'RelationshipToApplicant',
+        editor: {
+            xtype: 'textfield'
+        }
     },
     {
         text     : 'Address',
         width    : 90,
         sortable : true,
-        dataIndex: 'Address'
-    },{
-        text     : 'RelationshipToApplicant',
-        width    : 90,
-        sortable : true,
-        dataIndex: 'RelationshipToApplicant'
+        dataIndex: 'Address',
+        editor: {
+            xtype: 'textfield'
+        }
     },{
         text     : 'Telephone',
         width    : 90,
         sortable : true,
-        dataIndex: 'Telephone'
+        dataIndex: 'Telephone',
+            editor: {
+                xtype: 'textfield'
+            }
     },{
         text     : 'Fax',
         width    : 90,
         sortable : true,
-        dataIndex: 'Fax'
+        dataIndex: 'Fax',
+            editor: {
+                xtype: 'textfield'
+            }
     },{
         text     : 'Email',
         width    : 90,
         sortable : true,
-        dataIndex: 'Email'
+        dataIndex: 'Email',
+            editor: {
+                xtype: 'textfield'
+            }
     },{
         text     : 'TitleID',
         width    : 90,
         sortable : true,
-        dataIndex: 'TitleID'
-    }
-    ]
+        dataIndex: 'TitleID',
+            editor: {
+                xtype: 'combobox',
+                id: 'fldTitleIDExperienceForm',
+                queryMode: 'local',
+                flex: 1,
+                forceSelection: true,
+                displayField: 'Description',
+                valueField: 'ListItemID',
+                name: 'Title',
+                bind: {
+                    store: '{titleList}',
+                    value: '{currentRecord.TitleID}'
+                }
+            }
+    }, {
+            xtype:'actioncolumn',
+            width:50,
+            bubbleEvents: [ 'click' ],
+            items: [{
+                icon: 'app/images/cross.gif',  // Use a URL in the icon config
+                tooltip: 'View details',
+                handler: function(grid, rowIndex, colIndex) {
+                    var rec = grid.getStore().getAt(rowIndex);
+                    alert("Edit " + rec.get('CourseName'));
+                }
+            }]
+        }],
+    tbar: [{
+        text: 'Add Reference',
+        iconCls: 'employee-add',
+        handler : function() {
+            var myStore = this.up().up().getStore();
+            var rec = Ext.create('LinkExPortal.model.StudentReference', {
+                FirstName: '',
+                Surname: '',
+                JobTitle: '',
+                Organization: '',
+                RelationshipToApplicant: '',
+                Address: '',
+                Telephone: '',
+                Fax: '',
+                Email: '',
+                TitleID: '',
+                CPDHealthApplicationFormID: LinkExPortal.global.Vars.applicationID.value});
+            rec.save({
+                failure: function(record, operation) {
+                    // do something if the save failed
+                },
+                success: function(record, operation) {
+                    myStore.load();
+                },
+                callback: function(record, operation, success) {
+                    // do something whether the save succeeded or failed
+                }
+            });
+        }
+    }]
 });
