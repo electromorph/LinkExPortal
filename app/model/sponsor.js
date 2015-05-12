@@ -12,7 +12,6 @@ Ext.define('LinkExPortal.model.sponsor', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/genders',
             url: LinkExPortal.global.Vars.defaultUrl + '/api/Sponsors',
             reader: {
                 type: 'json',

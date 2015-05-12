@@ -11,7 +11,6 @@ Ext.define('LinkExPortal.model.EthnicitiesList', {
         proxy: {
             type: 'rest',
             url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/ethnicities',
-            //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/ethnicities',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

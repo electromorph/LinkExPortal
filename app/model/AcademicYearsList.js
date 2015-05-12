@@ -10,7 +10,6 @@ Ext.define('LinkExPortal.model.AcademicYearsList', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/academicyears',
             url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/academicyears',
             reader: {
                 type: 'json',

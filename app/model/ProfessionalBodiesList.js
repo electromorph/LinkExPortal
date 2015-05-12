@@ -12,7 +12,6 @@ Ext.define('LinkExPortal.model.ProfessionalBodiesList', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/professionalbodies',
             url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/professionalbodies',
             reader: {
                 type: 'json',

@@ -22,7 +22,6 @@ Ext.define('LinkExPortal.model.coursesession', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/genders',
             url: LinkExPortal.global.Vars.defaultUrl + '/api/CourseSessions',
             reader: {
                 type: 'json',

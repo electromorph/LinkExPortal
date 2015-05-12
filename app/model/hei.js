@@ -10,7 +10,6 @@ Ext.define('LinkExPortal.model.hei', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/genders',
             url: LinkExPortal.global.Vars.defaultUrl + '/api/HEIs',
             reader: {
                 type: 'json',

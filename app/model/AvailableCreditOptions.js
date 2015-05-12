@@ -10,7 +10,6 @@ Ext.define('LinkExPortal.model.AvailableCreditOptions', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/genders',
             url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/availablecreditoptions',
             reader: {
                 type: 'json',

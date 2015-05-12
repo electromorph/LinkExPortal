@@ -10,7 +10,6 @@ Ext.define('LinkExPortal.model.CountryList', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/countries',http://localhost:26214
             url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/countries',
             reader: {
                 type: 'json',

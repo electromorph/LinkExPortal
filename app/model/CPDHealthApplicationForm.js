@@ -65,7 +65,6 @@ Ext.define('LinkExPortal.model.CPDHealthApplicationForm', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            //url: 'http://linkexwebapi.azurewebsites.net/api/CPDHealthApplicationFormTemps',
             url: LinkExPortal.global.Vars.defaultUrl + '/api/CPDHealthApplicationFormTemps',
             reader: {
                 type: 'json',
