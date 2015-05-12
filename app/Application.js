@@ -26,6 +26,7 @@ Ext.define('LinkExPortal.Application', {
         Ext.define('LinkExPortal.global.Vars', {
             singleton: true,
             loginToken: undefined,
+            defaultUrl: 'https://localhost:44306',  //http://linkexwebapi.azurewebsites.net
             courseID: {
                 value: '-1',
                 name: '',
@@ -138,6 +139,10 @@ Ext.define('LinkExPortal.Application', {
                 Ext.util.CSS.swapStyleSheet( 'styles', url );
             }
         }*/
+        // Check whether the browser supports LocalStorage
+        // It's important to note that this type of application could use
+        // any type of storage, i.e., Cookies, LocalStorage, etc.
+
         Ext.create('Ext.container.Viewport', {
             layout: 'border',
             autoShow: 'true',

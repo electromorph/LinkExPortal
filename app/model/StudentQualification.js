@@ -16,7 +16,7 @@ Ext.define('LinkExPortal.model.StudentQualification', {
         proxy: {
             type: 'rest',
             //url: 'http://linkexwebapi.azurewebsites.net/application/2/qualifications',
-            url: 'http://localhost:26214/api/studentqualifications',
+            url: LinkExPortal.global.Vars.defaultUrl + '/api/studentqualifications',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

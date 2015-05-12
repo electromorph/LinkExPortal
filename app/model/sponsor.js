@@ -13,7 +13,7 @@ Ext.define('LinkExPortal.model.sponsor', {
         proxy: {
             type: 'rest',
             //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/genders',
-            url: 'http://localhost:26214/api/Sponsors',
+            url: LinkExPortal.global.Vars.defaultUrl + '/api/Sponsors',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

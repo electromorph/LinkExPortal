@@ -11,7 +11,7 @@ Ext.define('LinkExPortal.model.FTPTList', {
         proxy: {
             type: 'rest',
             //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/genders',
-            url: 'http://localhost:26214/application/Refs/ftpt',
+            url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/ftpt',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

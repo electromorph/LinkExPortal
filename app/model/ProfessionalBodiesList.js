@@ -13,7 +13,7 @@ Ext.define('LinkExPortal.model.ProfessionalBodiesList', {
         proxy: {
             type: 'rest',
             //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/professionalbodies',
-            url: 'http://localhost:26214/application/Refs/professionalbodies',
+            url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/professionalbodies',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

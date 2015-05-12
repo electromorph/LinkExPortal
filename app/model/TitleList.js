@@ -10,8 +10,7 @@ Ext.define('LinkExPortal.model.TitleList', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/titles',
-            url: 'http://localhost:26214/application/Refs/titles',
+            url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/titles',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

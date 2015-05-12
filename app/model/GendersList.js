@@ -11,7 +11,7 @@ Ext.define('LinkExPortal.model.GendersList', {
         proxy: {
             type: 'rest',
             //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/genders',
-            url: 'http://localhost:26214/application/Refs/genders',
+            url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/genders',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

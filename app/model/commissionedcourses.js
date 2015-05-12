@@ -21,7 +21,7 @@ Ext.define('LinkExPortal.model.commissionedcourses', {
         proxy: {
             type: 'rest',
             //url: 'http://linkexwebapi.azurewebsites.net/application/Refs/genders',
-            url: 'http://localhost:26214/application/courses/commissioned',
+            url: LinkExPortal.global.Vars.defaultUrl + '/application/courses/commissioned',
             reader: {
                 type: 'json',
                 rootProperty: 'data'
