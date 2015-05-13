@@ -20,7 +20,7 @@ Ext.define('LinkExPortal.model.commissionedcourses', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/application/courses/commissioned',
+            url: 'https://localhost:44306/application/courses/commissioned',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

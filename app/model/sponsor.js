@@ -12,7 +12,7 @@ Ext.define('LinkExPortal.model.sponsor', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/api/Sponsors',
+            url: 'https://localhost:44306/api/Sponsors',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

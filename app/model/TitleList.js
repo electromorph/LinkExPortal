@@ -10,7 +10,7 @@ Ext.define('LinkExPortal.model.TitleList', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/titles',
+            url: 'https://localhost:44306/application/Refs/titles',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

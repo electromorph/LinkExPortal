@@ -11,7 +11,7 @@ Ext.define('LinkExPortal.model.CourseType', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/api/CourseTypes',
+            url: 'https://localhost:44306/api/CourseTypes',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

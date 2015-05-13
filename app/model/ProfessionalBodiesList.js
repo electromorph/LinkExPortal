@@ -12,7 +12,7 @@ Ext.define('LinkExPortal.model.ProfessionalBodiesList', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/professionalbodies',
+            url: 'https://localhost:44306/application/Refs/professionalbodies',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

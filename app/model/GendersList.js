@@ -10,7 +10,7 @@ Ext.define('LinkExPortal.model.GendersList', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/genders',
+            url: 'https://localhost:44306/application/Refs/genders',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

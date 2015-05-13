@@ -10,7 +10,7 @@ Ext.define('LinkExPortal.model.AvailableCreditOptions', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/availablecreditoptions',
+            url: 'https://localhost:44306/application/Refs/availablecreditoptions',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

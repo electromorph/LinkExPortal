@@ -37,6 +37,7 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
             var myStore = this.getStore('applicationForm');
             if (LinkExPortal.global.Vars.courseID.present) {
                 var newRecord = LinkExPortal.model.CPDHealthApplicationForm.create();
+                newRecord.data.Email = Ext.getCmp('fldEmail').getValue();
                 LinkExPortal.global.Vars.applicationRecordExists = true;
                 //Create new record in temp table.
                 myStore.add(newRecord);
@@ -47,7 +48,7 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
                         newRecords[0].phantom = true;
                         myViewModel.set('currentRecord', newRecords[0]);
                     }
-                    var email = Ext.getCmp('fldEmail').getValue();
+
                 }
             }
         }

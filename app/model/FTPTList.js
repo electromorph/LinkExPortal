@@ -10,7 +10,7 @@ Ext.define('LinkExPortal.model.FTPTList', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/ftpt',
+            url: 'https://localhost:44306/application/Refs/ftpt',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

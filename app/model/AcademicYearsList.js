@@ -10,7 +10,7 @@ Ext.define('LinkExPortal.model.AcademicYearsList', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/academicyears',
+            url: 'https://localhost:44306/application/Refs/academicyears',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

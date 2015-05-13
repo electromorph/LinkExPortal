@@ -10,7 +10,7 @@ Ext.define('LinkExPortal.model.CountryList', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/countries',
+            url: 'https://localhost:44306/application/Refs/countries',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

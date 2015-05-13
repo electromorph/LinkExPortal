@@ -10,7 +10,7 @@ Ext.define('LinkExPortal.model.hei', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/api/HEIs',
+            url: 'https://localhost:44306/api/HEIs',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

@@ -66,7 +66,7 @@ Ext.define('LinkExPortal.model.CPDHealthApplication', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/api/CPDHealthApplicationForms',
+            url: 'https://localhost:44306/api/CPDHealthApplicationForms',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

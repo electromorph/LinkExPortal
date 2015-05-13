@@ -17,7 +17,7 @@ Ext.define('LinkExPortal.model.StudentExperience', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/api/studentexperiences',
+            url: 'https://localhost:44306/api/studentexperiences',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

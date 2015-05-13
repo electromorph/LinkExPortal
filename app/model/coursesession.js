@@ -22,7 +22,7 @@ Ext.define('LinkExPortal.model.coursesession', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: LinkExPortal.global.Vars.defaultUrl + '/api/CourseSessions',
+            url: 'https://localhost:44306/api/CourseSessions',
             reader: {
                 type: 'json',
                 rootProperty: 'data'
