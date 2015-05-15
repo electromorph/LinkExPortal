@@ -56,7 +56,7 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
     //This is called from the store on load completion. It executes in a Store context, which is useless.
     //So we just use it to fire a new event that gets picked up by in controller context.
     finishedLoading: function(me, myViewModel, successful) {
-            this.fireEvent('gotRecord');
+        this.fireEvent('gotRecord');
     },
 
     storeWrite: function(me, operation) {
