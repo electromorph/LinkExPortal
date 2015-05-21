@@ -1,5 +1,6 @@
 Ext.define('LinkExPortal.view.main.Main', {
     extend: 'Ext.container.Container',
+    plugins: 'viewport',
     requires: [
         'LinkExPortal.view.main.MainController',
         'LinkExPortal.view.main.MainModel',

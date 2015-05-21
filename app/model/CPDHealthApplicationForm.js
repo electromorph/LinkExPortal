@@ -48,7 +48,7 @@ Ext.define('LinkExPortal.model.CPDHealthApplicationForm', {
         { name: 'CourseSessionID', type: 'int' },
         { name: 'IsConfirmationOfPrerequisites', type: 'bool' },
         { name: 'IsCPDFunded', type: 'bool' },
-        { name: 'IsSelfFunded', type: 'bool'},
+        { name: 'IsSelfFunded', type: 'bool' },
         { name: 'IsPartFunded', type: 'bool' },
         { name: 'PartFundedPercentage', type: 'float' },
         { name: 'CanReceiveEmailConfirmation', type: 'bool' },
@@ -58,7 +58,11 @@ Ext.define('LinkExPortal.model.CPDHealthApplicationForm', {
         { name: 'Email', type: 'string' },
         { name: 'ApplicationDate', type: 'date', dateReadFormat: 'Y-m-dT00:00:00', dateWriteFormat: 'Y-m-d' },
         { name: 'PONumber', type: 'string' },
-        { name: 'TitleID', type: 'int' }
+        { name: 'TitleID', type: 'int' },
+        { name: 'CourseSessionText', type: 'string' },
+        { name: 'SponsorID', type: 'int' },
+        { name: 'AccountID', type: 'int' },
+        { name: 'PreviousStudentIDAtHEI', type: 'string' }
     ],
     schema: {
         id: 'applicationformtemp',

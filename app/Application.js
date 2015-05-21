@@ -1,6 +1,10 @@
 Ext.define('LinkExPortal.Application', {
     extend: 'Ext.app.Application',
     name: 'LinkExPortal',
+    views: [
+        'LinkExPortal.view.loginForm.LoginForm',
+        'LinkExPortal.view.main.Main'
+    ],
     models: [
         'CountryList',
         'ProfessionalBodiesList',
@@ -20,9 +24,24 @@ Ext.define('LinkExPortal.Application', {
         'CourseType',
         'FTPTList',
         'hei',
-        'sponsor'
+        'sponsor',
+        'Account',
+        'AspNetUser',
+        'UserProfileInfo',
+        'CPDHealthApplicationTemp'
     ],
     launch: function () {
+        // Add the additional 'advanced' VTypes
+        Ext.apply(Ext.form.field.VTypes, {
+            email: function(val, field) {
+                if (field.initialEmailField) {
+                    var pwd = field.up('form').down('#' + field.initialEmailField);
+                    return (val == pwd.getValue());
+                }
+                return true;
+            },
+            passwordText: 'Passwords do not match'
+        });
         Ext.define('LinkExPortal.global.Vars', {
             singleton: true,
             loginToken: undefined,
@@ -43,7 +62,8 @@ Ext.define('LinkExPortal.Application', {
             },
             courseSessionID: {
                 value: '-1',
-                present: false
+                present: false,
+                text: ''
             },
             trustID: {
                 value: '-1',
@@ -100,6 +120,7 @@ Ext.define('LinkExPortal.Application', {
                 });
             }
         });
+
         var queryString = Ext.Object.fromQueryString(location.search);
         if (queryString != null)
         {
@@ -130,6 +151,20 @@ Ext.define('LinkExPortal.Application', {
             }
             LinkExPortal.global.Utils.calculateHideAndShow();
         }
+
+
+        var supportsLocalStorage = Ext.supports.LocalStorage, loggedIn;
+        if (!supportsLocalStorage) {
+            // Alert the user if the browser does not support localStorage
+            Ext.Msg.alert('Your Browser Does Not Support Local Storage');
+            return;
+        }
+        LinkExPortal.global.Vars.loginToken = localStorage.getItem("LinkExAccessToken");
+        if (LinkExPortal.global.Vars.loginToken) {
+            Ext.Ajax.setDefaultHeaders({
+                'Authorization': 'Bearer ' + LinkExPortal.global.Vars.loginToken
+            });
+        }
         //SWITCHING THEMES
         /*if (LinkExPortal.global.Vars.HEIID.present) {
             if (LinkExPortal.global.Vars.HEIID.value == 1) {
@@ -143,13 +178,25 @@ Ext.define('LinkExPortal.Application', {
         // It's important to note that this type of application could use
         // any type of storage, i.e., Cookies, LocalStorage, etc.
 
-        Ext.create('Ext.container.Viewport', {
+
+        //START FORM CHOICE
+        //If there's an applicationID, make them login.
+        //If there are one or more application params, go straight to application form.
+        //If there are no application params supplied, make them log in - the login page will direct them to the correct place.
+        var noApplicationParams = !(LinkExPortal.global.Vars.trustID.present
+        || LinkExPortal.global.Vars.HEIID.present
+        || LinkExPortal.global.Vars.courseID.present
+        || LinkExPortal.global.Vars.applicationID.present);
+
+        var form = (LinkExPortal.global.Vars.applicationID.present ? (LinkExPortal.global.Vars.loginToken ? 'app-main' : 'loginform') : (noApplicationParams ? 'loginform' : 'app-main'));
+        Ext.widget(form);
+        /*Ext.create('Ext.container.Viewport', {
             layout: 'border',
             autoShow: 'true',
             items: [{
                 region: 'center',
                 xtype: 'app-main'
             }]
-        });
+        });*/
     }
 });

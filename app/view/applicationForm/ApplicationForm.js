@@ -15,6 +15,10 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
     bind: {
         title: 'You are applying for the following course: {CourseName}'
     },
+    fieldDefaults: {
+        msgTarget: 'side',
+        autoFitErrors: false
+    },
     defaults: {
         // applied to each contained panel
         bodyStyle: 'padding:15px',
@@ -28,105 +32,163 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         titleCollapse: false
     },
     store: 'applicationForm',
-    items: [
-        {
-            title: 'Personal Details',
+    items: [{
+        title: 'Personal Details',
+        xtype: 'form',
+        items: [{
+            xtype: 'combobox',
+            id: 'fldTitleID',
+            fieldLabel: 'Title',
+            queryMode: 'local',
+            editable: false,
+            flex: 1,
+            allowBlank: false,
+            forceSelection: true,
+            displayField: 'Description',
+            valueField: 'ListItemID',
+            name: 'Title',
+            bind: {
+                store: '{titleList}',
+                value: '{currentRecord.TitleID}'
+            }
+        },{
+            xtype: 'textfield',
+            id: 'fldFirstname',
+            name: 'Forename',
+            flex: 2,
+            fieldLabel: 'Forename(s)',
+            allowBlank: false,
+            bind: {
+                value: '{currentRecord.Firstname}'
+            }
+        },{
+            xtype: 'textfield',
+            id: 'fldLastname',
+            flex: 2,
+            name: 'Surname',
+            fieldLabel: 'Surname',
+            allowBlank: false,
+            bind: {
+                value: '{currentRecord.Lastname}'
+            }
+        },{
+            xtype: 'textfield',
+            id: 'fldEmail',
+            name: 'Email',
+            fieldLabel: 'Email',
+            allowBlank: false,
+            bind: {
+                value: '{currentRecord.Email}'
+            }
+        },{
+            xtype: 'textfield',
+            id: 'fldConfirmEmail',
+            vtype: 'email',
+            initialEmailField: 'fldEmail',
+            name: 'ConfirmEmail',
+            fieldLabel: 'Confirm Email',
+            allowBlank: false
+        }],
+        bbar: {
             items: [
-
                 {
-                    xtype: 'combobox',
-                    id: 'fldTitleID',
-                    fieldLabel: 'Title',
-                    queryMode: 'local',
-                    flex: 1,
-                    forceSelection: true,
-                    displayField: 'Description',
-                    valueField: 'ListItemID',
-                    name: 'Title',
-                    bind: {
-                        store: '{titleList}',
-                        value: '{currentRecord.TitleID}'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    id: 'fldFirstname',
-                    name: 'Forename',
-                    flex: 2,
-                    fieldLabel: 'Forename(s)',
-                    allowBlank: false,
-                    bind: {
-                        value: '{currentRecord.Firstname}'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    id: 'fldLastname',
-                    flex: 2,
-                    name: 'Surname',
-                    fieldLabel: 'Surname',
-                    allowBlank: false,
-                    bind: {
-                        value: '{currentRecord.Lastname}'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    id: 'fldEmail',
-                    name: 'Email',
-                    fieldLabel: 'Email',
-                    allowBlank: false,
-                    bind: {
-                        value: '{currentRecord.Email}'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    id: 'fldMobileNumber',
-                    name: 'Mobile',
-                    fieldLabel: 'Mobile',
-                    allowBlank: true,
-                    bind: {
-                        value: '{currentRecord.MobileNumber}'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    id: 'fldPreviousSurname',
-                    name: 'PreviousSurname',
-                    fieldLabel: 'Previous Surname',
-                    allowBlank: true,
-                    bind: {
-                        value: '{currentRecord.PreviousSurname}'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    id: 'fldKnownAs',
-                    name: 'KnownAs',
-                    fieldLabel: 'Known as',
-                    allowBlank: true,
-                    bind: {
-                        value: '{currentRecord.KnownAs}'
-                    }
-                },
-                {
-                    xtype: 'datefield',
-                    id: 'fldDOB',
-                    anchor: '100%',
-                    fieldLabel: 'DOB',
-                    name: 'DOB',
-                    format: 'd m Y',
-                    maxValue: new Date(),  //Today or earlier.
-                    submitFormat: 'd m Y',
-                    bind: {
-                        value: '{currentRecord.DOB}'
+                    xtype: 'button',
+                    text: 'Save and continue',
+                    formBind: true,
+                    listeners: {
+                        click: 'onSaveClicked'
                     }
                 }
+            ]
+        }
+    },{
+        title: 'Select Course Session',
+        autoScroll: true,
+        listeners: {
+            activate: 'onActivateCourseSessionCard'
+        },
+        items: [{
+            xtype: 'gridpanel',
+            title: 'Course Sessions',
+            scrollable: true,
+            bubbleEvents: [
+                'select'
             ],
+            listeners: {
+                select: 'onSelectCourseSession'
+            },
+            bind: {
+                store: '{courseSessionList}',
+                selection: '{selectedcoursesession}'
+            },
+            columns: [
+                { text: 'Description',  dataIndex: 'SessionDescription', flex: 2 },
+                { text: 'StartDate', dataIndex: 'StartDate' },
+                { text: 'Status', dataIndex: 'Status' }
+            ]
+        }],
+        bbar: {
+            items: [{
+                xtype: 'button',
+                text: 'Back',
+                listeners: {
+                    click: 'onBackClicked'
+                }
+            },{
+                xtype: 'button',
+                text: 'Save and continue',
+                listeners: {
+                    click: 'onSaveClicked'
+                }
+            },{
+                xtype: 'button',
+                text: 'Submit',
+                formBind: true,
+                listeners: {
+                    click: 'onSubmit'
+                }
+            }]}
+        },{
+            bind: {
+                title: 'Personal Information (Current application - {currentRecord.CourseSessionText})'
+            },
+            items: [{
+                layout: {
+                    type: 'hbox',
+                    align: 'left'
+                },
+                items: [{
+                    xtype: 'label',
+                    margin: '0 0 0 10',
+                    bind: {
+                        text: 'Have you studied at {currentRecord.HEIText} before?'
+                    }
+                },{
+                    xtype: 'checkbox',
+                    id: 'fldHEITextCheckbox',
+                    bind: {
+                        value: '{currentRecord.StudedAtHEIBefore}'
+                    }
+                }]
+            },{
+                xtype: 'textfield',
+                id: 'fldStudentID',
+                name: 'StudentID',
+                fieldLabel: 'What was your student ID?',
+                bind: {
+                    value: '{currentRecord.PreviousStudentIDAtHEI}',
+                    visible: '{currentRecord.StudedAtHEIBefore}'
+                }
+            }],
             bbar: {
                 items: [
                     {
+                        xtype: 'button',
+                        text: 'Back',
+                        listeners: {
+                            click: 'onBackClicked'
+                        }
+                    },{
                         xtype: 'button',
                         text: 'Save and continue',
                         listeners: {
@@ -143,31 +205,51 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 ]
             }
         },{
-            title: 'Select Course Session',
-            autoScroll: true,
-            listeners: {
-                activate: 'onActivateCourseSessionCard'
+            bind: {
+                title: 'Personal Information (Current application - {currentRecord.CourseSessionText})'
             },
             items: [
+                ,
                 {
-                    xtype: 'gridpanel',
-                    title: 'Course Sessions',
-                    scrollable: true,
-                    bubbleEvents: [
-                        'select'
-                    ],
-                    listeners: {
-                        select: 'onSelectCourseSession'
-                    },
+                    xtype: 'textfield',
+                    id: 'fldMobileNumber',
+                    name: 'Mobile',
+                    fieldLabel: 'Mobile',
                     bind: {
-                        store: '{courseSessionList}',
-                        selection: '{selectedcoursesession}'
-                    },
-                    columns: [
-                        { text: 'Description',  dataIndex: 'SessionDescription', flex: 2 },
-                        { text: 'StartDate', dataIndex: 'StartDate' },
-                        { text: 'Status', dataIndex: 'Status' }
-                    ]
+                        value: '{currentRecord.MobileNumber}'
+                    }
+                },
+                {
+                    xtype: 'textfield',
+                    id: 'fldPreviousSurname',
+                    name: 'PreviousSurname',
+                    fieldLabel: 'Previous Surname',
+                    bind: {
+                        value: '{currentRecord.PreviousSurname}'
+                    }
+                },
+                {
+                    xtype: 'textfield',
+                    id: 'fldKnownAs',
+                    name: 'KnownAs',
+                    fieldLabel: 'Known as',
+                    bind: {
+                        value: '{currentRecord.KnownAs}'
+                    }
+                },
+                {
+                    xtype: 'datefield',
+                    id: 'fldDOB',
+                    anchor: '100%',
+                    fieldLabel: 'DOB',
+                    allowBlank: false,
+                    name: 'DOB',
+                    format: 'd m Y',
+                    maxValue: new Date(),  //Today or earlier.
+                    submitFormat: 'd m Y',
+                    bind: {
+                        value: '{currentRecord.DOB}'
+                    }
                 }
             ],
             bbar: {
@@ -194,16 +276,17 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     }
                 ]
             }
-        },
-        {
-            title: 'Other information',
+        },{
+            bind: {
+                title: 'Other information (Current application - {currentRecord.CourseSessionText})'
+            },
             items: [
                 {
                     xtype: 'textfield',
                     id: 'fldNationality',
+                    allowBlank: false,
                     name: 'Nationality',
                     fieldLabel: 'Nationality',
-                    allowBlank: true,
                     bind: {
                         value: '{currentRecord.Nationality}'
                     }
@@ -211,6 +294,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 {
                     xtype: 'combobox',
                     id: 'fldCountryOfBirthID',
+                    editable: false,
                     fieldLabel: 'Country of Birth',
                     queryMode: 'local',
                     forceSelection: true,
@@ -225,6 +309,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 {
                     xtype: 'combobox',
                     id: 'fldGenderID',
+                    editable: false,
                     fieldLabel: 'Gender',
                     queryMode: 'local',
                     forceSelection: true,
@@ -237,8 +322,17 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     }
                 },
                 {
+                    xtype: 'label',
+                    id: 'lblEthnicity',
+                    text: 'Please note that ethnicity information is required for equal opportunities monitoring only',
+                    style: {
+                        'font-style': 'italic'
+                    }
+                },
+                {
                     xtype: 'combobox',
                     id: 'fldEthnicityID',
+                    editable: false,
                     fieldLabel: 'Ethnicity',
                     queryMode: 'local',
                     displayField: 'Description',
@@ -268,6 +362,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     },
                     {
                         xtype: 'button',
+                        formBind: true,
                         text: 'Submit',
                         listeners: {
                             click: 'onSubmit'
@@ -277,16 +372,20 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             }
         },
         {
-            title: 'Professional Body Details',
+            bind: {
+                title: 'Professional Body Details (Current application - {currentRecord.CourseSessionText})'
+            },
             items: [
                 {
                     xtype: 'combobox',
                     id: 'fldProfessionalBodyID',
+                    editable: false,
                     fieldLabel: 'Professional Body',
                     queryMode: 'local',
                     displayField: 'Description',
                     valueField: 'ListItemID',
                     forceSelection: true,
+                    allowBlank: true,
                     name: 'ProfessionalBody',
                     bind: {
                         store: '{professionalBodyList}',
@@ -345,14 +444,15 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             }
         },
         {
-            title: 'Home details',
+            bind: {
+                title: 'Home details (Current application - {currentRecord.CourseSessionText})'
+            },
             items: [
             {
                 xtype: 'textfield',
                 id: 'fldHomeAddress1',
                 name: 'HomeAddress1',
                 fieldLabel: 'Address',
-                allowBlank: false,
                 bind: {
                     value: '{currentRecord.HomeAddress1}'
                 }
@@ -361,8 +461,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 xtype: 'textfield',
                 id: 'fldHomeAddress2',
                 name: 'HomeAddress2',
-                fieldLabel: ' ',
-                allowBlank: true,
+                hideEmptyLabel: false,
                 bind: {
                     value: '{currentRecord.HomeAddress2}'
                 }
@@ -372,7 +471,6 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 id: 'fldHomeCity',
                 name: 'HomeCity',
                 fieldLabel: 'City',
-                allowBlank: false,
                 bind: {
                     value: '{currentRecord.HomeCity}'
                 }
@@ -382,7 +480,6 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 id: 'fldHomePostCode',
                 name: 'HomePostcode',
                 fieldLabel: 'Postcode',
-                allowBlank: false,
                 bind: {
                     value: '{currentRecord.HomePostCode}'
                 }
@@ -391,6 +488,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 xtype: 'combobox',
                 id: 'fldHomeCountryID',
                 fieldLabel: 'Country',
+                editable: false,
                 queryMode: 'local',
                 displayField: 'Description',
                 valueField: 'ListItemID',
@@ -406,7 +504,6 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 id: 'fldTelephone',
                 name: 'Telephone',
                 fieldLabel: 'Telephone',
-                allowBlank: true,
                 bind: {
                     value: '{currentRecord.Telephone}'
                 }
@@ -439,12 +536,10 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         }
     },
     {
-        title: 'Work details',
+        bind: {
+            title: 'Work details (Current application - {currentRecord.CourseSessionText})'
+        },
         items: [
-            {
-                xtype: 'label',
-                html: '<b>Work Details</b>'
-            },
             {
                 xtype: 'textfield',
                 id: 'fldWorkAddress1',
@@ -459,7 +554,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 xtype: 'textfield',
                 id: 'fldWorkAddress2',
                 name: 'WorkAddress2',
-                fieldLabel: ' ',
+                hideEmptyLabel: false,
                 allowBlank: true,
                 bind: {
                     value: '{currentRecord.WorkAddress2}'
@@ -489,6 +584,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 xtype: 'combobox',
                 id: 'fldWorkCountryID',
                 fieldLabel: 'Country',
+                editable: false,
                 queryMode: 'local',
                 displayField: 'Description',
                 valueField: 'ListItemID',
@@ -502,6 +598,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             {
                 xtype: 'textfield',
                 id: 'fldWorkEmail',
+                vtype: 'email',
                 name: 'WorkEmail',
                 fieldLabel: 'Email',
                 allowBlank: true,
@@ -546,13 +643,16 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             ]
         }
     },{
-        title: 'Eligibility',
+        bind: {
+            title: 'Eligibility (Current application - {currentRecord.CourseSessionText})'
+        },
         items: [
             {
                 xtype: 'combobox',
                 id: 'fldCountryOfResidenceID',
                 fieldLabel: 'Country Of Residence',
                 queryMode: 'local',
+                editable: false,
                 forceSelection: true,
                 displayField: 'Description',
                 valueField: 'ListItemID',
@@ -562,53 +662,77 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     value: '{currentRecord.CountryOfResidenceID}'
                 }
             },
+            //BEGINBAZOOKA!!
             {
-                layout: {
-                    type: 'hbox',
-                    align: 'left'
-                },
-                items: [
-                    {
-                        xtype: 'label',
-                        text: 'Have you been granted permanent residence in the EU / Indefinite leave to remain in the UK?',
-                        forId: 'fldIsPermanentResident',
-                        margin: '0 0 0 10'
+                //title: 'Were you born in the European Union?'
+                items: [{
+                    layout: {
+                        type: 'hbox',
+                        align: 'left'
                     },
-                    {
-                        xtype: 'checkbox',
-                        id: 'fldIsPermanentResident',
+                    items: [{
+                        xtype: 'label',
+                        margin: '0 0 0 10',
                         bind: {
-                            value: '{currentRecord.IsPermanentResident}'
+                            text: 'Were you born in the European Union?'
                         }
-                    }
-                ]
+                    },{
+                        xtype: 'checkbox',
+                        id: 'fldBornInTheEU',
+                        value: true,
+                        bind: {
+                            value: '{currentRecord.BornInTheEU}'
+                        }
+                    }]
+                },{
+                    xtype: 'panel',
+                    bind: {
+                        hidden: '{currentRecord.BornInTheEU}'
+                    },
+                    items: [{
+                        layout: {
+                            type: 'hbox',
+                            align: 'left'
+                        },
+                        items: [{
+                            xtype: 'label',
+                            text: 'Have you been granted permanent residence in the EU / Indefinite leave to remain in the UK?',
+                            forId: 'fldIsPermanentResident',
+                            margin: '0 0 0 10'
+                        },{
+                            xtype: 'checkbox',
+                            id: 'fldIsPermanentResident',
+                            bind: {
+                                value: '{currentRecord.IsPermanentResident}'
+                            }
+                        }]
+                    },{
+                        xtype: 'datefield',
+                        id: 'fldDateOfFirstEntryToUK',
+                        anchor: '100%',
+                        fieldLabel: 'Date of First Entry to UK',
+                        name: 'DateOfFirstEntryToUK',
+                        format: 'd/m/Y',
+                        maxValue: new Date(),  //Today or earlier.
+                        bind: {
+                            value: '{currentRecord.DateOfFirstEntryToUK}',
+                            hidden: '{!currentRecord.IsPermanentResident}'
+                        }
+                    },{
+                        xtype: 'datefield',
+                        id: 'fldDateOfGrantedResidency',
+                        anchor: '100%',
+                        fieldLabel: 'Date residency was granted',
+                        name: 'DateOfGrantedResidency',
+                        format: 'd/m/Y',
+                        maxValue: new Date(),  //Today or earlier.
+                        bind: {
+                            value: '{currentRecord.DateOfGrantedResidency}',
+                            hidden: '{!currentRecord.IsPermanentResident}'
+                        }
+                    }]
+                }]
             },
-            {
-                xtype: 'datefield',
-                id: 'fldDateOfFirstEntryToUK',
-                anchor: '100%',
-                fieldLabel: 'Date of First Entry to UK',
-                name: 'DateOfFirstEntryToUK',
-                format: 'd/m/Y',
-                maxValue: new Date(),  //Today or earlier.
-                bind: {
-                    value: '{currentRecord.DateOfFirstEntryToUK}',
-                    hidden: '{!currentRecord.IsPermanentResident}'
-                }
-            },
-            {
-                xtype: 'datefield',
-                id: 'fldDateOfGrantedResidency',
-                anchor: '100%',
-                fieldLabel: 'Date residency was granted',
-                name: 'DateOfGrantedResidency',
-                format: 'd/m/Y',
-                maxValue: new Date(),  //Today or earlier.
-                bind: {
-                    value: '{currentRecord.DateOfGrantedResidency}',
-                    hidden: '{!currentRecord.IsPermanentResident}'
-                }
-            }
         ],
         bbar: {
             items: [
@@ -636,7 +760,9 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             ]
         }
      },{
-        title: 'Qualifications',
+        bind: {
+            title: 'Qualifications (Current application - {currentRecord.CourseSessionText})'
+        },
         listeners: {
             activate: 'onActivateQualificationsCard'
         },
@@ -671,7 +797,9 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 ]
             }
     },{
-        title: 'Experience',
+        bind: {
+            title: 'Experience (Current application - {currentRecord.CourseSessionText})'
+        },
         listeners: {
             activate: 'onActivateExperienceCard'
         },
@@ -706,7 +834,9 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 ]
             }
     },{
-        title: 'References',
+        bind: {
+            title: 'References (Current application - {currentRecord.CourseSessionText})'
+        },
         listeners: {
             activate: 'onActivateReferencesCard'
         },
@@ -741,7 +871,9 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 ]
             }
     },{
-        title: 'Personal Statement',
+        bind: {
+            title: 'Personal Statement (Current application - {currentRecord.CourseSessionText})'
+        },
         items: [
             {
                 html: '<p><strong>Please give your reasons for choosing this particular programme of study.</strong></p><p><i>You may wish to alter this section according to which programme of study you are applying for.</i></p>'
@@ -786,8 +918,10 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 ]
             }
     },{
-        title: 'Declaration',
-        items: [
+            bind: {
+                title: 'Declaration (Current application - {currentRecord.CourseSessionText})'
+            },
+            items: [
             {
                 xtype: 'label',
                 text: 'Because of the nature of the programmes for which you are applying, they are exempt from the provision of Section 4 (2) of the Rehabilitation of Offenders Act 1974. By virtue of the Rehabilitation of Offenders Act 1974 (Exemptions) Order 1975 and the Children Act 1989, applicants are, therefore, not entitled to withhold information about convictions which for other purposes are "spent" under the provisions of the Act.'
@@ -798,129 +932,68 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             },
             {
                 layout: {
-                    type: 'hbox',
-                    align: 'left'
+                    type: 'vbox',
+                    align: 'stretchmax ',
+                    width: 600
                 },
                 items: [
                     {
-                        xtype: 'label',
-                        text: 'Do you have a criminal conviction?',
-                        forId: 'hascriminalconviction',
-                        margin: '0 0 0 10'
-                    },
-                    {
                         xtype: 'checkbox',
+                        fieldLabel: 'do you have a criminal conviction?',
                         id: 'fldHasCriminalConviction',
                         bind: {
                             value: '{currentRecord.HasCriminalConviction}'
                         }
-                    }
-                ]
-            },{
-                layout: {
-                    type: 'hbox',
-                    align: 'left'
-                },
-                items: [
-                    {
-                        xtype: 'label',
-                        text: 'Have you had a caution (including verbal cautions)?',
-                        forId: 'fldhasCaution',
-                        margin: '0 0 0 10'
-                    },
-                    {
+                    },{
                         xtype: 'checkbox',
+                        fieldLabel: 'Have you had a caution (including verbal cautions)?',
                         id: 'fldHasCaution',
                         bind: {
                             value: '{currentRecord.HasCaution}'
                         }
-                    }
-                ]
-            },
-            {
-                layout: {
-                    type: 'hbox',
-                    align: 'left'
-                },
-                items: [
-                    {
-                        xtype: 'label',
-                        text: 'Do you have a spent criminal conviction?',
-                        forId: 'fldHasSpentCriminalConviction',
-                        margin: '0 0 0 10'
-                    },
-                    {
+                    },{
                         xtype: 'checkbox',
+                        fieldLabel: 'Do you have a spent criminal conviction?',
                         id: 'fldHasSpentCriminalConviction',
                         bind: {
                             value: '{currentRecord.HasSpentCriminalConviction}'
                         }
-                    }
-                ]
-            },
-            {
-                layout: {
-                    type: 'hbox',
-                    align: 'left'
-                },
-                items: [
-                    {
-                        xtype: 'label',
-                        text: 'Do you have a bind-over order?',
-                        forId: 'HasBindOverOrder',
-                        margin: '0 0 0 10'
-                    },
-                    {
+                    },{
                         xtype: 'checkbox',
+                        fieldLabel: 'Do you have a bind-over order?',
                         id: 'fldHasBindOverOrder',
                         bind: {
                             value: '{currentRecord.HasBindOverOrder}'
                         }
-                    }
-                ]
-            },
-            {
-                layout: {
-                    type: 'hbox',
-                    align: 'middle'
-                },
-                items: [
-                    {
-                        xtype: 'label',
-                        text: 'Have you been through the Criminal Records Bureau Enhanced Disclosure process in relation to your current employment?',
-                        forId: 'isCRBChecked',
-                        margin: '0 0 0 10'
-                    },
-                    {
+                    },{
                         xtype: 'checkbox',
                         id: 'fldIsCRBChecked',
+                        fieldLabel: 'Have you been through the Criminal Records Bureau Enhanced Disclosure process in relation to your current employment?',
                         bind: {
                             value: '{currentRecord.IsCRBChecked}'
                         }
+                    },{
+                        xtype: 'datefield',
+                        id: 'fldCRBCheckDate',
+                        anchor: '100%',
+                        fieldLabel: 'Date of Check',
+                        name: 'CRBCheckDate',
+                        format: 'd/m/Y',
+                        maxValue: new Date(),  //Today or earlier.
+                        bind: {
+                            value: '{currentRecord.CRBCheckDate}'
+                        }
+                    },{
+                        xtype: 'textfield',
+                        id: 'fldCRBCheckRefNo',
+                        name: 'CRBCheckRefNo',
+                        fieldLabel: 'CRB Reference No',
+                        allowBlank: true,
+                        bind: {
+                            value: '{currentRecord.CRBCheckRefNo}'
+                        }
                     }
                 ]
-            },
-            {
-                xtype: 'datefield',
-                id: 'fldCRBCheckDate',
-                anchor: '100%',
-                fieldLabel: 'Date of Check',
-                name: 'CRBCheckDate',
-                format: 'd/m/Y',
-                maxValue: new Date(),  //Today or earlier.
-                bind: {
-                    value: '{currentRecord.CRBCheckDate}'
-                }
-            },
-            {
-                xtype: 'textfield',
-                id: 'fldCRBCheckRefNo',
-                name: 'CRBCheckRefNo',
-                fieldLabel: 'CRB Reference No',
-                allowBlank: true,
-                bind: {
-                    value: '{currentRecord.CRBCheckRefNo}'
-                }
             },
             {
                 xtype: 'fieldcontainer',
@@ -932,44 +1005,26 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                     inputValue: '1',
                     id        : 'fldConfirmedAgreement'
                 }]
-            },
-            {
-                xtype: 'datefield',
-                id: 'fldConfirmationDate',
-                anchor: '100%',
-                fieldLabel: 'Date',
-                name: 'ConfirmationDate',
-                format: 'd/m/Y',
-                bind: {
-                    value: '{currentRecord.ConfirmationDate}'
-                }
-            },
-            {
-                xtype: 'textfield',
-                id: 'fldAccountID',
-                bind: {
-                    value: '{currentRecord.AccountID}'
-                }
             }
         ],
-            bbar: {
-                items: [
-                    {
-                        xtype: 'button',
-                        text: 'Back',
-                        listeners: {
-                            click: 'onBackClicked'
-                        }
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Submit',
-                        formBind: true,
-                        listeners: {
-                            click: 'onSubmit'
-                        }
+        bbar: {
+            items: [
+                {
+                    xtype: 'button',
+                    text: 'Back',
+                    listeners: {
+                        click: 'onBackClicked'
                     }
-                ]
-            }
+                },
+                {
+                    xtype: 'button',
+                    text: 'Submit',
+                    formBind: true,
+                    listeners: {
+                        click: 'onSubmit'
+                    }
+                }
+            ]
+        }
     }]
 });

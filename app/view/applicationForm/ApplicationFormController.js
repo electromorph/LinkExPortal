@@ -12,7 +12,8 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
         }
         myStore.on({ write: { fn: this.storeWrite, scope:  this } });
         this.on({ gotRecord: { fn: this.onGotRecord, scope: this } });
-        this.createNewRecordIfRequired();
+        //this.createNewRecordIfRequired();
+        //this.saveCurrentRecord();
         var applicationStore = Ext.StoreManager.lookup('allCourses');
         applicationStore.on({ load: { fn: this.getCourseNameFromCourseID, scope: this, single: true } })
     },
@@ -38,6 +39,17 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
             if (LinkExPortal.global.Vars.courseID.present) {
                 var newRecord = LinkExPortal.model.CPDHealthApplicationForm.create();
                 newRecord.data.Email = Ext.getCmp('fldEmail').getValue();
+                newRecord.data.TitleID = Ext.getCmp('fldTitleID').getValue();
+                newRecord.data.Firstname = Ext.getCmp('fldFirstname').getValue();
+                newRecord.data.Lastname = Ext.getCmp('fldLastname').getValue();
+                newRecord.data.PreviousSurname = Ext.getCmp('fldPreviousSurname').getValue();
+                newRecord.data.PreviousSurname = Ext.getCmp('fldPreviousSurname').getValue();
+                newRecord.data.MobileNumber = Ext.getCmp('fldMobileNumber').getValue();
+                newRecord.data.KnownAs = Ext.getCmp('fldKnownAs').getValue();
+                newRecord.data.DOB = Ext.getCmp('fldDOB').getValue();
+                if (LinkExPortal.global.Vars.trustID.present) {
+                    newRecord.data.SponsorID = LinkExPortal.global.Vars.trustID.value;
+                }
                 LinkExPortal.global.Vars.applicationRecordExists = true;
                 //Create new record in temp table.
                 myStore.add(newRecord);
@@ -46,6 +58,7 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
                     var myViewModel = this.getViewModel();
                     if (myViewModel) {
                         newRecords[0].phantom = true;
+                        newRecords[0].set('BornInTheEU', true);
                         myViewModel.set('currentRecord', newRecords[0]);
                     }
 
@@ -136,8 +149,38 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
         var myViewModel = this.getViewModel();
         if (myViewModel) {
             var rec = myViewModel.get('currentRecord');
-            rec.set('CourseSessionID', (record.get('CourseSessionID')).replace(/\D/g,''));
+            var clickedSessionID = (record.get('CourseSessionID')).replace(/\D/g,'');
+            rec.set('CourseSessionID', clickedSessionID);
+            this.getCourseSessionText(clickedSessionID).then({
+                success: function(courseSessionText) {
+                    rec.set('CourseSessionText', courseSessionText.StrapLine);
+                    rec.set('CourseText', courseSessionText.Course);
+                    rec.set('HEIText', courseSessionText.HEI);
+                    rec.set('SessionText', courseSessionText.SessionText);
+                },
+                failure: function(error) {
+                }
+            }).always(function() {
+                // Do something whether call succeeded or failed
+            }).done();
         }
+    },
+    getCourseSessionText: function(courseSessionId) {
+        var deferred = Ext.create('Deft.Deferred');
+        Ext.Ajax.request({
+            url: 'https://localhost:44306/application/Refs/coursesessiontext/' + courseSessionId,
+            method: 'GET',
+            success: function(responseObject) {
+                var obj = Ext.decode(responseObject.responseText);
+                deferred.resolve(obj.data);
+            },
+            failure: function(responseObject) {
+                var obj = Ext.decode(responseObject.responseText);
+                //Ext.Msg.alert('Status', obj);
+                deferred.reject("Could not get session information");
+            }
+        });
+        return deferred.promise;
     },
     saveCurrentRecord: function() {
         this.createNewRecordIfRequired();
@@ -185,11 +228,18 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
     onSubmit: function() {
         //Save current record
         this.saveCurrentRecord();
-        Ext.Ajax.request({ url: 'http://localhost:26214/application/' + LinkExPortal.global.Vars.applicationID.value + '/submit',
+        Ext.Ajax.request({
+            url: 'https://localhost:44306/application/' + LinkExPortal.global.Vars.applicationID.value + '/submit',
+            timeout: 30000,
             method: 'GET',
             //params: {param1:LinkExPortal.global.Vars.applicationID.value},
-            success: function(responseObject){
-                var obj = Ext.decode(responseObject.responseText);
+            success: function(responseObject) {
+                var obj;
+                if (responseObject.responseText != "") {
+                    obj = Ext.decode(responseObject.responseText);
+                } else {
+                    obj = ""
+                }
                 if (obj.SubmittedApplicationId == -1) {
                     Ext.Msg.alert('Status', 'Your application could not be submitted because ' + obj.Information + '.');
                 } else {
@@ -198,8 +248,7 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
                 }
             },
             failure: function(responseObject){
-                var obj = Ext.decode(responseObject.responseText);
-                Ext.Msg.alert('Status', obj);
+                Ext.Msg.alert('Status', "An error occurred whilst submitting your form. You may retrieve it by logging into the student portal at http://www.linkexstudentportal.com");
             }
         });
     }

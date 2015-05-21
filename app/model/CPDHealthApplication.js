@@ -59,7 +59,12 @@ Ext.define('LinkExPortal.model.CPDHealthApplication', {
         { name: 'ApplicationDate', type: 'date', dateReadFormat: 'Y-m-dT00:00:00', dateWriteFormat: 'Y-m-d' },
         { name: 'PONumber', type: 'string' },
         { name: 'AccountID', type: 'int' },
-        { name: 'TitleID', type: 'int' }
+        { name: 'TitleID', type: 'int' },
+        { name: 'SponsorID', type: 'int' },
+        { name: 'AccountID', type: 'int' },
+        { name: 'PreviousStudentIDAtHEI', type: 'string' },
+        { name: 'ApplicationStatusText', type: 'string' },
+        { name: 'CourseSessionText', type: 'string' }
     ],
     schema: {
         id: 'applicationform',
