@@ -52,7 +52,6 @@ Ext.define('LinkExPortal.view.loginForm.LoginFormController', {
             showAppropriateForm: function() {
                 var screen = 'studentmain';
                 if (LinkExPortal.global.Vars.applicationID.present) {
-                    alert('we have an application form id');
                     screen = 'app-main';
                 } else {
                     Ext.Ajax.request({
@@ -63,13 +62,10 @@ Ext.define('LinkExPortal.view.loginForm.LoginFormController', {
                             var obj = Ext.decode(responseObject.responseText);
                             var userRole = obj.data.role;
                             if (userRole == 'SPONSOR') {
-                                alert('youre a sponsor but its app-main for now');
-                                screen = 'app-main';
+                                screen = 'sponsormain';
                             }
                             if (userRole == 'HEI') {
-                                alert('Youre an HEI user but its app-main for now');
-                                //screen = 'hei-main'
-                                screen = 'app-main'
+                                screen = 'heiMain'
                             }
                         },
                         failure: function (responseObject) {

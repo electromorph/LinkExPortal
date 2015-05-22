@@ -28,7 +28,11 @@ Ext.define('LinkExPortal.Application', {
         'Account',
         'AspNetUser',
         'UserProfileInfo',
-        'CPDHealthApplicationTemp'
+        'CPDHealthApplicationTemp',
+        'StudentExperienceSubmittedForApplication',
+        'StudentQualificationSubmittedForApplication',
+        'StudentReferencesSubmittedForApplication',
+        'CPDHealthApplicationFormSponsor'
     ],
     launch: function () {
         // Add the additional 'advanced' VTypes
@@ -151,7 +155,6 @@ Ext.define('LinkExPortal.Application', {
             }
             LinkExPortal.global.Utils.calculateHideAndShow();
         }
-
 
         var supportsLocalStorage = Ext.supports.LocalStorage, loggedIn;
         if (!supportsLocalStorage) {
