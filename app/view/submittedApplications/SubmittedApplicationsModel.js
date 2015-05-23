@@ -9,8 +9,9 @@ Ext.define('LinkExPortal.view.submittedApplications.SubmittedApplicationsModel',
             autoLoad: true,
             filters: [
                 {
-                    property: 'ApplicationStatusID',
-                    value   : 19
+                    filterFn: function(item) {
+                        return item.ApplicationStatusID != 19
+                    }
                 }
             ]
         }

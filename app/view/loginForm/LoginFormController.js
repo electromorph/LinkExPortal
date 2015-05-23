@@ -50,30 +50,7 @@ Ext.define('LinkExPortal.view.loginForm.LoginFormController', {
                 }
             },
             showAppropriateForm: function() {
-                var screen = 'studentmain';
-                if (LinkExPortal.global.Vars.applicationID.present) {
-                    screen = 'app-main';
-                } else {
-                    Ext.Ajax.request({
-                        url: LinkExPortal.global.Vars.defaultUrl + '/user/getrole',
-                        async: false,
-                        method: 'GET',
-                        success: function (responseObject) {
-                            var obj = Ext.decode(responseObject.responseText);
-                            var userRole = obj.data.role;
-                            if (userRole == 'SPONSOR') {
-                                screen = 'sponsormain';
-                            }
-                            if (userRole == 'HEI') {
-                                screen = 'heiMain'
-                            }
-                        },
-                        failure: function (responseObject) {
-                            //Should probably assume student role here.
-                            Ext.Msg.alert('ERROR', 'User information could not be retrieved');
-                        }
-                    });
-                }
+                var screen = LinkExPortal.global.Utils.getAppropriateView();
                 Ext.widget(screen);
             }
         });

@@ -3,10 +3,10 @@ Ext.define('LinkExPortal.view.applicationsList.ApplicationsListModel', {
     alias: 'viewmodel.applicationslist-applicationslist',
     stores: {
        submittedApplications: {
-            model: 'CPDHealthApplicationForm',
-            storeId: 'submittedApplications',
-            alias: 'submittedApplications',
-            autoLoad: true
-        }
+           model: 'CPDHealthApplicationForm',
+           storeId: 'submittedApplications',
+           alias: 'submittedApplications',
+           autoLoad: true
+       }
     }
 });

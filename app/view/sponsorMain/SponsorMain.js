@@ -25,6 +25,10 @@ Ext.define('LinkExPortal.view.sponsorMain.SponsorMain', {
         split: true,
         xtype: 'tabpanel',
         flex: 1,
+        tbar: {
+            xtype: 'button',
+            text: 'Logout'
+        },
         items:[{
             title: 'Applications',
             layout: {

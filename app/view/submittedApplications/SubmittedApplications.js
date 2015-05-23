@@ -10,9 +10,8 @@ Ext.define("LinkExPortal.view.submittedApplications.SubmittedApplications",{
     viewModel: {
         type: "submittedapplications-submittedapplications"
     },
-    frame: true,
-    header: false,
     iconCls: 'icon-user',
+    header: false,
     bubbleEvents: [
         'select'
     ],

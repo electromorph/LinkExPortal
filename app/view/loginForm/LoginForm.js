@@ -27,28 +27,13 @@ Ext.define("LinkExPortal.view.loginForm.LoginForm",{
             name: 'username',
             fieldLabel: 'Username',
             allowBlank: false
-        },/*{
-         xtype: 'textfield',
-         name: 'email',
-         fieldLabel: 'Email',
-         allowBlank: false
-         },*/{
+        },{
             xtype: 'textfield',
             value: 'y1%HD6j)',
             name: 'password',
             inputType: 'password',
             fieldLabel: 'Password',
             allowBlank: false
-        },/*{
-         xtype: 'textfield',
-         name: 'confirmpassword',
-         inputType: 'password',
-         fieldLabel: 'Confirm Password',
-         allowBlank: false
-         },*/{
-            xtype: 'displayfield',
-            hideEmptyLabel: false,
-            value: 'Enter any non-blank password'
         }],
         buttons: [{
             text: 'Login',

@@ -9,7 +9,7 @@ Ext.define("LinkExPortal.view.commissionedCourses.CommissionedCourses",{
     viewModel: {
         type: "commissionedcourses-commissionedcourses"
     },
-    frame: true,
+    frame: false,
     title: 'Commissioned courses',
     iconCls: 'icon-user',
     bind: {
@@ -17,8 +17,6 @@ Ext.define("LinkExPortal.view.commissionedCourses.CommissionedCourses",{
         selection: '{selectedApplicationView}'*/
     },
     bubbleEvents: [ 'click' ],
-    height: 250,
-    width: 600,
     scrollable: true,
     columns: [
         {

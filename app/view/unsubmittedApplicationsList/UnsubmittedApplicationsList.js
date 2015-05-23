@@ -9,7 +9,7 @@ Ext.define("LinkExPortal.view.unsubmittedApplicationsList.UnsubmittedApplication
     viewModel: {
         type: "unsubmittedapplicationslist-unsubmittedapplicationslist"
     },
-    frame: true,
+    //frame: true,
     scrollable: true,
     header: false,
     autoScroll: true,

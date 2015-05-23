@@ -20,28 +20,7 @@ Ext.define('LinkExPortal.view.main.Main', {
     listeners : {
         rowclick: 'copyGlobalsToViewModel'
     },
-    items: [
-        /*{
-            itemId: 'panelToolBar',
-            region: 'north',
-            xtype: 'panel',
-            dockedItems: [{
-                xtype: 'toolbar',
-                dock: 'top',
-                items: [
-                    {
-                        xtype:'image',
-                        id: 'linkEXLogo',
-                        src: '/LinkExPortal/LinkEX.png',
-                        width: 103,
-                        height: 81
-                    }
-                ]
-            }],
-            items: [
-
-            ]
-        },*/{
+    items: [{
             region: 'center',
             xtype: 'panel',
             bubbleEvents: [ 'rowclick' ],

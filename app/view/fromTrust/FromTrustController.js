@@ -12,7 +12,7 @@ Ext.define('LinkExPortal.view.fromTrust.FromTrustController', {
             property: 'SponsorID',
             value   : data.SponsorID
         });
-        myStore.setAutoLoad(true);
+        myStore.load();
     },
     onClickedSelfFunded: function(radiogroup, newValue, oldValue) {
         if (newValue.fromTrust == true) {

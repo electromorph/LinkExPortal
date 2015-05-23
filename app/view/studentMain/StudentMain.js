@@ -18,11 +18,9 @@ Ext.define('LinkExPortal.view.studentMain.StudentMain', {
     },
     items: [{
         xtype: 'panel',
-        bind: {
-            title: '{name}'
-        },
+        title: 'Student Portal',
         region: 'west',
-        html: '<ul><li>This is the student portal. Should the menu be here?</li></ul>',
+        html: '',
         width: 250,
         split: true,
         tbar: [{
