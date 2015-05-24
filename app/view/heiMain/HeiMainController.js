@@ -8,7 +8,22 @@ Ext.define('LinkExPortal.view.heiMain.HeiMainController', {
     },
     onClickDownload: function () {
         var url = LinkExPortal.global.Vars.defaultUrl + "/cpdhealth/heigetsubmittedapplicationsasfile";
-        alert(url);
         location.href = url;
+    },
+    onClickEmail: function() {
+        var url = LinkExPortal.global.Vars.defaultUrl + "/cpdhealth/heigetsubmittedapplicationsasemail";
+        Ext.Ajax.request({
+            url: url,
+            async: false,
+            method: 'GET',
+            success: function (responseObject) {
+                var obj = Ext.decode(responseObject.responseText);
+                Ext.Msg.alert('SUCCESS', 'Success! You have been emailed')
+            },
+            failure: function (responseObject) {
+                //Should probably assume student role here.
+                Ext.Msg.alert('ERROR', 'Emailing failed');
+            }
+        });
     }
 });

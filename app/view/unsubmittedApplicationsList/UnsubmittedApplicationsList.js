@@ -23,6 +23,14 @@ Ext.define("LinkExPortal.view.unsubmittedApplicationsList.UnsubmittedApplication
             flex     : 1,
             sortable : true,
             dataIndex: 'CourseSessionText'
+        },{
+            xtype:'actioncolumn',
+            width:50,
+            items: [{
+                icon: 'app/images/information.png',  // Use a URL in the icon config
+                tooltip: 'Edit application',
+                handler: 'editClicked'
+            }]
         }
     ]
 });

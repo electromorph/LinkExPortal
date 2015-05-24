@@ -25,7 +25,7 @@ Ext.define("LinkExPortal.view.heiMain.HeiMain",{
             handler: 'onClickDownload'
         },{
             text: 'Email me the file',
-            handler: 'onClickDownload'
+            handler: 'onClickEmail'
             //Confirm email address to send to (Yes/No)
             //Make AJAX call
             //Confirm success/failure.
