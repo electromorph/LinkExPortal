@@ -732,7 +732,7 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                         }
                     }]
                 }]
-            },
+            }
         ],
         bbar: {
             items: [

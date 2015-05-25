@@ -1023,6 +1023,9 @@ $include-linkexportal-view-referencesgrid-referencesgridmodel: true;
 $include-linkexportal-view-searchcourses-searchcourses: true;
 $include-linkexportal-view-searchcourses-searchcoursescontroller: true;
 $include-linkexportal-view-searchcourses-searchcoursesmodel: true;
+$include-linkexportal-view-sponsorapplications-sponsorapplications: true;
+$include-linkexportal-view-sponsorapplications-sponsorapplicationscontroller: true;
+$include-linkexportal-view-sponsorapplications-sponsorapplicationsmodel: true;
 $include-linkexportal-view-sponsormain-sponsormain: true;
 $include-linkexportal-view-sponsormain-sponsormaincontroller: true;
 $include-linkexportal-view-sponsormain-sponsormainmodel: true;
@@ -1044,9 +1047,6 @@ $include-linkexportal-view-updateprofilelinkex-updateprofilelinkexmodel: true;
 $include-linkexportal-view-userprofile-userprofile: true;
 $include-linkexportal-view-userprofile-userprofilecontroller: true;
 $include-linkexportal-view-userprofile-userprofilemodel: true;
-$include-studentdashboard-view-studentdashboard-studentdashboard: true;
-$include-studentdashboard-view-studentdashboard-studentdashboardcontroller: true;
-$include-studentdashboard-view-studentdashboard-studentdashboardmodel: true;
 /* including package ext-theme-base */
 @import '../../../../../ext/packages/ext-theme-base/sass/etc/all';
 /* including package ext-theme-neutral */

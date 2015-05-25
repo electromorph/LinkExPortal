@@ -4,15 +4,18 @@ Ext.define('LinkExPortal.view.sponsorMain.SponsorMain', {
     requires: [
         'LinkExPortal.view.sponsorMain.SponsorMainController',
         'LinkExPortal.view.sponsorMain.SponsorMainModel',
-        'LinkExPortal.view.submittedApplications.SubmittedApplications',
-        'LinkExPortal.view.applicationsHEIApproved.ApplicationsHEIApproved',
-        'LinkExPortal.view.applicationsPendingHEI.ApplicationsPendingHEI',
-        'LinkExPortal.view.applicationsRejected.ApplicationsRejected'
+        'LinkExPortal.view.sponsorApplications.SponsorApplications'
     ],
     alias: 'widget.sponsormain',
+    title: 'Sponsor Screen',
     controller: 'sponsormain-sponsormain',
     viewModel: {
         type: 'sponsormain-sponsormain'
+    },
+    routes: {
+        '!:page': {
+            action: 'onNavigate'
+        }
     },
     layout: {
         type: 'border'
@@ -21,54 +24,40 @@ Ext.define('LinkExPortal.view.sponsorMain.SponsorMain', {
         select: 'onSelectApplication'
     },
     items: [{
-        region: 'center',
-        split: true,
-        xtype: 'tabpanel',
-        flex: 1,
-        tbar: {
-            xtype: 'button',
-            text: 'Logout'
+        xtype: 'panel',
+        title: 'Sponsor Portal',
+        region: 'west',
+        width: 125,
+        layout: {
+            type: 'vbox',
+            align: 'stretchmax'
         },
-        items:[{
-            title: 'Applications',
-            layout: {
-                type: 'fit'
-            },
-            items: [{
-                xtype: 'submittedapplications'
-            }]
-        },{
-            title: 'HEI Pending',
-            layout: {
-                type: 'fit'
-            },
-            items: [{
-                xtype: 'applicationspendinghei'
-            }]
-        },{
-            title: 'HEI Approved',
-            layout: {
-                type: 'fit'
-            },
-            items: [{
-                xtype: 'applicationsheiapproved'
-            }]
-        },{
-            title: 'Rejected',
-            layout: {
-                type: 'fit'
-            },
-            items: [{
-                xtype: 'applicationsrejected'
-            }]
+        split: true,
+        items: [{
+            xtype: 'button',
+            text: 'User Settings',
+            handler: 'onClickProfile'
+        }, {
+            xtype: 'button',
+            text: 'Application Forms',
+            handler: 'onClickApplications'
+        }, {
+            xtype: 'button',
+            text: 'Logout',
+            handler: 'onClickLogout'
         }]
     },{
-        region: 'east',
+        region: 'center',
+        layout: {
+            type: 'fit'
+        },
         split: true,
-        flex: 1,
         xtype: 'panel',
-        items: [{
-            xtype: 'applicationsummary'
+        items:[{
+            xtype: 'sponsorapplications'
+        },{
+            xtype: 'userprofile',
+            hidden: true
         }]
     }]
 });

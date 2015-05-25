@@ -2,7 +2,7 @@ Ext.define("LinkExPortal.view.applicationsList.ApplicationsList",{
     extend: "Ext.grid.Panel",
     requires: [
         'LinkExPortal.view.applicationsList.ApplicationsListController',
-        'LinkExPortal.view.applicationsList.ApplicationsListModel',
+        'LinkExPortal.view.applicationsList.ApplicationsListModel'
     ],
     alias: 'widget.applicationsList',
     controller: "applicationslist-applicationslist",

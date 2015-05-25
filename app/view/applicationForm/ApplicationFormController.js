@@ -82,6 +82,7 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
         var myStore = this.getStore('applicationForm');
         if (myStore) {
             var myRecord = myStore.findRecord('CPDHealthApplicationFormTempID', LinkExPortal.global.Vars.applicationID.value);
+            alert('Number of Records: ' + myStore.count());
             if (myRecord) {
                 var myViewModel = this.getViewModel();
                 if (myViewModel) {

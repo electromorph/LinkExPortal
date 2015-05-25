@@ -7,6 +7,7 @@ Ext.define("LinkExPortal.view.userProfile.UserProfile",{
         'LinkExPortal.view.updateProfileLinkEx.UpdateProfileLinkEx'
     ],
     alias: 'widget.userprofile',
+    reference: 'userprofile',
     controller: "userprofile-userprofile",
     viewModel: {
         type: "userprofile-userprofile"

@@ -4,30 +4,33 @@ Ext.define('LinkExPortal.view.sponsorMain.SponsorMainController', {
         'Ext.window.MessageBox'
     ],
     alias: 'controller.sponsormain-sponsormain',
-    onClickButton: function () {
-        Ext.Msg.confirm('Confirm', 'Are you sure?', 'onConfirm', this);
-    },
-    onConfirm: function (choice) {
-        if (choice === 'yes') {
-            //
+    routes: {
+        '!:page': {
+            action: 'onNavigate'
         }
     },
-    onSelectApplication : function(rowModel, record, index, eOpts) {
-        var applicationID = record.get('CPDHealthApplicationFormID');
-        var experienceStore = this.getStore('experience');
-        if (experienceStore) {
-            experienceStore.proxy.url = 'https://localhost:44306/studentexperiences/submittedforapplication/' + applicationID;
-            experienceStore.load();
-        }
-        var qualificationsStore = this.getStore('qualifications');
-        if (qualificationsStore) {
-            qualificationsStore.proxy.url = 'https://localhost:44306/studentqualifications/submittedforapplication/' + applicationID;
-            qualificationsStore.load();
-        }
-        var referencesStore = this.getStore('references');
-        if (referencesStore) {
-            referencesStore.proxy.url = 'https://localhost:44306/studentreferences/submittedforapplication/' + applicationID;
-            referencesStore.load();
+    onClickLogout: function () {
+        localStorage.removeItem('LinkExAccessToken');
+        // Remove Main View
+        this.getView().destroy();
+        // Add the Login Window
+        Ext.widget('loginform');
+    },
+    onClickProfile: function () {
+        location.href = "index.html#!profile";
+    },
+    onClickApplications: function () {
+        location.href = "index.html";
+    },
+    onNavigate: function(page) {
+        var summaryPanel = this.getView().lookupReference('applications');
+        var profilePanel = this.getView().lookupReference('userprofile');
+        if (page == 'profile') {
+            summaryPanel.hide();
+            profilePanel.show();
+        } else {
+            summaryPanel.show();
+            profilePanel.hide();
         }
     }
 });
