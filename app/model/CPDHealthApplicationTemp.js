@@ -60,6 +60,9 @@ Ext.define('LinkExPortal.model.CPDHealthApplicationTemp', {
         { name: 'PONumber', type: 'auto' },
         { name: 'AccountID', type: 'int' },
         { name: 'TitleID', type: 'auto' },
+        { name: 'CourseID', type: 'auto' },
+        { name: 'HEIID', type: 'auto' },
+        { name: 'SponsorID', type: 'auto' },
         { name: 'CourseSessionText', type: 'auto' }
     ],
     schema: {

@@ -1,13 +1,13 @@
 Ext.define('LinkExPortal.Application', {
     extend: 'Ext.app.Application',
     name: 'LinkExPortal',
-    views: [
+    /*views: [
         'LinkExPortal.view.loginForm.LoginForm',
         'LinkExPortal.view.main.Main',
         'LinkExPortal.view.studentMain.StudentMain',
         'LinkExPortal.view.sponsorMain.SponsorMain',
         'LinkExPortal.view.heiMain.HeiMain'
-    ],
+    ],*/
     models: [
         'CountryList',
         'ProfessionalBodiesList',
@@ -35,7 +35,8 @@ Ext.define('LinkExPortal.Application', {
         'StudentExperienceSubmittedForApplication',
         'StudentQualificationSubmittedForApplication',
         'StudentReferencesSubmittedForApplication',
-        'CPDHealthApplicationFormSponsor'
+        'CPDHealthApplicationFormSponsor',
+        'CPDHealthApplicationFormHEI'
     ],
     launch: function () {
         // Add the additional 'advanced' VTypes
@@ -47,7 +48,8 @@ Ext.define('LinkExPortal.Application', {
                 }
                 return true;
             },
-            passwordText: 'Passwords do not match'
+            passwordText: 'Email addresses do not match',
+
         });
         Ext.define('LinkExPortal.global.Vars', {
             singleton: true,
@@ -77,6 +79,8 @@ Ext.define('LinkExPortal.Application', {
                 name: '',
                 present: false
             },
+            courseCode: '',
+            academicYear: '',
             showApplicationForm: false,
             showSearchScreen: false,
             showTrustScreen: false,
@@ -112,6 +116,7 @@ Ext.define('LinkExPortal.Application', {
                 this.getViewModel().set('applicationFormSubmitted', LinkExPortal.global.Vars.applicationFormSubmitted);
             },
             getCourseIdFromCourseSession: function(courseSessionId) {
+                //TODO: THIS SHOULD BE DEPRECATED IN FAVOUR OF A MORE GENERAL FUNCTION getInfoFromCourseSession
                 Ext.Ajax.request({ url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/getCourseFromCourseSession/' + courseSessionId,
                     method: 'GET',
                     success: function(responseObject) {
@@ -119,6 +124,22 @@ Ext.define('LinkExPortal.Application', {
                         if (obj) {
                             LinkExPortal.global.Vars.courseID = { present: true, value: courseID};
                             return obj.CourseID;
+                        }
+                    },
+                    failure: function(responseObject) {
+                        var obj = Ext.decode(responseObject.responseText);
+                        Ext.Msg.alert('Status', 'Could not retrieve course information.');
+                    }
+                });
+            },
+            getInfoFromCourseSession: function(courseSessionId) {
+                //TODO: THIS SHOULD ultimately replace getCourseIdFromCourseSession (above)
+                Ext.Ajax.request({ url: LinkExPortal.global.Vars.defaultUrl + '/application/Refs/CourseSessionInfo/' + courseSessionId,
+                    method: 'GET',
+                    success: function(responseObject) {
+                        var obj = Ext.decode(responseObject.responseText);
+                        if (obj) {
+                            return obj;
                         }
                     },
                     failure: function(responseObject) {
@@ -168,6 +189,14 @@ Ext.define('LinkExPortal.Application', {
             {
                 LinkExPortal.global.Vars.HEIID.value = queryString.heiid;
                 LinkExPortal.global.Vars.HEIID.present = true;
+            }
+            if (queryString.coursecode != null)
+            {
+                LinkExPortal.global.Vars.courseCode = queryString.coursecode;
+            }
+            if (queryString.academicyear != null)
+            {
+                LinkExPortal.global.Vars.academicYear = queryString.academicyear;
             }
             if ((queryString.applicationid != null) && (queryString.applicationid > 0))
             {

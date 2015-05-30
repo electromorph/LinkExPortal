@@ -16,11 +16,6 @@ Ext.define("LinkExPortal.view.referencesGrid.ReferencesGrid",{
         })
     ],
     selModel: 'rowmodel',
-    listeners: {
-        /*'selectionchange': function(view, records) {
-         grid.down('#removeEmployee').setDisabled(!records.length);
-         }*/
-    },
     bind: {
         store: '{studentReferences}'
     },
@@ -28,16 +23,17 @@ Ext.define("LinkExPortal.view.referencesGrid.ReferencesGrid",{
         text     : 'StudentReferenceID',
         flex     : 1,
         sortable : true,
+        hidden: true,
         dataIndex: 'StudentReferenceID'
     },{
         text     : 'Firstname',
         flex     : 1,
         sortable : true,
-        dataIndex: 'Firstname',
+        dataIndex: 'FirstName',
         editor: {
             xtype: 'textfield'
         }
-    }, {
+    },{
         text     : 'Surname',
         flex     : 1,
         sortable : true,
@@ -45,7 +41,7 @@ Ext.define("LinkExPortal.view.referencesGrid.ReferencesGrid",{
         editor: {
             xtype: 'textfield'
         }
-    }, {
+    },{
         text     : 'JobTitle',
         width    : 75,
         sortable : true,
@@ -53,7 +49,7 @@ Ext.define("LinkExPortal.view.referencesGrid.ReferencesGrid",{
         editor: {
             xtype: 'textfield'
         }
-    }, {
+    },{
         text     : 'Organization',
         width    : 90,
         sortable : true,
@@ -69,8 +65,7 @@ Ext.define("LinkExPortal.view.referencesGrid.ReferencesGrid",{
         editor: {
             xtype: 'textfield'
         }
-    },
-    {
+    },{
         text     : 'Address',
         width    : 90,
         sortable : true,
@@ -121,7 +116,7 @@ Ext.define("LinkExPortal.view.referencesGrid.ReferencesGrid",{
                     value: '{currentRecord.TitleID}'
                 }
             }
-    }, {
+    },{
             xtype:'actioncolumn',
             width:50,
             bubbleEvents: [ 'click' ],
@@ -139,6 +134,7 @@ Ext.define("LinkExPortal.view.referencesGrid.ReferencesGrid",{
         iconCls: 'employee-add',
         handler : function() {
             var myStore = this.up().up().getStore();
+            myStore.proxy.url = LinkExPortal.global.Vars.defaultUrl + '/api/studentreferences';
             var rec = Ext.create('LinkExPortal.model.StudentReference', {
                 FirstName: '',
                 Surname: '',
@@ -153,13 +149,13 @@ Ext.define("LinkExPortal.view.referencesGrid.ReferencesGrid",{
                 CPDHealthApplicationFormID: LinkExPortal.global.Vars.applicationID.value});
             rec.save({
                 failure: function(record, operation) {
-                    // do something if the save failed
                 },
                 success: function(record, operation) {
+                    myStore.proxy.url = LinkExPortal.global.Vars.defaultUrl + '/studentreferences/unsubmittedforapplication/' + LinkExPortal.global.Vars.applicationID.value;
                     myStore.load();
                 },
                 callback: function(record, operation, success) {
-                    // do something whether the save succeeded or failed
+                    myStore.proxy.url = LinkExPortal.global.Vars.defaultUrl + '/api/studentreferences';
                 }
             });
         }

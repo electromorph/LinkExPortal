@@ -5,7 +5,8 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
         'LinkExPortal.view.applicationForm.ApplicationFormModel',
         'LinkExPortal.view.qualificationsGrid.QualificationsGrid',
         'LinkExPortal.view.experienceGrid.ExperienceGrid',
-        'LinkExPortal.view.referencesGrid.ReferencesGrid'
+        'LinkExPortal.view.referencesGrid.ReferencesGrid',
+        'LinkExPortal.view.fromTrust.FromTrust'
     ],
     alias: 'widget.applicationForm',
     controller: "applicationform-applicationform",
@@ -33,6 +34,122 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
     },
     store: 'applicationForm',
     items: [{
+        title: 'Select Sponsored or Self-funded',
+        layout:{
+            type: 'vbox'
+            //align: 'center'
+        },
+        items: [{
+            xtype: 'button',
+            width: 200,
+            height: 100,
+            text: 'A health trust is funding my study',
+            handler: 'onTrustFundedClicked',
+            //ui: 'round',
+            flex: 1,
+            margin: '40px 40px 0 40px'
+        },{
+            xtype: 'button',
+            text: 'I will fund my own study',
+            width: 200,
+            height:100,
+            handler: 'onSelfFundingClicked',
+            //ui: 'round',
+            flex: 1,
+            margin: '40px 40px 0 40px'
+        }]
+    },{
+        title: 'Choose sponsor',
+        items: [{
+                xtype: 'fromtrust'
+        }],
+        bbar: {
+            items: [{
+                xtype: 'button',
+                text: 'Back',
+                listeners: {
+                    click: 'onBackOneWithoutSaving'
+                }
+            },{
+                xtype: 'button',
+                text: 'Continue',
+                listeners: {
+                    click: 'onSelectSponsorClicked'
+                }
+            },{
+                xtype: 'button',
+                text: 'Submit',
+                formBind: true,
+                listeners: {
+                    click: 'onSubmit'
+                }
+            }]
+        }
+    },{
+        title: 'Choose commissioned course',
+        layout: {
+            type: 'vbox',
+            align: 'stretch'
+        },
+        items: [{
+            xtype: 'commissionedcourses'
+        }],
+        listeners: {
+            activate: 'onActivateCommissionedCourses',
+            RowClick: 'onRowClick'
+        },
+        bbar: {
+            items: [{
+                xtype: 'button',
+                text: 'Back',
+                listeners: {
+                    click: 'onBackOneWithoutSaving'
+                }
+            },{
+                xtype: 'button',
+                text: 'Save and continue',
+                listeners: {
+                    click: 'onCommissionedCourseClicked'
+                }
+            },{
+                xtype: 'button',
+                text: 'Submit',
+                formBind: true,
+                listeners: {
+                    click: 'onSubmit'
+                }
+            }]
+        }
+    },{
+        title: 'Search for course',
+        items: [{
+            xtype: 'searchcourses'
+        }],
+        bbar: {
+            items: [
+                {
+                    xtype: 'button',
+                    text: 'Back',
+                    listeners: {
+                        click: 'onBackFromSearchCoursesClicked'
+                    }
+                },{
+                    xtype: 'button',
+                    text: 'Continue',
+                    listeners: {
+                        click: 'onTrustFundedClicked'  //this method moves forward one
+                    }
+                },{
+                    xtype: 'button',
+                    text: 'Submit',
+                    formBind: true,
+                    listeners: {
+                        click: 'onSubmit'
+                    }
+                }
+            ]
+        }
+    },{
         title: 'Personal Details',
         xtype: 'form',
         items: [{
@@ -90,8 +207,13 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
             allowBlank: false
         }],
         bbar: {
-            items: [
-                {
+            items: [{
+                    xtype: 'button',
+                    text: 'Back',
+                    listeners: {
+                        click: 'onBackFromPersonalInfoClicked'
+                    }
+                },{
                     xtype: 'button',
                     text: 'Save and continue',
                     formBind: true,
@@ -115,7 +237,8 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 'select'
             ],
             listeners: {
-                select: 'onSelectCourseSession'
+                select: 'onSelectCourseSession',
+                activate: 'loadCourseSessions'
             },
             bind: {
                 store: '{courseSessionList}',
@@ -918,113 +1041,113 @@ Ext.define("LinkExPortal.view.applicationForm.ApplicationForm",{
                 ]
             }
     },{
-            bind: {
-                title: 'Declaration (Current application - {currentRecord.CourseSessionText})'
-            },
-            items: [
-            {
-                xtype: 'label',
-                text: 'Because of the nature of the programmes for which you are applying, they are exempt from the provision of Section 4 (2) of the Rehabilitation of Offenders Act 1974. By virtue of the Rehabilitation of Offenders Act 1974 (Exemptions) Order 1975 and the Children Act 1989, applicants are, therefore, not entitled to withhold information about convictions which for other purposes are "spent" under the provisions of the Act.'
-            },
-            {
-                xtype: 'label',
-                text: 'As you are applying for a programme in health or social work which may involve children or vulnerable adults, you must tell us about any criminal convictions, including spent sentences and cautions (including verbal cautions) and bind-over orders.'
-            },
-            {
-                layout: {
-                    type: 'vbox',
-                    align: 'stretchmax ',
-                    width: 600
-                },
-                items: [
-                    {
-                        xtype: 'checkbox',
-                        fieldLabel: 'do you have a criminal conviction?',
-                        id: 'fldHasCriminalConviction',
-                        bind: {
-                            value: '{currentRecord.HasCriminalConviction}'
-                        }
-                    },{
-                        xtype: 'checkbox',
-                        fieldLabel: 'Have you had a caution (including verbal cautions)?',
-                        id: 'fldHasCaution',
-                        bind: {
-                            value: '{currentRecord.HasCaution}'
-                        }
-                    },{
-                        xtype: 'checkbox',
-                        fieldLabel: 'Do you have a spent criminal conviction?',
-                        id: 'fldHasSpentCriminalConviction',
-                        bind: {
-                            value: '{currentRecord.HasSpentCriminalConviction}'
-                        }
-                    },{
-                        xtype: 'checkbox',
-                        fieldLabel: 'Do you have a bind-over order?',
-                        id: 'fldHasBindOverOrder',
-                        bind: {
-                            value: '{currentRecord.HasBindOverOrder}'
-                        }
-                    },{
-                        xtype: 'checkbox',
-                        id: 'fldIsCRBChecked',
-                        fieldLabel: 'Have you been through the Criminal Records Bureau Enhanced Disclosure process in relation to your current employment?',
-                        bind: {
-                            value: '{currentRecord.IsCRBChecked}'
-                        }
-                    },{
-                        xtype: 'datefield',
-                        id: 'fldCRBCheckDate',
-                        anchor: '100%',
-                        fieldLabel: 'Date of Check',
-                        name: 'CRBCheckDate',
-                        format: 'd/m/Y',
-                        maxValue: new Date(),  //Today or earlier.
-                        bind: {
-                            value: '{currentRecord.CRBCheckDate}'
-                        }
-                    },{
-                        xtype: 'textfield',
-                        id: 'fldCRBCheckRefNo',
-                        name: 'CRBCheckRefNo',
-                        fieldLabel: 'CRB Reference No',
-                        allowBlank: true,
-                        bind: {
-                            value: '{currentRecord.CRBCheckRefNo}'
-                        }
-                    }
-                ]
-            },
-            {
+        bind: {
+            title: 'Declaration (Current application - {currentRecord.CourseSessionText})'
+        },
+        items: [
+        {
+            xtype: 'label',
+            text: 'Because of the nature of the programmes for which you are applying, they are exempt from the provision of Section 4 (2) of the Rehabilitation of Offenders Act 1974. By virtue of the Rehabilitation of Offenders Act 1974 (Exemptions) Order 1975 and the Children Act 1989, applicants are, therefore, not entitled to withhold information about convictions which for other purposes are "spent" under the provisions of the Act.'
+        },
+        {
+            xtype: 'label',
+            text: 'As you are applying for a programme in health or social work which may involve children or vulnerable adults, you must tell us about any criminal convictions, including spent sentences and cautions (including verbal cautions) and bind-over orders.'
+        },{
                 xtype: 'fieldcontainer',
-                fieldLabel: ' ',
+                fieldLabel: 'Please tick if you have any of the following:',
+                //labelWidth: 100,
                 defaultType: 'checkboxfield',
                 items: [{
+                    boxLabel: 'Criminal conviction?',
+                    id: 'fldHasCriminalConviction',
+                    bind: {
+                        value: '{currentRecord.HasCriminalConviction}'
+                    }
+                },{
+                    boxLabel: 'Caution (including verbal)?',
+                    id: 'fldHasCaution',
+                    bind: {
+                        value: '{currentRecord.HasCaution}'
+                    }
+                },{
+                    boxLabel: 'Spent criminal conviction?',
+                    id: 'fldHasSpentCriminalConviction',
+                    bind: {
+                        value: '{currentRecord.HasSpentCriminalConviction}'
+                    }
+                }, {
+                    boxLabel: 'Bind-over order',
+                    id: 'fldHasBindOverOrder',
+                    bind: {
+                        value: '{currentRecord.HasBindOverOrder}'
+                    }
+                }/*,{
                     boxLabel  : 'I agree to the above declararation',
                     name      : 'ConfirmedAgreement',
                     inputValue: '1',
                     id        : 'fldConfirmedAgreement'
-                }]
-            }
-        ],
-        bbar: {
-            items: [
-                {
-                    xtype: 'button',
-                    text: 'Back',
-                    listeners: {
-                        click: 'onBackClicked'
-                    }
+                }*/]
+        },{
+                xtype: 'panel',
+                layout: {
+                    type: 'hbox'
                 },
-                {
-                    xtype: 'button',
-                    text: 'Submit',
-                    formBind: true,
-                    listeners: {
-                        click: 'onSubmit'
+                items: [{
+                    xtype: 'label',
+                    text: ''
+                },{
+                    xtype: 'checkbox',
+                    boxLabel: 'Please tick if you have been through the Criminal Records Bureau Enhanced Disclosure process in relation to your current employment',
+                    id: 'fldIsCRBChecked',
+                    bind: {
+                        value: '{currentRecord.IsCRBChecked}'
                     }
+                }]
+        },{
+            xtype: 'datefield',
+            id: 'fldCRBCheckDate',
+            anchor: '100%',
+            fieldLabel: 'Date of Check',
+            name: 'CRBCheckDate',
+            format: 'd/m/Y',
+            maxValue: new Date(),  //Today or earlier.
+            bind: {
+                value: '{currentRecord.CRBCheckDate}',
+                hidden: '{!currentRecord.IsCRBChecked}'
+            }
+        },{
+            xtype: 'textfield',
+            id: 'fldCRBCheckRefNo',
+            name: 'CRBCheckRefNo',
+            fieldLabel: 'CRB Reference No',
+            allowBlank: true,
+            bind: {
+                value: '{currentRecord.CRBCheckRefNo}',
+                hidden: '{!currentRecord.IsCRBChecked}'
+            }
+        },{
+            xtype: 'checkbox',
+            boxLabel  : 'I agree to the above declararation',
+            validation: true,
+            name      : 'ConfirmedAgreement',
+            inputValue: '1',
+            id        : 'fldConfirmedAgreement'
+        }],
+        bbar: {
+            items: [{
+                xtype: 'button',
+                text: 'Back',
+                listeners: {
+                    click: 'onBackClicked'
                 }
-            ]
+            },{
+                xtype: 'button',
+                text: 'Submit',
+                formBind: true,
+                listeners: {
+                    click: 'onSubmit'
+                }
+            }]
         }
     }]
 });

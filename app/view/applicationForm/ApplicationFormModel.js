@@ -53,15 +53,14 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormModel', {
         courseSessionList: {
             model: 'coursesession',
             storeId: 'courseSessionList',
-            alias: 'courseSessionList',
-            autoLoad: true
+            alias: 'courseSessionList'
         },
         studentQualifications: {
             model: 'StudentQualification',
             storeId: 'studentQualifications',
             alias: 'studentQualifications',
-            autoSync: true,
-            autoLoad: true
+            autoSync: true/*,
+            autoLoad: true*/
         },
         studentExperience: {
             model: 'StudentExperience',
@@ -76,6 +75,31 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormModel', {
             alias: 'studentReferences',
             autoSync: true,
             autoLoad: true
+        },
+        commissionedcourses: {
+            model: 'commissionedcourses',
+            storeId: 'commissionedcourses',
+            alias: 'commissionedcourses'/*,
+             autoLoad: true*/
+        },
+        allCourses: {
+            model: 'course',
+            storeId: 'allCourses',
+            alias: 'allCourses',
+            remoteFilter: true
+        },
+        FTPTList: {
+            model: 'FTPTList',
+            storeId: 'FTPTList',
+            alias: 'FTPTList',
+            autoLoad: true,
+            listeners: {
+                //Adds a blank row to the top for a 'null' selection.
+                load: function(store){
+                    var rec = { Description: 'Any', FTPTID: '-1' };
+                    store.insert(0,rec);
+                }
+            }
         }
     },
     formulas: {

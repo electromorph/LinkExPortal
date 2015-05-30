@@ -6,7 +6,6 @@ Ext.define("LinkExPortal.view.searchCourses.SearchCourses",{
     ],
     alias: 'widget.searchcourses',
     controller: "searchcourses-searchcourses",
-
     viewModel: {
         type: "searchcourses-searchcourses"
     },
@@ -23,7 +22,7 @@ Ext.define("LinkExPortal.view.searchCourses.SearchCourses",{
             valueField: 'CourseTypeID',
             name: 'searchType',
             listeners: {
-                select: 'onSearch'
+                //select: 'onSearch'
             },
             bind: {
                 store: '{courseTypeList}',
@@ -40,7 +39,7 @@ Ext.define("LinkExPortal.view.searchCourses.SearchCourses",{
             valueField: 'ListItemid',
             name: 'academicyear',
             listeners: {
-                select: 'onSearch'
+                //select: 'onSearch'
             },
             bind: {
                 store: '{academicYearsList}',
@@ -57,7 +56,7 @@ Ext.define("LinkExPortal.view.searchCourses.SearchCourses",{
             valueField: 'HEIID',
             name: 'institution',
             listeners: {
-                select: 'onSearch'
+                //select: 'onSearch'
             },
             bind: {
                 store: '{HEIList}',
@@ -80,11 +79,16 @@ Ext.define("LinkExPortal.view.searchCourses.SearchCourses",{
             }
         },{
             xtype: 'textfield',
-            fieldLabel: 'keywords',
+            fieldLabel: 'Keywords',
             id: 'searchKeywords',
             bind: {
                 value: '{currentRecord.keywords}'
             }
+        },{
+            xtype: 'button',
+            id: 'btnSearchCourses',
+            text: 'Search',
+            handler: 'onSearch'
         },{
             xtype: 'coursesmatchingcriteria',
             bubbleEvents: ['rowclick']

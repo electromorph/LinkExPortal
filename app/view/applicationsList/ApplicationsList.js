@@ -26,8 +26,8 @@ Ext.define("LinkExPortal.view.applicationsList.ApplicationsList",{
             sortable : true,
             dataIndex: 'ApplicationStatusText'
         },{
-            xtype:'actioncolumn',
-            width:50,
+            xtype: 'actioncolumn',
+            width: 50,
             items: [{
                 icon: 'app/images/information.png',  // Use a URL in the icon config
                 tooltip: 'View application',

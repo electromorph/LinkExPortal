@@ -21,58 +21,31 @@ Ext.define('LinkExPortal.view.main.Main', {
         rowclick: 'copyGlobalsToViewModel'
     },
     items: [{
+        region: 'north',
+        xtype: 'panel',
+        layout: {
+            type: 'hbox'
+        },
+        items: [
+            {
+                xtype: 'image',
+                id: 'UniLogoImage',
+                width: 318,
+                height: 98
+            },
+            {
+                xtype: 'button',
+                text: 'Visit Portal',
+                id: 'btnBackToPortal',
+                handler: 'onClickBackToPortal'
+            }
+        ]
+    },{
             region: 'center',
             xtype: 'panel',
             bubbleEvents: [ 'rowclick' ],
             items:[{
-                    xtype: 'applicationForm',
-                    bind: { hidden: '{!showApplicationForm}' }
-                },{
-                    xtype: 'label',
-                    text: 'Thank you!  Your application has been successfully registered, and is now under consideration.',
-                    bind: { hidden: '{!applicationFormSubmitted}' }
-                },{
-                    xtype: 'tabpanel',
-                    bind: {
-                        hidden: '{showApplicationForm}'
-                    },
-                    items: [{
-                        title: 'Select Trust',
-                        defaults: {
-                            // applied to each contained panel
-                            bodyStyle: 'padding:15px',
-                            autoScroll: true
-                        },
-                        items: [{
-                                title: 'Select Trust',
-                                items: [{
-                                    xtype: 'fromtrust',
-                                    listeners: {
-                                        select: 'copyGlobalsToViewModel',
-                                        change: 'copyGlobalsToViewModel'
-                                    },
-                                    bind: { hidden: '{!showTrustScreen}' }
-                                },{
-                                    xtype: 'commissionedcourses',
-                                    listeners: {
-                                        click: 'copyGlobalsToViewModel'
-                                    },
-                                    bind: { hidden: '{!showCommissionedCoursesScreen}'}
-                                }]
-                            }
-                        ]},{
-                            title: 'Choose courses',
-                            bind: {
-                                hidden: '{!showSearchScreen}'
-                            },
-                            items: [
-                                {
-                                    xtype: 'searchcourses',
-                                    bubbleEvents: ['rowclick']
-                                }
-                            ]
-                        }
-                    ]
+                    xtype: 'applicationForm'
                 }
             ]
         }

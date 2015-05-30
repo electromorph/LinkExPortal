@@ -1,8 +1,8 @@
-Ext.define('LinkExPortal.model.CPDHealthApplicationForm', {
+Ext.define('LinkExPortal.model.CPDHealthApplicationFormHEI', {
     extend: 'Ext.data.Model',
-    idProperty: 'CPDHealthApplicationFormTempID',
+    idProperty: 'CPDHealthApplicationFormID',
     fields: [
-        { name: 'CPDHealthApplicationFormTempID', type: 'int' },
+        { name: 'CPDHealthApplicationFormID', type: 'int' },
         { name: 'Description', type: 'string' },
         { name: 'Firstname', type: 'string' },
         { name: 'Lastname', type: 'string' },
@@ -65,7 +65,7 @@ Ext.define('LinkExPortal.model.CPDHealthApplicationForm', {
         { name: 'PreviousStudentIDAtHEI', type: 'string' }
     ],
     schema: {
-        id: 'applicationformtemp',
+        id: 'applicationformtemphei',
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',

@@ -87,7 +87,7 @@ Ext.define("LinkExPortal.view.qualificationsGrid.QualificationsGrid", {
             tooltip: 'View details',
             handler: function(grid, rowIndex, colIndex) {
                 var rec = grid.getStore().getAt(rowIndex);
-                alert("Edit " + rec.get('CourseName'));
+                rec.erase();
             }
         }]
     }],
@@ -96,6 +96,7 @@ Ext.define("LinkExPortal.view.qualificationsGrid.QualificationsGrid", {
         iconCls: 'employee-add',
         handler : function() {
             var myStore = this.up().up().getStore();
+            myStore.proxy.url = LinkExPortal.global.Vars.defaultUrl + '/api/studentqualifications';
             var rec = Ext.create('LinkExPortal.model.StudentQualification', {
                     Name: '',
                     Comments: '',
@@ -105,16 +106,16 @@ Ext.define("LinkExPortal.view.qualificationsGrid.QualificationsGrid", {
                     CPDHealthApplicationFormID: LinkExPortal.global.Vars.applicationID.value});
             rec.save({
                 failure: function(record, operation) {
-                    // do something if the save failed
                 },
                 success: function(record, operation) {
+                    myStore.proxy.url = LinkExPortal.global.Vars.defaultUrl + '/studentqualifications/unsubmittedforapplication/' + LinkExPortal.global.Vars.applicationID.value;
                     myStore.load();
                 },
                 callback: function(record, operation, success) {
-                    // do something whether the save succeeded or failed
+                    myStore.proxy.url = LinkExPortal.global.Vars.defaultUrl + '/api/studentqualifications';
                 }
             });
-        }
+        },
     },{
         itemId: 'removeQualification',
         text: 'Remove Qualification',

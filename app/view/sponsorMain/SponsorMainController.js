@@ -20,7 +20,7 @@ Ext.define('LinkExPortal.view.sponsorMain.SponsorMainController', {
         location.href = "index.html#!profile";
     },
     onClickApplications: function () {
-        location.href = "index.html";
+        location.href = "index.html#!applications";
     },
     onNavigate: function(page) {
         var summaryPanel = this.getView().lookupReference('applications');
@@ -28,6 +28,10 @@ Ext.define('LinkExPortal.view.sponsorMain.SponsorMainController', {
         if (page == 'profile') {
             summaryPanel.hide();
             profilePanel.show();
+        }
+        else if (page == 'applications') {
+            summaryPanel.show();
+            profilePanel.hide();
         } else {
             summaryPanel.show();
             profilePanel.hide();

@@ -3,7 +3,7 @@ Ext.define('LinkExPortal.model.StudentReference', {
     idProperty: 'StudentReferenceID',
     fields: [
         { name: 'StudentReferenceID', type: 'int' },
-        { name: 'Firstname', type: 'string' },
+        { name: 'FirstName', type: 'string' },
         { name: 'Surname', type: 'string' },
         { name: 'JobTitle', type: 'string' },
         { name: 'Organization', type: 'string' },

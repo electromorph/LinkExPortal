@@ -16,9 +16,31 @@ Ext.define('LinkExPortal.view.main.MainController', {
         this.getViewModel().set('showCommissionedCoursesScreen', LinkExPortal.global.Vars.showCommissionedCoursesScreen);
         this.getViewModel().set('showHEIBox', LinkExPortal.global.Vars.showHEIBox);
         this.getViewModel().set('applicationFormSubmitted', LinkExPortal.global.Vars.applicationFormSubmitted);
+        var thisView = this.getView();
+        if (thisView) {
+            var portalButton =  thisView.down('#btnBackToPortal');
+        }
+        if (portalButton) {
+            if (LinkExPortal.global.Vars.loginToken) {
+                portalButton.show();
+            } else {
+                portalButton.hide();
+            }
+        }
     },
     init: function() {
         //Populate name if an ID exists but no name.
         this.copyGlobalsToViewModel();
+    },
+    onClickBackToPortal: function() {
+        var view = this.getView();
+        if (view) {
+            view.destroy();
+            this.showAppropriateForm();
+        }
+    },
+    showAppropriateForm: function() {
+        var screen = LinkExPortal.global.Utils.getAppropriateView();
+        Ext.widget(screen);
     }
 });

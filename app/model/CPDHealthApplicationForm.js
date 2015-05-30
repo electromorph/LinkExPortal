@@ -69,7 +69,7 @@ Ext.define('LinkExPortal.model.CPDHealthApplicationForm', {
         namespace: 'LinkExPortal.model',
         proxy: {
             type: 'rest',
-            url: 'https://localhost:44306/api/CPDHealthApplicationForms',
+            url: 'https://localhost:44306/api/CPDHealthApplicationFormTemps',
             reader: {
                 type: 'json',
                 rootProperty: 'data'

@@ -4,10 +4,10 @@ Ext.define('LinkExPortal.model.Account', {
     fields: [
         { name: 'AccountID', type: 'int' },
         { name: 'UserID', type: 'string' },
-        { name: 'Password', type: 'string' },
         { name: 'FirstName', type: 'string' },
         { name: 'LastName', type: 'string' },
-        { name: 'EmailAtFirstRegistration', type: 'string' }
+        { name: 'EmailAtFirstRegistration', type: 'string' },
+        { name: 'EmailMeIfSponsor', type: 'bool' }
     ],
     schema: {
         id: 'account',

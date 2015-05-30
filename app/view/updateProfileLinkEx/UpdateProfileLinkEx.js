@@ -30,6 +30,14 @@ Ext.define("LinkExPortal.view.updateProfileLinkEx.UpdateProfileLinkEx",{
         bind: {
             value: '{currentRecord.LastName}'
         }
+    },{
+        xtype: 'checkboxfield',
+        id: 'EmailMeIfSponsor',
+        name: 'EmailMeIfSponsor',
+        fieldLabel: 'Email me when an application form is submitted to my trust.',
+        bind: {
+            value: '{currentRecord.EmailMeIfSponsor}'
+        }
     }],
     buttons: [{
         text: 'Save',

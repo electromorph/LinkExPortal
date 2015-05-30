@@ -108,6 +108,7 @@ Ext.define("LinkExPortal.view.experienceGrid.ExperienceGrid",{
         iconCls: 'employee-add',
         handler : function() {
             var myStore = this.up().up().getStore();
+            myStore.proxy.url = LinkExPortal.global.Vars.defaultUrl + '/api/studentexperiences';
             var rec = Ext.create('LinkExPortal.model.StudentExperience', {
                 Description: '',
                 Organization: '',
@@ -122,10 +123,11 @@ Ext.define("LinkExPortal.view.experienceGrid.ExperienceGrid",{
                     // do something if the save failed
                 },
                 success: function(record, operation) {
+                    myStore.proxy.url = LinkExPortal.global.Vars.defaultUrl + '/studentexperiences/unsubmittedforapplication/' + LinkExPortal.global.Vars.applicationID.value;
                     myStore.load();
                 },
                 callback: function(record, operation, success) {
-                    // do something whether the save succeeded or failed
+                    myStore.proxy.url = LinkExPortal.global.Vars.defaultUrl + '/api/studentexperiences';
                 }
             });
         }

@@ -46,8 +46,7 @@ Ext.define('LinkExPortal.view.studentMain.StudentMain', {
             items: [{
                 xtype: 'unsubmittedApplicationsList'
             }]
-        },
-        {
+        },{
             title: 'Profile',
             items: [
                 {
