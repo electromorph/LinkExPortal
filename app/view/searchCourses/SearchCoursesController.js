@@ -5,35 +5,27 @@ Ext.define('LinkExPortal.view.searchCourses.SearchCoursesController', {
         var courseStore = Ext.getStore('allCourses');
         if (courseStore) {
             courseStore.clearFilter(true);
-            var myViewModel = this.getViewModel();
-            if (myViewModel) {
-                var currentRecord = myViewModel.get('currentRecord');
-                var HEIID = -1, academicYearID = -1, courseTypeID = '-1',keywords='';
-                if (currentRecord) {
-                    if (currentRecord.AcademicYearID) {
-                        academicYearID = currentRecord.AcademicYearID;
-                    }
-                    if (currentRecord.CourseTypeID) {
-                        courseTypeID = currentRecord.CourseTypeID;
-                    }
-                    if (LinkExPortal.global.Vars.HEIID.value > 0) {
-                        HEIID = LinkExPortal.global.Vars.HEIID.value
-                    } else {
-                        if (currentRecord.HEIID > 0) {
-                            HEIID = currentRecord.HEIID;
-                        }
-                    }
-                    if (currentRecord.keywords != undefined) {
-                        keywords = currentRecord.keywords
-                    }
-                }
+            if (LinkExPortal.global.Vars.HEIID.value > 0) {
+                LinkExPortal.global.Vars.searchHEIID = LinkExPortal.global.Vars.HEIID.value
             }
             courseStore.addFilter([
-                { property: 'CourseTypeID', value: courseTypeID },
-                { property: 'AcademicYearID', value: academicYearID },
-                { property: 'HEIID', value: HEIID },
-                { property: 'keywords', value: keywords}], true);
+                { property: 'CourseTypeID', value: LinkExPortal.global.Vars.searchCourseTypeID },
+                { property: 'AcademicYearID', value: LinkExPortal.global.Vars.searchAcademicYearID },
+                { property: 'HEIID', value: LinkExPortal.global.Vars.searchHEIID },
+                { property: 'keywords', value: LinkExPortal.global.Vars.searchKeywords}], true);
             courseStore.load();
         }
+    },
+    onCourseTypeSelected: function(combo, record, eOpts) {
+        LinkExPortal.global.Vars.searchCourseTypeID = record.get('CourseTypeID');
+    },
+    onAcademicYearSelected: function(combo, record, eOpts) {
+        LinkExPortal.global.Vars.searchAcademicYearID = record.get('ListItemID');
+    },
+    onHEIIDSelected: function(combo, record, eOpts) {
+        LinkExPortal.global.Vars.searchHEIID = record.get('HEIID');
+    },
+    onKeywordsChange: function(field, event, eOpts) {
+        LinkExPortal.global.Vars.searchKeywords = field.getValue();
     }
 });

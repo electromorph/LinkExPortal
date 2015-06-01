@@ -2,7 +2,8 @@ Ext.define("LinkExPortal.view.applicationsList.ApplicationsList",{
     extend: "Ext.grid.Panel",
     requires: [
         'LinkExPortal.view.applicationsList.ApplicationsListController',
-        'LinkExPortal.view.applicationsList.ApplicationsListModel'
+        'LinkExPortal.view.applicationsList.ApplicationsListModel',
+        'LinkExPortal.view.applicationSummaryWindow.ApplicationSummaryWindow'
     ],
     alias: 'widget.applicationsList',
     controller: "applicationslist-applicationslist",
@@ -31,10 +32,7 @@ Ext.define("LinkExPortal.view.applicationsList.ApplicationsList",{
             items: [{
                 icon: 'app/images/information.png',  // Use a URL in the icon config
                 tooltip: 'View application',
-                handler: function(grid, rowIndex, colIndex) {
-                    var rec = grid.getStore().getAt(rowIndex);
-                    alert('Examine this record (' + rec.get('CPDHealthApplicationFormID') + ')');
-                }
+                handler: 'showInformationWindow'
             },{
                 icon: 'app/images/add.png',
                 tooltip: 'Create a new application using these details',

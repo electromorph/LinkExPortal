@@ -17,8 +17,7 @@ Ext.define("LinkExPortal.view.unsubmittedApplicationsList.UnsubmittedApplication
     bind: {
         store: '{unsubmittedApplications}'
     },
-    columns: [
-        {
+    columns: [{
             text     : 'Course Applied For',
             flex     : 1,
             sortable : true,
@@ -30,7 +29,11 @@ Ext.define("LinkExPortal.view.unsubmittedApplicationsList.UnsubmittedApplication
                 icon: 'app/images/information.png',  // Use a URL in the icon config
                 tooltip: 'Edit application',
                 handler: 'editClicked'
-            }]
-        }
-    ]
+            },{
+                    icon: 'app/images/information.png',  // Use a URL in the icon config
+                    tooltip: 'Delete Application',
+                    handler: 'deleteClicked'
+            }
+        ]
+    }]
 });

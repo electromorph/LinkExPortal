@@ -15,6 +15,7 @@ Ext.define("LinkExPortal.view.qualificationsGrid.QualificationsGrid", {
             autoCancel: false
         })
     ],
+    height: 400,
     bind: {
         store: '{studentQualifications}'
     },
@@ -115,7 +116,7 @@ Ext.define("LinkExPortal.view.qualificationsGrid.QualificationsGrid", {
                     myStore.proxy.url = LinkExPortal.global.Vars.defaultUrl + '/api/studentqualifications';
                 }
             });
-        },
+        }
     },{
         itemId: 'removeQualification',
         text: 'Remove Qualification',

@@ -48,7 +48,7 @@ Ext.define('LinkExPortal.Application', {
                 }
                 return true;
             },
-            passwordText: 'Email addresses do not match',
+            passwordText: 'Email addresses do not match'
 
         });
         Ext.define('LinkExPortal.global.Vars', {
@@ -88,6 +88,10 @@ Ext.define('LinkExPortal.Application', {
             showHEIBox: false,
             applicationFormSubmitted: false,
             applicationRecordExists: false,
+            searchCourseTypeID: -1,
+            searchHEIID: -1,
+            searchAcademicYearID: -1,
+            searchKeywords: '',
             searchFilters: new Ext.util.Collection({
                 extraKeys: {
                     byName: 'name' // based on "name" property of each item
@@ -103,6 +107,12 @@ Ext.define('LinkExPortal.Application', {
                 LinkExPortal.global.Vars.showHEIBox = !LinkExPortal.global.Vars.HEIID.present;
                 LinkExPortal.global.Vars.showCommissionedCoursesScreen = !LinkExPortal.global.Vars.applicationID.present && LinkExPortal.global.Vars.trustID.present && !LinkExPortal.global.Vars.courseID.present && (LinkExPortal.global.Vars.trustID.value > 0);
                 //alert('ShowSearchScreen=' + LinkExPortal.global.Vars.showSearchScreen + '|ShowCommissionedCoursesScreen=' + LinkExPortal.global.Vars.showCommissionedCoursesScreen);
+            },
+            clearGlobalVars: function() {
+                LinkExPortal.global.Vars.courseID = { value: '-1', name: '', present: false };
+                LinkExPortal.global.Vars.HEIID = { value: '-1', name: '', present: false };
+                LinkExPortal.global.Vars.applicationID = { value: '-1', name: '', present: false };
+                LinkExPortal.global.Vars.trustID = { value: '-1', name: '', present: false };
             },
             addGlobalsToMainViewModel: function() {
                 this.getViewModel().set('courseID', LinkExPortal.global.Vars.courseID.value);

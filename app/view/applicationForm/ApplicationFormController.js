@@ -334,6 +334,9 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
         var appForm = this.getView();
         var layout = appForm.getLayout();
         ++active;++active;++active;
+        if (LinkExPortal.global.Vars.courseID.present) {
+            ++active
+        }
         layout.setActiveItem(active);
     },
     onCommissionedCourseClicked: function() {

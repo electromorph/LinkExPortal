@@ -36,6 +36,7 @@ Ext.define('LinkExPortal.view.main.MainController', {
         var view = this.getView();
         if (view) {
             view.destroy();
+            LinkExPortal.global.Utils.clearGlobalVars();
             this.showAppropriateForm();
         }
     },
