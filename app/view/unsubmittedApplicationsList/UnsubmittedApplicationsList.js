@@ -26,11 +26,11 @@ Ext.define("LinkExPortal.view.unsubmittedApplicationsList.UnsubmittedApplication
             xtype:'actioncolumn',
             width:50,
             items: [{
-                icon: 'app/images/information.png',  // Use a URL in the icon config
+                icon: 'app/images/user_edit.png',  // Use a URL in the icon config
                 tooltip: 'Edit application',
                 handler: 'editClicked'
             },{
-                    icon: 'app/images/information.png',  // Use a URL in the icon config
+                    icon: 'app/images/cross.gif',  // Use a URL in the icon config
                     tooltip: 'Delete Application',
                     handler: 'deleteClicked'
             }

@@ -6,9 +6,9 @@ Ext.define('LinkExPortal.view.applicationsList.ApplicationsListController', {
         if (rec) {
             var appId = rec.get('CPDHealthApplicationFormID');
             if (appId) {
-                showInformationWindow(appId);
+                LinkExPortal.global.Vars.applicationID = { value: appId, present: true };
+                Ext.widget('applicationsummarywindow');
             }
         }
-        Ext.widget('applicationsummarywindow');
     }
 });

@@ -34,7 +34,7 @@ Ext.define("LinkExPortal.view.applicationsList.ApplicationsList",{
                 tooltip: 'View application',
                 handler: 'showInformationWindow'
             },{
-                icon: 'app/images/add.png',
+                icon: 'app/images/clone.gif',
                 tooltip: 'Create a new application using these details',
                 handler: function(grid, rowIndex, colIndex) {
                     var rec = grid.getStore().getAt(rowIndex);

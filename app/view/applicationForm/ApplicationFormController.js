@@ -423,30 +423,54 @@ Ext.define('LinkExPortal.view.applicationForm.ApplicationFormController', {
         }
     },
     onSubmit: function() {
-        //Save current record
         this.saveCurrentRecord();
-        Ext.Ajax.request({
-            url: 'https://localhost:44306/application/' + LinkExPortal.global.Vars.applicationID.value + '/submit',
-            timeout: 30000,
-            method: 'GET',
-            //params: {param1:LinkExPortal.global.Vars.applicationID.value},
-            success: function(responseObject) {
-                var obj;
-                if (responseObject.responseText != "") {
-                    obj = Ext.decode(responseObject.responseText);
-                } else {
-                    obj = ""
-                }
-                if (obj.SubmittedApplicationId == -1) {
-                    Ext.Msg.alert('Status', 'Your application could not be submitted because ' + obj.Information + '.');
-                } else {
-                    LinkExPortal.global.Vars.applicationFormSubmitted = true;
-                    location.href = "/LinkExPortal/ApplicationSubmitted.html";
-                }
+        Ext.MessageBox.show({
+            scope: {
+
             },
-            failure: function(responseObject){
-                Ext.Msg.alert('Status', "An error occurred whilst submitting your form. You may retrieve it by logging into the student portal at http://www.linkexstudentportal.com");
-            }
+            title : 'Submit Application',
+            msg : 'Are you sure you want to submit this CPD application?  You will not be able to change it after submission',
+            width : 300,
+            buttons : Ext.MessageBox.YESNO,
+            fn : this.doSubmit,
+            icon : Ext.MessageBox.QUESTION
         });
+    },
+    /*deleteRow: function(btn, text, eventOptions) {
+        if (btn == 'yes') {
+            var store = this.grid.getStore();
+            var rec = store.getAt(this.rowIndex);
+            var applicationID = rec.get('CPDHealthApplicationFormTempID');
+            rec.erase();
+            store.sync();
+        }
+    },*/
+    doSubmit: function(btn, text, eventOptions) {
+        if (btn == 'yes') {
+            //Save current record
+            Ext.Ajax.request({
+                url: 'https://localhost:44306/application/' + LinkExPortal.global.Vars.applicationID.value + '/submit',
+                timeout: 30000,
+                method: 'GET',
+                //params: {param1:LinkExPortal.global.Vars.applicationID.value},
+                success: function (responseObject) {
+                    var obj;
+                    if (responseObject.responseText != "") {
+                        obj = Ext.decode(responseObject.responseText);
+                    } else {
+                        obj = ""
+                    }
+                    if (obj.SubmittedApplicationId == -1) {
+                        Ext.Msg.alert('Status', 'Your application could not be submitted because ' + obj.Information + '.');
+                    } else {
+                        LinkExPortal.global.Vars.applicationFormSubmitted = true;
+                        location.href = "/LinkExPortal/ApplicationSubmitted.html";
+                    }
+                },
+                failure: function (responseObject) {
+                    Ext.Msg.alert('Status', "An error occurred whilst submitting your form. You may retrieve it by logging into the student portal at http://www.linkexstudentportal.com");
+                }
+            });
+        }
     }
 });
